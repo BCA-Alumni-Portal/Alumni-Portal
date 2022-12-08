@@ -1,23 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
+import NavBar from "./NavBar";
+
 
 function App() {
+  // const pizza = 56;
+  const mylink = "/about.js";
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+         <p className="text-center">Welcome to BCA - Alumni.</p>
       </header>
+      <NavBar link={mylink}></NavBar>
     </div>
   );
 }
