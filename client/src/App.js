@@ -1,19 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
-import NavBar from "./NavBar";
-
+import Navbar from "./NavBar"
+import Home from "./pages/Home"
+import About from "./pages/About"
+import { Route, Routes } from "react-router-dom"
 
 function App() {
-  // const pizza = 56;
-  const mylink = "/about.js";
   return (
-    <div className="App">
-      <header className="App-header">
-         <p className="text-center">Welcome to BCA - Alumni.</p>
-      </header>
-      <NavBar link={mylink}></NavBar>
-    </div>
-  );
+    <>
+      <Navbar />
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </div>
+    </>
+  )
 }
 
 export default App;
