@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
-import App from "./App"
+import Admin from "./pages/admin_side/admin_app.js"
 import "./App.css"
 import { BrowserRouter } from "react-router-dom"
 
@@ -9,7 +9,7 @@ root.render(
   <div>
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <Admin />
     </BrowserRouter>
   </React.StrictMode>
   </div>

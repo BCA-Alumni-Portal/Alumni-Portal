@@ -4,7 +4,7 @@ export default function Home() {
     return(
       <div>
         <h1>Welcome to BCA - Alumni!</h1>
-        <button variant="primary" onClick={Authenticate}>Authenticate</button>
+        <Button variant="primary" onClick={Authenticate}>Authenticate</Button>
       </div>
     );
   }

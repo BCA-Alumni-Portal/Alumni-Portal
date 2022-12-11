@@ -1,14 +1,15 @@
 import { Link, useMatch, useResolvedPath } from "react-router-dom"
 
-export default function Navbar() {
+export default function AdminNavBar() {
   return (
     <nav className="nav">
-      <Link to="/" className="BCA Alumni">
-        BCA Alumni
+      <Link to="/" className="Admin">
+        Admin
       </Link>
       <ul>
-        <CustomLink to="/">Home</CustomLink>
-        <CustomLink to="/about">About</CustomLink>
+        <CustomLink to="/customize">Customize</CustomLink>
+        <CustomLink to="/data">Data</CustomLink>
+        <CustomLink to="/email">Email</CustomLink>
       </ul>
     </nav>
   )
