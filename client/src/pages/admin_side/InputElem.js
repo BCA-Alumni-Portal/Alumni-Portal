@@ -1,7 +1,7 @@
 import React from 'react'; 
 import { useState } from 'react'; 
 
-function InputElem() { 
+function InputElem(props) { 
   
   const [textareaheight, setTextareaheight] = useState(1); 
   
@@ -24,7 +24,7 @@ function InputElem() {
     
     <div> 
     
-      <textarea rows={textareaheight} onChange={handleChange} > </textarea> 
+      <textarea rows={textareaheight} onChange={handleChange} {...props.canType}> </textarea> 
       
     </div> 
   

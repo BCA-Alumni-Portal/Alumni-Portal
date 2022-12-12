@@ -1,8 +1,8 @@
 import AlumniNavbar from "./AlumniNavBar"
-import News from "./News"
+import JobPostings from "./JobPostings"
 import Profile from "./Profile"
 import Messages from "./Msgs"
-import Default_screen from "../../Default_screen"
+import Directory from "./Directory"
 import { Route, Routes } from "react-router-dom"
 
 function alumni_app() {
@@ -11,8 +11,9 @@ function alumni_app() {
       <AlumniNavbar />
       <div className="container">
         <Routes>
-          <Route path="/" element={<Default_screen />} />
-          <Route path="/news" element={<News />} />
+          {/* directory list of people */}
+          <Route path="/" element={<Directory />} />
+          <Route path="/jobs" element={<JobPostings />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/messages" element={<Messages />} />
         </Routes>

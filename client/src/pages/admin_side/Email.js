@@ -32,7 +32,7 @@ export default function Email() {
           </Form.Group>
           <Form.Group>
             {/* i got to make this disabled but for now push */}
-            <InputElem /> 
+            <Form.Control as="textarea" rows={3} disabled />
             <Button type="submit">Apply Filter</Button>
           </Form.Group>
           <Button type="submit" onClick={SendEmail}>Send Email</Button>

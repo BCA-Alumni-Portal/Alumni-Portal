@@ -3,11 +3,11 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom"
 export default function AlumniNavBar() {
   return (
     <nav className="nav">
-      <Link to="/" className="BCA Alumni">
-        Welcome
+      <Link to="/" className="Directory">
+        Directory
       </Link>
       <ul>
-        <CustomLink to="/news">News</CustomLink>
+        <CustomLink to="/jobs">Job Postings</CustomLink>
         <CustomLink to="/profile">Profile</CustomLink>
         <CustomLink to="/messages">Messages</CustomLink>
       </ul>
