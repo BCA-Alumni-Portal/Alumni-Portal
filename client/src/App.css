@@ -1,36 +1,43 @@
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-}
+ }
 
 body {
-  margin: 0;
-}
-
-.container {
-  margin: 1rem;
   text-align: center;
+  background-color: rgb(48, 78, 230);
+  color:white;
 }
+.home_title {
+  font-size:100px;
+}
+.container {
+  margin: auto;
+  width: screen; 
+  height:screen;
+  color:white;
+} 
 
 .nav {
-  background-color: #333;
+  padding:10px;
+  background-color: rgb(89, 111, 222);
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  gap: 2rem;
-  padding: 0 1rem;
+  gap: 40px;
+  height: 70px;
+  font-size:25px;
 }
 
-.site-title {
-  font-size: 2rem;
-}
 
 .nav ul {
-  padding: 0;
   margin: 0;
   list-style: none;
   display: flex;
   gap: 1rem;
+  padding: .25rem;
 }
 
 .nav a {
@@ -43,9 +50,41 @@ body {
 }
 
 .nav li.active {
-  background-color: #555;
+  background-color: rgb(69, 90, 196);
 }
 
 .nav li:hover {
-  background-color: #777;
+  background-color: rgb(69, 90, 196);
+}
+
+button{
+  background-color: rgb(168, 168, 168);
+  border-color: rgb(168, 168, 168);
+  text-decoration-color: black;
+  text-align: center;
+  cursor: pointer;
+  border-radius:100rem;
+  padding: 0.35em 1.2em;
+
+}
+
+
+.mb-2 {
+  border-radius: 100px;
+  font-size:35px;
+  text-align:center;
+  margin:10px;
+  
+}
+button:hover{
+  background-color:rgb(204, 204, 204);
+}
+
+.centered{
+  font-size:50px;
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%)
 }
