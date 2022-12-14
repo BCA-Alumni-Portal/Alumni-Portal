@@ -1,0 +1,24 @@
+{
+  "name": "academiesalumni",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"cd backend && npm run start\" \"cd client && yarn start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RemingtonKim/AcademiesAlumni.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RemingtonKim/AcademiesAlumni/issues"
+  },
+  "homepage": "https://github.com/RemingtonKim/AcademiesAlumni#readme",
+  "dependencies": {
+    "concurrently": "^7.6.0",
+    "yarn": "^1.22.19"
+  }
+}
