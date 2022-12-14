@@ -10,7 +10,6 @@ body {
   text-align: center;
   background-color: #f1f2e9;
   color:#4691f2;
-  background-image:none;
   overflow:hidden;
 }
 
@@ -18,13 +17,16 @@ body {
   display: flex;
   min-width: 100vw; 
   height: 100vh;
-  background-image:cover;
+  /* background-image:cover; */
   flex-flow: column;
   color: #4691f2;
   align-items: center;
   justify-content: center;
 }
-
+.title{
+  -webkit-text-stroke: 1px black;
+	-webkit-text-fill-color: white
+}
 .nav {
   padding: 10px;
   background-color: #f1f2e9;
@@ -76,16 +78,6 @@ button {
 
 button:hover {
   background-color: rgb(204, 204, 204);
-}
-
-.centered {
-  font-size: 50px;
-  position: fixed;
-  /* or absolute */
-  top: 50%;
-  left: 50%;
-  /* bring your own prefixes */
-  transform: translate(-50%, -50%)
 }
 
 .jobs {
