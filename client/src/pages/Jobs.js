@@ -25,25 +25,22 @@ export default function Jobs() {
           <div class="col-md-7">
             <div class="job-info">
               <h2 class="job-title">Software Engineer</h2>
-              <p class="job-location">TABACALERA USA Inc. Whippany, NJ (Hybrid)</p>
+              <p class="job-location">Company USA Inc. Place, NJ (Hybrid)</p>
               <div class="job-schedule">
+                <img id="job-info-icon" src={briefcaseImage} width="25" height="25" alt="Test"></img>
                 <p>
-                  <img src={briefcaseImage} width="25" height="25" alt="Test"></img>
                   Full-time
-
                 </p>
-
-
               </div>
-              <div class="job-employees">
-
-              </div>
+              
               <div class="job-description">
 
               </div>
-              <img src="https://www.computerhope.com/cdn/computer-hope.jpg" width="200" height="40" alt="Computer Hope">
 
-              </img>
+              <button id="job-apply">
+                Apply Now
+              </button>
+
             </div>
           </div>
         </div>
