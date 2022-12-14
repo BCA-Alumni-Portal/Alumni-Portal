@@ -1,27 +1,30 @@
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
- }
+}
 
 body {
   text-align: center;
   background-color: #f1f2e9;
-  color:#4691f2;
+  color: #4691f2;
 }
+
 .container {
   display: flex;
   margin: auto;
-  width: screen; 
+  width: screen;
   height: 100%;
   flex-flow: column;
-  color:#4691f2;
+  color: #4691f2;
   align-items: center;
   justify-content: center;
-} 
+}
 
 .nav {
-  padding:10px;
+  padding: 10px;
   background-color: #f1f2e9;
   color: #4691f2;
   display: flex;
@@ -29,7 +32,7 @@ body {
   align-items: stretch;
   gap: 40px;
   height: 70px;
-  font-size:25px;
+  font-size: 25px;
   border-bottom: 2px solid #4691f2;
 }
 
@@ -50,33 +53,46 @@ body {
   padding: .25rem;
 }
 
-button{
+button {
   background-color: rgb(168, 168, 168);
   border-color: rgb(168, 168, 168);
   text-decoration-color: black;
   text-align: center;
   cursor: pointer;
-  border-radius:100rem;
+  border-radius: 100rem;
   padding: 0.35em 1.2em;
 
 }
 
 .mb-2 {
   border-radius: 100px;
-  font-size:35px;
-  text-align:center;
-  margin:10px;
-  
-}
-button:hover{
-  background-color:rgb(204, 204, 204);
+  font-size: 35px;
+  text-align: center;
+  margin: 10px;
+
 }
 
-.centered{
-  font-size:50px;
-  position: fixed; /* or absolute */
+button:hover {
+  background-color: rgb(204, 204, 204);
+}
+
+.centered {
+  font-size: 50px;
+  position: fixed;
+  /* or absolute */
   top: 50%;
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%)
+}
+
+.jobs {
+  /* font-size: 24px; */
+  min-height: 100%;
+  height: 100%;
+  width: 100%;
+}
+
+.jobs .list-group {
+  font-size: 18px;
 }
