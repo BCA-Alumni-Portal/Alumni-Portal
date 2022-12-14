@@ -56,7 +56,7 @@ body {
   align-items: center;
   padding: .25rem;
 }
-
+/* 
 button {
   background-color: rgb(168, 168, 168);
   border-color: rgb(168, 168, 168);
@@ -66,7 +66,7 @@ button {
   border-radius: 100rem;
   padding: 0.35em 1.2em;
 
-}
+} */
 
 .mb-2 {
   border-radius: 100px;
@@ -74,10 +74,6 @@ button {
   text-align: center;
   margin: 10px;
 
-}
-
-button:hover {
-  background-color: rgb(204, 204, 204);
 }
 
 .jobs {
