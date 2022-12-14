@@ -98,5 +98,16 @@ button {
 .jobs .job-info {
   color: black;
   text-align: left;
-  display: inline-block;
+  /* display: inline-block; */
+  /* float: left; */
+}
+
+#job-info-icon {
+  float: left;
+  margin-right: 10px;
+}
+
+.job-info {
+  box-shadow: 0 0 3pt 2pt cornflowerblue;
+  padding: 10px;
 }
