@@ -8,12 +8,15 @@ body {
   text-align: center;
   background-color: #f1f2e9;
   color:#4691f2;
+  background-image:none;
+  overflow:hidden;
 }
+
 .container {
   display: flex;
-  margin: auto;
-  width: screen; 
-  height: 100%;
+  min-width: 100vw; 
+  height: 100vh;
+  background-image:cover;
   flex-flow: column;
   color:#4691f2;
   align-items: center;
@@ -73,10 +76,8 @@ button:hover{
 }
 
 .centered{
+  display: flex;
+  flex-direction: column;
   font-size:50px;
-  position: fixed; /* or absolute */
-  top: 50%;
-  left: 50%;
-  /* bring your own prefixes */
-  transform: translate(-50%, -50%)
+  margin: auto;
 }
