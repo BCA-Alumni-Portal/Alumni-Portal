@@ -100,3 +100,8 @@ button {
   text-align: left;
   display: inline-block;
 }
+
+.message{
+  box-sizing: border-box;
+
+}
