@@ -10,7 +10,6 @@ body {
   text-align: center;
   background-color: #f1f2e9;
   color:#4691f2;
-  background-image:none;
   overflow:hidden;
 }
 
@@ -18,13 +17,16 @@ body {
   display: flex;
   min-width: 100vw; 
   height: 100vh;
-  background-image:cover;
+  /* background-image:cover; */
   flex-flow: column;
   color: #4691f2;
   align-items: center;
   justify-content: center;
 }
-
+.title{
+  -webkit-text-stroke: 1px black;
+	-webkit-text-fill-color: white
+}
 .nav {
   padding: 10px;
   background-color: #f1f2e9;
@@ -54,7 +56,7 @@ body {
   align-items: center;
   padding: .25rem;
 }
-
+/* 
 button {
   background-color: rgb(168, 168, 168);
   border-color: rgb(168, 168, 168);
@@ -64,7 +66,7 @@ button {
   border-radius: 100rem;
   padding: 0.35em 1.2em;
 
-}
+} */
 
 .mb-2 {
   border-radius: 100px;
@@ -74,9 +76,6 @@ button {
 
 }
 
-button:hover {
-  background-color: rgb(204, 204, 204);
-}
 
 .centered{
   display: flex;
