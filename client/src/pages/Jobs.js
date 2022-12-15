@@ -69,12 +69,13 @@ export default function Jobs() {
               </div>
 
               <div class="job-description">
-                Employee will be working alongside other software engineers to engineer software. Background in software engineering recommended.
+                <p>Employee will be working alongside other software engineers to engineer software. Background in software engineering recommended.</p>
               </div>
 
               <button class="job-apply">
                 Apply Now
               </button>
+              <a class="job-poster-link" href="#">Remingtom Kim's Profile</a>
 
             </div>
           </div>
