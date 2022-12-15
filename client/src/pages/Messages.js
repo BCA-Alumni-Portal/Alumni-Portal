@@ -17,7 +17,7 @@ export default function Messages() {
             <a href="#kevin" className="list-group-item list-group-item-action">Kevin Liu</a>
           </div>
         </div>
-        <div className="message_box col-md-5">
+        <div className="profile-box col-md-5">
           <h2 className="align-bottom text-4xl font-bold">Messages</h2>
           <div className="message list-group">
             <p className="other-message"><box-icon name='user-circle' type='solid' color='#4691f2' ></box-icon>Hi, my name's Hayun Jung</p>
