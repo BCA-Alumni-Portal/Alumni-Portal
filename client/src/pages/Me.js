@@ -11,13 +11,22 @@ export default function Me() {
                     <img src={personImage2} className='rounded-md'/>
                 </div>
                 <div className="remington-kim col-md-6">
-                    <p>Name: {user.name}</p>
-                    <p>Academy, Year: ATCS, 2023</p>
-                    <p>Email: {user.email}</p>
+                    <div class='inline-flex'>
+                        <p>Name:&nbsp;</p>
+                        <p contentEditable>{user.name}</p>
+                    </div>
+                    <div class='inline-flex'>
+                        <p>Academy, Year:&nbsp;</p>
+                        <p contentEditable>ATCS, 2023</p>
+                    </div>
+                    <div class='inline-flex'>
+                        <p>Email:&nbsp;</p>
+                        <p contentEditable>{user.email}</p>
+                    </div>
                 </div>
-                <p className="job-description">{lorem}</p>
+                <p contentEditable  className="job-description">{lorem}</p>
                 <div className="job-description me-button">
-                    <button className="bg-blue hover:bg-hover-blue text-xl text-cream font-semibold py-2 px-4 rounded-ful">Edit</button>
+                    <button className="bg-blue hover:bg-hover-blue text-xl text-cream font-semibold py-2 px-4 rounded-ful">Save</button>
                 </div>
             </div>
         </div>
