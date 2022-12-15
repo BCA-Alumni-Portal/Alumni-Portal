@@ -144,3 +144,19 @@ button {
   padding: 10px;
   color: #4691f2;
 }
+
+.message_box{
+  box-sizing:border-box;
+  border-style:solid;
+  border-color: #4691f2;
+  border-width: 5px;
+  padding: 1em;
+}
+
+.other-message{
+  text-align:left;
+}
+
+.self-message{
+  text-align:right;
+}
