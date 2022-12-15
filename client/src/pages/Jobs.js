@@ -1,6 +1,8 @@
 import briefcaseImage from '../images/icons/briefcase.png';
+import { useState } from 'react';
 
 export default function Jobs() {
+  const [j, setJ] = useState(true);
   return (
 
     <div class="jobs">
@@ -13,7 +15,7 @@ export default function Jobs() {
             <h2>Job Postings</h2>
 
             <div class="list-group">
-              <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+              <a href="#" onClick={() => setJ(true)} class="list-group-item list-group-item-action active" aria-current="true">
 
                 <h3>
                   <b>Software Engineer</b>
@@ -27,7 +29,7 @@ export default function Jobs() {
                 </p>
 
               </a>
-              <a href="#" class="list-group-item list-group-item-action">
+              <a href="#" onClick={() => setJ(false)} class="list-group-item list-group-item-action">
                 
               <h3>
                   <b>Data Scientist</b>
@@ -58,7 +60,8 @@ export default function Jobs() {
             </div>
           </div>
           <div class="col-md-7">
-            <div class="job-info">
+            {j ? (
+              <div class="job-info">
               <h2 class="job-title">Software Engineer</h2>
               <p class="job-location">Company A USA Inc. Place, NJ (Hybrid)</p>
               <div class="job-schedule">
@@ -75,9 +78,32 @@ export default function Jobs() {
               <button class="job-apply">
                 Apply Now
               </button>
-              <a class="job-poster-link" href="#">Remingtom Kim's Profile</a>
+              <a class="job-poster-link" href="/me">Remington Kim's Profile</a>
 
             </div>
+            ) : (
+              <div class="job-info">
+              <h2 class="job-title">Data Scientist</h2>
+              <p class="job-location">Company B USA Inc. Place, NJ (Hybrid)</p>
+              <div class="job-schedule">
+                <img id="job-info-icon" src={briefcaseImage} width="25" height="25" alt="Test"></img>
+                <p>
+                  Part-time
+                </p>
+              </div>
+
+              <div class="job-description">
+                <p>Employee will be working alongside other data scientists to science data. Background in statistics and data analysis recommended.</p>
+              </div>
+
+              <button class="job-apply">
+                Apply Now
+              </button>
+              <a class="job-poster-link" href="#">Kevin Liu's Profile</a>
+
+            </div>
+            )}
+            
           </div>
         </div>
       </div>

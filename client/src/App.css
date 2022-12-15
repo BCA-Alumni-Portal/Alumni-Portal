@@ -93,6 +93,9 @@ button {
 
 .jobs .list-group {
   font-size: 18px;
+  height:600px;
+  overflow:scroll;
+  overflow-x:hidden;
 }
 
 .jobs .job-info {
