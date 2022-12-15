@@ -114,6 +114,24 @@ button {
 }
 
 .job-info {
-  box-shadow: 0 0 3pt 2pt cornflowerblue;
+  box-shadow: 0 0 3pt 2pt gray;
   padding: 10px;
+}
+
+.job-description {
+  padding: 10px;
+}
+
+.job-apply {
+  border: 2px solid black;
+  border-color: cornflowerblue;
+  font-size: 25px;
+  padding: 10px;
+  color: #4691f2;
+}
+
+.job-apply:hover {
+  box-shadow: 0 0 3pt 2pt cornflowerblue;
+  background-color: cornflowerblue;
+  color: white;
 }
