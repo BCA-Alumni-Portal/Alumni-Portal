@@ -163,3 +163,29 @@ button {
 .self-message{
   text-align:right;
 }
+
+.remington-kim{
+  font-weight:5px;
+  font-size:30px;
+  display: flex;
+  flex-flow: column;
+  color: #4691f2;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-box{
+  box-shadow: 0 0 3pt 2pt gray;
+  padding: 10px;
+}
+
+.me-button{
+  font-size:20px;
+  width:100%;
+}
+
+.contact{
+  text-align:left;
+  margin-right:80%;
+}
+
