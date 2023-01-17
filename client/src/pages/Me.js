@@ -9,6 +9,9 @@ export default function Me() {
             <div className="row">
                 <div className="col-md-6">
                     <img src={personImage2} className='rounded-md'/>
+                    <div className="job-description me-button">
+                        <button className="bg-blue hover:bg-hover-blue text-xl text-cream font-semibold py-2 px-4 rounded-ful">Upload Photo</button>
+                    </div>
                 </div>
                 <div className="remington-kim col-md-6">
                     <div class='inline-flex'>
