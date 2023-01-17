@@ -1,4 +1,5 @@
 import '../index.css'
+import 'boxicons'
 
 export default function Messages() {
   return (
@@ -16,13 +17,13 @@ export default function Messages() {
             <a href="#kevin" className="list-group-item list-group-item-action">Kevin Liu</a>
           </div>
         </div>
-        <div className="col-md-5">
+        <div className="profile-box col-md-5">
           <h2 className="align-bottom text-4xl font-bold">Messages</h2>
           <div className="message list-group">
-            <p className="other-message">Hi, my name's Hayun Jung</p>
-            <p className="self-message">Hello, nice to meet you. </p>
-            <p className="other-message">I was wondering if I could possibly intern at your office?</p>
-            <p className="self-message">I'll consider it.</p>
+            <p className="other-message"><box-icon name='user-circle' type='solid' color='#4691f2' ></box-icon>Hi, my name's Hayun Jung</p>
+            <p className="self-message">Hello, nice to meet you. <box-icon name='user-circle' type='solid' color='#4691f2' ></box-icon></p>
+            <p className="other-message"><box-icon name='user-circle' type='solid' color='#4691f2' ></box-icon>I was wondering if I could possibly intern at your office?</p>
+            <p className="self-message">I'll consider it.<box-icon name='user-circle' type='solid' color='#4691f2' ></box-icon></p>
           </div>
           <div className="space-y-3">
             {/* <Form.Group className="mb-3">

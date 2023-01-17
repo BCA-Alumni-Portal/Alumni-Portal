@@ -11,9 +11,9 @@ export default function NavBar() {
       </Link>
         {!isAuthenticated ? (
           <ul>
-            <CustomLink to="/about">
+            {/* <CustomLink to="/about">
               <p class="text-2xl font-semibold hover:font-bold">About</p>
-            </CustomLink>
+            </CustomLink> */}
             <Link onClick={() => {loginWithRedirect({ redirectUri: 'http://localhost:3000'})}}>
               <p class="text-2xl font-semibold hover:font-bold">Login</p>
             </Link>
@@ -29,9 +29,9 @@ export default function NavBar() {
             <CustomLink to="/messages">
               <p class="text-2xl font-semibold hover:font-bold">Messages</p>
             </CustomLink>
-            <CustomLink to="/about">
+            {/* <CustomLink to="/about">
               <p class="text-2xl font-semibold hover:font-bold">About</p>
-            </CustomLink>
+            </CustomLink> */}
             <Link onClick={() => logout({ returnTo: "http://localhost:3000" })}>
               <p class="text-2xl font-semibold hover:font-bold">Logout</p>
             </Link>
