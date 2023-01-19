@@ -4,14 +4,14 @@ const sqlModule = require("./sqlModule");
 async function sync() {
     let lastSqlID = await getLastSqlAlumniID();
     let lastSheetsID = await getLastSheetsAlumniID();
-    console.log("lastSqlID: ");
+    // console.log("lastSqlID: ");
     // We add 1 because it starts with 0, and max() returns the largest value
     lastSqlID = parseInt(lastSqlID[0]['max(alumni_id)'], 10) + 1;
-    console.log(lastSqlID);
+    // console.log(lastSqlID);
 
-    console.log("lastSheetsID: ");
+    // console.log("lastSheetsID: ");
     lastSheetsID = parseInt(lastSheetsID.data.values[0][0], 10);
-    console.log(lastSheetsID);
+    // console.log(lastSheetsID);
 
     // - Upon loading the application, get:
     //     - Last alumni_id from SQL
@@ -36,7 +36,7 @@ async function sync() {
 
     if (lastSqlID == lastSheetsID) {
         // All good! (for now)
-        console.log("No need for a sync - all good!");
+        // console.log("No need for a sync - all good!");
         return;
     } else if (lastSqlID < lastSheetsID) {
         // Read the rows that the SQL database doesn't have
@@ -44,9 +44,9 @@ async function sync() {
         let result = await sheetsModule.readSheets({range: range});
         let values = result.data.values;
 
-        console.log("Sheets Data:");
-        console.log(values);
-        console.log(result);
+        // console.log("Sheets Data:");
+        // console.log(values);
+        // console.log(result);
 
         // INSERT INTO table_name (column_list)
         // VALUES
@@ -88,31 +88,31 @@ async function sync() {
         }
 
         let queryResult = await sqlModule.makeQuery({query: query});
-        console.log(queryResult);
+        // console.log(queryResult);
 
     } else if (lastSheetsID < lastSqlID) {
         // Query the rows that the Sheets doesn't have
         let query = "SELECT * FROM Alumni WHERE alumni_id >= " + lastSheetsID + " AND alumni_id <= " + lastSqlID;
         let data = await sqlModule.makeQuery({query: query});
 
-        console.log("SQL Data:");
-        console.log(data);
+        // console.log("SQL Data:");
+        // console.log(data);
 
         // The values that will be put into Sheets
         let values = [];
         for (let rowData of data) {
             let row = [];
             for (let key of sql_columns) {
-                console.log("Key: " + key);
-                console.log(rowData);
+                // console.log("Key: " + key);
+                // console.log(rowData);
                 row.push(rowData[key]);
             }
             values.push(row);
         }
-        console.log(values);
+        // console.log(values);
 
         let range = "A" + (lastSheetsID+3) + ":F" + (lastSqlID+3);
-        console.log(range);
+        // console.log(range);
         sheetsModule.updateSheets({values: values, range: range});
 
     }

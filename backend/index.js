@@ -115,7 +115,7 @@ app.get('/updateSQLData', async (req, res) => {
     //     email_address: "jd@gmail.com2",
     //     academy_id: 4
     // }
-    console.log(additionalSpecifiers);
+    // console.log(additionalSpecifiers);
     
     let query = "UPDATE Alumni ";
 
@@ -159,6 +159,10 @@ app.listen(port, () => {
 })
 
 app.get('/syncData', (req, res) => {
+    console.log("syncData");
     databaseSync.sync();
     return res.send("Finished syncing");
 })
+
+console.log("Automatically syncing here!");
+databaseSync.sync();

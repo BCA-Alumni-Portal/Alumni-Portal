@@ -54,7 +54,7 @@ async function updateSheets({ values, range }) {
             resource: resource,
             valueInputOption: "RAW"
         });
-        console.log('%d cells updated.', result.data.updatedCells);
+        // console.log('%d cells updated.', result.data.updatedCells);
         return result;
     } catch (err) {
         // TODO (Developer) - Handle exception
