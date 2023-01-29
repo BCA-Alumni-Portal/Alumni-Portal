@@ -15,9 +15,9 @@ function SearchBar(props) {
         }
     })
     return (
-        <ul>
+        <ul className="block border-black border">
             {filteredData.map((item) => (
-                <li key={item.id}>{item.text}</li>
+                <li className="text-black  block  hover:bg-hover-cream py-3 text-sm" key={item.id}>{item.text}</li>
             ))}
         </ul>
     )

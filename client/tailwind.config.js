@@ -8,7 +8,9 @@ module.exports = {
     colors:{
       'cream':'#f1f2e9',
       'defaultblue':'#4691f2',
-      'hover-blue':'#267ded'},
+      'hover-blue':'#267ded',
+      'black': '#0f172a',
+      'hover-cream': '#e4e6da',},
     extend: {},
   },
   plugins: [
