@@ -20,7 +20,7 @@ async function createConnection() {
 
     con.connect(function (err) {
         if (err) {
-            return console.error('error: ' + err.message);
+            return console.error("Failed to connect to the MySQL server.\n\tError: " + err.message);
         }
 
         console.log('Connected to the MySQL server.');
@@ -33,14 +33,15 @@ async function createConnection() {
 async function makeQuery({query: query}) {
     let con = await createConnection();
 
-    console.log(query);
+    // console.log(query);
     const resultPromise = new Promise((resolve, reject) => {
         con.query(query, function (err, result, fields) {
             if (err) {
-                return console.error("Error: " + err.message);
+                return console.error("Failed to make query to the MySQL server.\n\tError: " + err.message);
             }
             // console.log("Actual Result");
             // console.log(result);
+            console.log("Made query to the MySQL server.");
             resolve(result);
         });
     });

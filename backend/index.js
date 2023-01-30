@@ -10,6 +10,9 @@ const fs = require('fs');
 const app = express();
 const port = 5000;
 
+const sourceSheetsID = "1oOohmDEw3R2AU8aHwt9-KWGpFCQSYz08HsGgcXQEDLQ";
+const exportSheetsID = "1nCnY_3uG0xUZSx9uSaS9ROFUF9hur70jBrUxFSEnZMY";
+
 app.use(cors());
 app.use(express.json())
 
@@ -115,7 +118,7 @@ app.get('/updateSQLData', async (req, res) => {
     //     email_address: "jd@gmail.com2",
     //     academy_id: 4
     // }
-    console.log(additionalSpecifiers);
+    // console.log(additionalSpecifiers);
     
     let query = "UPDATE Alumni ";
 
@@ -144,13 +147,13 @@ app.get('/updateSQLData', async (req, res) => {
 app.get('/getGSData', (req, res) => {
     console.log("getGSData");
     let range = "A1:C5";
-    sheetsModule.readSheets({range: range});
+    sheetsModule.readSheets({range: range, sheetID: sourceSheetsID});
     return res.send("Finished reading");
 });
 
 app.get('/writeGSData', (req, res) => {
     console.log("writeGSData");
-    sheetsModule.updateSheets({query: "dummy"});
+    sheetsModule.updateSheets({query: "dummy", sheetID: sourceSheetsID});
     return res.send("Finished writing");
 })
 
@@ -159,6 +162,12 @@ app.listen(port, () => {
 })
 
 app.get('/syncData', (req, res) => {
-    databaseSync.sync();
+    console.log("syncData");
+    databaseSync.sync({sheetID: sourceSheetsID});
     return res.send("Finished syncing");
 })
+
+console.log("Automatically running here!");
+// databaseSync.sync({sheetID: sourceSheetsID});
+databaseSync.exportSqlToSheets({sheetID: exportSheetsID});
+databaseSync.writeNewEntriesToSQL({sheetID: sourceSheetsID});

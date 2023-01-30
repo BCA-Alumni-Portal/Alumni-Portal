@@ -30,8 +30,8 @@ export default function Jobs() {
 
               </a>
               <a href="#" onClick={() => setJ(false)} class="list-group-item list-group-item-action">
-                
-              <h3>
+
+                <h3>
                   <b>Data Scientist</b>
                 </h3>
                 <p>
@@ -44,7 +44,7 @@ export default function Jobs() {
 
               </a>
               <a href="#" class="list-group-item list-group-item-action">
-                
+
                 <h3>
                   <b>Software Tester</b>
                 </h3>
@@ -62,48 +62,48 @@ export default function Jobs() {
           <div class="col-md-7">
             {j ? (
               <div class="job-info">
-              <h2 class="job-title">Software Engineer</h2>
-              <p class="job-location">Company A USA Inc. Place, NJ (Hybrid)</p>
-              <div class="job-schedule">
-                <img id="job-info-icon" src={briefcaseImage} width="25" height="25" alt="Test"></img>
-                <p>
-                  Full-time
-                </p>
+                <h2 class="job-title">Software Engineer</h2>
+                <p class="job-location">Company A USA Inc. Place, NJ (Hybrid)</p>
+                <div class="job-schedule">
+                  <img id="job-info-icon" src={briefcaseImage} width="25" height="25" alt="Test"></img>
+                  <p>
+                    Full-time
+                  </p>
+                </div>
+
+                <div class="job-description">
+                  <p>Employee will be working alongside other software engineers to engineer software. Background in software engineering recommended.</p>
+                </div>
+
+                <button class="job-apply">
+                  Apply Now
+                </button>
+                <a class="job-poster-link" href="/me">Remington Kim's Profile</a>
+
               </div>
-
-              <div class="job-description">
-                <p>Employee will be working alongside other software engineers to engineer software. Background in software engineering recommended.</p>
-              </div>
-
-              <button class="job-apply">
-                Apply Now
-              </button>
-              <a class="job-poster-link" href="/me">Remington Kim's Profile</a>
-
-            </div>
             ) : (
               <div class="job-info">
-              <h2 class="job-title">Data Scientist</h2>
-              <p class="job-location">Company B USA Inc. Place, NJ (Hybrid)</p>
-              <div class="job-schedule">
-                <img id="job-info-icon" src={briefcaseImage} width="25" height="25" alt="Test"></img>
-                <p>
-                  Part-time
-                </p>
+                <h2 class="job-title">Data Scientist</h2>
+                <p class="job-location">Company B USA Inc. Place, NJ (Hybrid)</p>
+                <div class="job-schedule">
+                  <img id="job-info-icon" src={briefcaseImage} width="25" height="25" alt="Test"></img>
+                  <p>
+                    Part-time
+                  </p>
+                </div>
+
+                <div class="job-description">
+                  <p>Employee will be working alongside other data scientists to science data. Background in statistics and data analysis recommended.</p>
+                </div>
+
+                <button class="job-apply">
+                  Apply Now
+                </button>
+                <a class="job-poster-link" href="#">Kevin Liu's Profile</a>
+
               </div>
-
-              <div class="job-description">
-                <p>Employee will be working alongside other data scientists to science data. Background in statistics and data analysis recommended.</p>
-              </div>
-
-              <button class="job-apply">
-                Apply Now
-              </button>
-              <a class="job-poster-link" href="#">Kevin Liu's Profile</a>
-
-            </div>
             )}
-            
+
           </div>
         </div>
       </div>

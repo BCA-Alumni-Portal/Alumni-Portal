@@ -1,7 +1,7 @@
 const { GoogleAuth } = require('google-auth-library');
 const { google, ValueInputOption, MajorDimension } = require('googleapis');
 
-const sheetID = "1oOohmDEw3R2AU8aHwt9-KWGpFCQSYz08HsGgcXQEDLQ";
+// const sheetID = "1oOohmDEw3R2AU8aHwt9-KWGpFCQSYz08HsGgcXQEDLQ";
 
 // Get the authenticated Google Sheets object
 async function getSheets() {
@@ -16,7 +16,7 @@ async function getSheets() {
 }
 
 // Return the values within <range>
-async function readSheets({ range }) {
+async function readSheets({ range, sheetID }) {
     const sheets = await getSheets();
 
     try {
@@ -32,7 +32,7 @@ async function readSheets({ range }) {
 }
 
 // Replace the values within <range> with <values>
-async function updateSheets({ values, range }) {
+async function updateSheets({ values, range, sheetID }) {
     const sheets = await getSheets(sheetID);
 
     // let values = [
@@ -54,7 +54,7 @@ async function updateSheets({ values, range }) {
             resource: resource,
             valueInputOption: "RAW"
         });
-        console.log('%d cells updated.', result.data.updatedCells);
+        // console.log('%d cells updated.', result.data.updatedCells);
         return result;
     } catch (err) {
         // TODO (Developer) - Handle exception
