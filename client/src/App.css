@@ -10,7 +10,7 @@ body {
   text-align: center;
   background-color: #f1f2e9;
   color:#4691f2;
-  overflow:hidden;
+  overflow-x: hidden
 }
 
 .container {
@@ -94,8 +94,6 @@ button {
 .jobs .list-group {
   font-size: 18px;
   height:600px;
-  overflow:scroll;
-  overflow-x:hidden;
 }
 
 .jobs .job-info {
@@ -175,8 +173,9 @@ button {
 }
 
 .profile-box{
-  box-shadow: 0 0 3pt 2pt gray;
-  padding: 10px;
+  box-shadow: 0 0 1pt 1pt white;
+  padding: 15px;
+  border-radius: 5px;
 }
 
 .me-button{
