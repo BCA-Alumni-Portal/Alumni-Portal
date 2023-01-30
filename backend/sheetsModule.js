@@ -35,6 +35,8 @@ async function readSheets({ range, sheetID }) {
 async function updateSheets({ values, range, sheetID }) {
     const sheets = await getSheets(sheetID);
 
+    console.log(sheetID);
+
     // let values = [
     //     [
     //         "Test1", "Test2", "Test3"

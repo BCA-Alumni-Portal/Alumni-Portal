@@ -163,11 +163,11 @@ app.listen(port, () => {
 
 app.get('/syncData', (req, res) => {
     console.log("syncData");
-    databaseSync.sync({sheetID: sourceSheetsID});
+    databaseSync.sync(sourceSheetsID);
     return res.send("Finished syncing");
 })
 
 console.log("Automatically running here!");
 // databaseSync.sync({sheetID: sourceSheetsID});
-databaseSync.exportSqlToSheets({sheetID: exportSheetsID});
-databaseSync.writeNewEntriesToSQL({sheetID: sourceSheetsID});
+databaseSync.exportSqlToSheets(exportSheetsID);
+databaseSync.writeNewEntriesToSQL(sourceSheetsID);
