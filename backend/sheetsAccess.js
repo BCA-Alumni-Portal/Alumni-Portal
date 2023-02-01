@@ -1,6 +1,6 @@
 const sheetsModule = require("./sheetsModule");
 
-async function getDataFromSheets(sheetID, startID=0, stopID=getLastEffectiveSheetsAlumniID(sheetID)) {
+async function readDataFromSheets(sheetID, startID=0, stopID=readLastEffectiveSheetsAlumniID(sheetID)) {
     let TOP_ROWS = 3;
     let TOP_ROWS_MINUS_ONE = TOP_ROWS-1;
 
@@ -12,7 +12,7 @@ async function getDataFromSheets(sheetID, startID=0, stopID=getLastEffectiveShee
     return values;
 }
 
-async function writeDataToSheets(sql_columns, data, sheetID, startID=0, stopID=getLastEffectiveSheetsAlumniID(sheetID)) {
+async function writeDataToSheets(sql_columns, data, sheetID, startID=0, stopID=readLastEffectiveSheetsAlumniID(sheetID)) {
     let TOP_ROWS = 3;
 
     stopID = await stopID;
@@ -33,8 +33,8 @@ async function writeDataToSheets(sql_columns, data, sheetID, startID=0, stopID=g
     sheetsModule.updateSheets({ values: values, range: range, sheetID: sheetID });
 }
 
-async function getLastEffectiveSheetsAlumniID(sheetID) {
-    let lastSheetsID = await getLastSheetsAlumniID(sheetID);
+async function readLastEffectiveSheetsAlumniID(sheetID) {
+    let lastSheetsID = await readLastSheetsAlumniID(sheetID);
     // console.log("-----------SHEETS ID-----------");
     // console.log(lastSheetsID);
     // return parseInt(lastSheetsID.data.values, 10);
@@ -42,9 +42,9 @@ async function getLastEffectiveSheetsAlumniID(sheetID) {
 }
 
 // Get the last Alumni ID from the Google Sheets database
-async function getLastSheetsAlumniID(sheetID) {
+async function readLastSheetsAlumniID(sheetID) {
     let range = "A2";
     return sheetsModule.readSheets({ range: range, sheetID: sheetID });
 }
 
-module.exports = { getDataFromSheets, writeDataToSheets, getLastEffectiveSheetsAlumniID, getLastSheetsAlumniID }
+module.exports = { readDataFromSheets, writeDataToSheets, readLastEffectiveSheetsAlumniID, readLastSheetsAlumniID }

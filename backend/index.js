@@ -2,6 +2,9 @@ const sheetsModule = require('./sheetsModule');
 const sqlModule = require('./sqlModule');
 const databaseSync = require('./databaseSync');
 
+// Remove this after testing messages
+const sqlAccess = require('./sqlAccess');
+
 const express = require('express');
 const cors = require('cors');
 const { auth, requiresAuth } = require('express-openid-connect');
@@ -169,5 +172,13 @@ app.get('/syncData', (req, res) => {
 
 console.log("Automatically running here!");
 // databaseSync.sync({sheetID: sourceSheetsID});
-databaseSync.exportSqlToSheets(exportSheetsID);
-databaseSync.writeNewEntriesToSQL(sourceSheetsID);
+// databaseSync.exportSqlToSheets(exportSheetsID);
+// databaseSync.writeNewEntriesToSQL(sourceSheetsID);
+
+let sender_id = 3;
+let receiver_id = 4;
+let body = "Message from index.js";
+// let result = sqlAccess.writeMessageToSQL(sender_id, receiver_id, body);
+// console.log(result);
+
+let result = sqlAccess.readMessageFromSQLByReceiverID(receiver_id);
