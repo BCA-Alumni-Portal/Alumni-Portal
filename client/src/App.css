@@ -15,7 +15,11 @@ body {
   text-align: center;
   background-color: #f1f2e9;
   color:#4691f2;
+<<<<<<< HEAD
+  overflow-x: hidden
+=======
   overflow:hidden; 
+>>>>>>> 1f8cfefdea78133e96c37492200f2cae2abab8a8
 }
 
 .container {
@@ -101,9 +105,13 @@ button {
 
 .jobs .list-group {
   font-size: 18px;
+<<<<<<< HEAD
+  height:600px;
+=======
   height: 600px;
   overflow: scroll;
   overflow-x: hidden;
+>>>>>>> 1f8cfefdea78133e96c37492200f2cae2abab8a8
 }
 
 .jobs .job-info {
@@ -182,9 +190,16 @@ button {
   justify-content: center;
 }
 
+<<<<<<< HEAD
+.profile-box{
+  box-shadow: 0 0 1pt 1pt white;
+  padding: 15px;
+  border-radius: 5px;
+=======
 .profile-box {
   box-shadow: 0 0 3pt 2pt gray;
   padding: 10px;
+>>>>>>> 1f8cfefdea78133e96c37492200f2cae2abab8a8
 }
 
 .me-button {
