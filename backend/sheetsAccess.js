@@ -16,8 +16,6 @@ async function writeDataToSheets(sql_columns, data, sheetID, startID=0, stopID=r
     let TOP_ROWS = 3;
 
     stopID = await stopID;
-    console.log("STOP ID:");
-    console.log(stopID);
 
     // The values that will be put into Sheets
     let values = [];
@@ -35,9 +33,6 @@ async function writeDataToSheets(sql_columns, data, sheetID, startID=0, stopID=r
 
 async function readLastEffectiveSheetsAlumniID(sheetID) {
     let lastSheetsID = await readLastSheetsAlumniID(sheetID);
-    // console.log("-----------SHEETS ID-----------");
-    // console.log(lastSheetsID);
-    // return parseInt(lastSheetsID.data.values, 10);
     return parseInt(lastSheetsID.data.values[0][0], 10);
 }
 
