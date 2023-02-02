@@ -15,11 +15,17 @@ function SearchBar(props) {
         }
     })
     return (
-        <ul className="block border-black border">
-            {filteredData.map((item) => (
-                <li className="text-black  block  hover:bg-hover-cream py-3 text-sm" key={item.id}>{item.text}</li>
+        // <ul className="block border-black border">
+        // <li className="text-black  block  hover:bg-hover-cream py-3 text-sm" key={item.id}>{item.text}</li>
+
+        <div class="list-group">
+
+        {filteredData.map((item) => (
+            <li class="list-group-item list-group-item-action" key={item.id}>{item.text}</li>
             ))}
-        </ul>
+        </div>
+            
+        //</ul>
     )
 }
 
