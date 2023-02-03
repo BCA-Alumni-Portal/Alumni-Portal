@@ -76,13 +76,23 @@ async function readAlumniDataFromSQL(startID=0, endID=readLastEffectiveSqlAlumni
 async function readMessageFromSQLByBothIDs(senderID, receiverID) {
     let query = "SELECT * FROM Messages WHERE sender_id = " + senderID + ", receiver_id = " + receiverID;
     let data = await sqlModule.makeQuery({ query: query });
-
-    console.log(data);
-
     return data;
 }
 
 async function writeMessageToSQL(senderID, receiverID, body) {
+    // Check that the IDs are valid
+    let lastID = readLastEffectiveSqlAlumniID();
+    if ((senderID > lastID) || (receiverID > lastID) || (senderID == receiverID)) {
+        console.log("Invalid senderID or receiverID (sqlAccess:writeMessageToSQL");
+        return -1;
+    }
+
+    // Check that the body exists
+    if (body.length == 0) {
+        console.log("Invalid body (sqlAccess:writeMessageToSQL)");
+        return -1;
+    }
+
     let values = [
         [
             senderID, 
@@ -98,7 +108,6 @@ async function writeMessageToSQL(senderID, receiverID, body) {
 // Write <values> to SQL in the order of <columns>
 async function writeDataToSQL(columns, values, tableName) {
     let query = constructSQLWriteQuery(columns, values, tableName);
-    console.log(query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
