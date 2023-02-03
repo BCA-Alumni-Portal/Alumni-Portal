@@ -19,6 +19,7 @@
   "homepage": "https://github.com/RemingtonKim/AcademiesAlumni#readme",
   "dependencies": {
     "concurrently": "^7.6.0",
+    "react-images-uploading": "^3.1.7",
     "yarn": "^1.22.19"
   }
 }

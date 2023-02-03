@@ -36,7 +36,7 @@ function People() {
               onChange={inputHandler}
               placeholder="Search Name"
               className="bg-defaultblue border border-defaultblue placeholder-defaultblue rounded-lg focus:ring-defaultblue focus:border-defaultblue block w-full"
-            />
+            /> 
           </div>
           <div>
             <div className="py-1">
