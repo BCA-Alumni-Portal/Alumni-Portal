@@ -181,4 +181,4 @@ let body = "Message from index.js";
 // let result = sqlAccess.writeMessageToSQL(sender_id, receiver_id, body);
 // console.log(result);
 
-let result = sqlAccess.readMessageFromSQLByReceiverID(receiver_id);
+// let result = sqlAccess.readMessageFromSQLByReceiverID(receiver_id);
