@@ -8,8 +8,8 @@ module.exports = {
   ],
   theme: {
     colors: {
+      'black': '#0f172a',
       'white': '#ffffff',
-      'black': '#000000',
       amber: colors.amber,
       stone: colors.stone,
       red: colors.red,
@@ -18,6 +18,16 @@ module.exports = {
     extend: {},
   },
   plugins: [
+    require("daisyui"),
     require('flowbite/plugin')
   ],
+  daisyui: {
+    styled: true,
+    themes: false,
+    base: true,
+    utils: true,
+    logs: true,
+    rtl: false,
+    prefix: "",
+  },
 }
