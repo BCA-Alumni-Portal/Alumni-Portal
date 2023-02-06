@@ -13,18 +13,15 @@
 
 body {
   text-align: center;
-  background-color: #f1f2e9;
-  color:#4691f2;
-  overflow:hidden; 
+  background-color: #fffbeb;
+  color: black
 }
 
 .container {
   display: flex;
-   min-width: 100vw; 
-  height: 100vh;  
   /* background-image:cover; */
   flex-flow: column;
-  color: #4691f2;
+  color: black;
   align-items: center;
   justify-content: center;
 }
@@ -36,15 +33,15 @@ body {
 
 .nav {
   padding: 10px;
-  background-color: #f1f2e9;
-  color: #4691f2;
+  background-color: #fffbeb;
+  color: black;
   display: flex;
   justify-content: space-between;
   align-items: stretch;
   gap: 40px;
   height: 70px;
   font-size: 25px;
-  border-bottom: 2px solid #4691f2;
+  border-bottom: 1px solid black;
 }
 
 .nav ul {
@@ -180,11 +177,6 @@ button {
   color: #4691f2;
   align-items: center;
   justify-content: center;
-}
-
-.profile-box {
-  box-shadow: 0 0 3pt 2pt gray;
-  padding: 10px;
 }
 
 .me-button {
