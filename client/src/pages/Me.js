@@ -1,18 +1,16 @@
-import personImage2 from '../images/person2.png';
 import { useAuth0 } from '@auth0/auth0-react';
+import React, { useEffect, useState } from 'react';
+import './styles/Me.css';
+import ProfilePicture from '../components/ProfilePicture';
 
 export default function Me() {
     const lorem = "Deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
+
     return (
-        <div style={{height: "90vh"}}>
-            <div>
-                <div className="avatar">
-                    <div className="w-24 rounded-full">
-                        <img src="https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg" />
-                    </div>
-                </div>
-            </div>
+        <div>
+            <ProfilePicture/>
         </div>
     )
 }

@@ -9,19 +9,22 @@
   right: 44%;
 }
 
+.container{
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  position: relative
+}
+
 body {
   text-align: center;
   background-color: #fffbeb;
-  color: black
-}
-
-.container {
-  display: flex;
-  /* background-image:cover; */
-  flex-flow: column;
   color: black;
-  align-items: center;
-  justify-content: center;
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0px;
+  padding: 0px
 }
 
 .title {

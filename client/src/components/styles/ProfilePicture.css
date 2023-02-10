@@ -1,0 +1,28 @@
+
+#wrapperpfp{
+    position: relative
+}
+#changepfp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #fffbeb
+}
+
+#wrapperpfp:hover #pfp{
+    -webkit-filter: brightness(.35);
+    filter: brightness(.35);
+    cursor: pointer;
+}
+
+#wrapperpfp #changepfp {
+    visibility: hidden;
+    opacity: 0
+}
+
+#wrapperpfp:hover #changepfp {
+    visibility: visible;
+    opacity: 1
+}
