@@ -24,7 +24,7 @@ function MessageGenerator(props) {
         <div class="list-group">
             {messages.map((item) => {
                 var data = {}
-                if (item.senderID == senderID) {
+                if (item.sender_id == senderID) {
                     data.class = "message-container";
                     data.imgClass = "img-left";
                     data.timeClass = "time-right";

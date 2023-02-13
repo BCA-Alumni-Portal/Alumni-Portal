@@ -51,7 +51,7 @@ app.get('/getSQLData', async (req, res) => {
         }
     }
 
-    let result = await sqlModule.makeQuery({query: query});
+    let result = await sqlModule.makeQuery({ query: query });
     res.send(result);
 });
 
@@ -99,7 +99,7 @@ app.get('/createSQLData', async (req, res) => {
 
     query += ");";
 
-    let result = await sqlModule.makeQuery({query: query});
+    let result = await sqlModule.makeQuery({ query: query });
     res.send(result);
 })
 
@@ -122,7 +122,7 @@ app.get('/updateSQLData', async (req, res) => {
     //     academy_id: 4
     // }
     // console.log(additionalSpecifiers);
-    
+
     let query = "UPDATE Alumni ";
 
     let first = true;
@@ -142,7 +142,7 @@ app.get('/updateSQLData', async (req, res) => {
 
     query += " WHERE alumni_id=" + req.query.alumniID;
 
-    let result = await sqlModule.makeQuery({query: query});
+    let result = await sqlModule.makeQuery({ query: query });
     res.send(result);
 })
 
@@ -150,13 +150,13 @@ app.get('/updateSQLData', async (req, res) => {
 app.get('/getGSData', (req, res) => {
     console.log("getGSData");
     let range = "A1:C5";
-    sheetsModule.readSheets({range: range, sheetID: sourceSheetsID});
+    sheetsModule.readSheets({ range: range, sheetID: sourceSheetsID });
     return res.send("Finished reading");
 });
 
 app.get('/writeGSData', (req, res) => {
     console.log("writeGSData");
-    sheetsModule.updateSheets({query: "dummy", sheetID: sourceSheetsID});
+    sheetsModule.updateSheets({ query: "dummy", sheetID: sourceSheetsID });
     return res.send("Finished writing");
 })
 
@@ -181,13 +181,42 @@ app.get('/sendMessageRequest', async (req, res) => {
     return res.send("Finished sending");
 })
 
+function mergeTwo(arr1, arr2) {
+    let merged = [];
+    let index1 = 0;
+    let index2 = 0;
+    let current = 0;
+
+    while (current < (arr1.length + arr2.length)) {
+
+        let isArr1Depleted = index1 >= arr1.length;
+        let isArr2Depleted = index2 >= arr2.length;
+
+        if (!isArr1Depleted && (isArr2Depleted || (arr1[index1].id < arr2[index2].id))) {
+            merged[current] = arr1[index1];
+            index1++;
+        } else {
+            merged[current] = arr2[index2];
+            index2++;
+        }
+
+        current++;
+    }
+
+    return merged;
+}
+
 app.get('/getMessageRequest', async (req, res) => {
     console.log("getMessage");
     let senderID = req.query.senderID;
     let receiverID = req.query.receiverID;
-    let result = await sqlAccess.readMessageFromSQLByBothIDs(senderID, receiverID);
-    // console.log(result);
-    return res.send(result);
+    let result_sr = await sqlAccess.readMessageFromSQLByBothIDs(senderID, receiverID);
+    let result_rs = await sqlAccess.readMessageFromSQLByBothIDs(receiverID, senderID);
+
+    let data = mergeTwo(result_sr, result_rs);
+
+    console.log(data);
+    return res.send(data);
 })
 
 console.log("Automatically running here!");

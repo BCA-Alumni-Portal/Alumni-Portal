@@ -34,8 +34,8 @@ export default function Messages() {
   let input;
 
   let testData = {
-    senderID: 0,
-    receiverID: 1
+    senderID: 1,
+    receiverID: 0
   }
 
   let inputHandler = (e) => {
@@ -48,8 +48,8 @@ export default function Messages() {
 
   const getPackedData = () => {
     return {
-      senderID: 0,
-      receiverID: 1,
+      senderID: 1,
+      receiverID: 0,
       messageBody: messageBody
     }
   }
@@ -57,7 +57,6 @@ export default function Messages() {
   const submitGetMessageRequest = () => {
     let result = axios.get("http://localhost:5000/getMessageRequest", { params: testData }).then(res => {
       let data = res.data;
-      console.log(data);
       if (data != null) {
         setMessages(data);
       }
