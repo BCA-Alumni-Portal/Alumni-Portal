@@ -1,14 +1,17 @@
 import personImage2 from '../images/person2.png';
+import { useAuth0 } from '@auth0/auth0-react';
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import React, { useEffect, useState } from 'react';
 import './styles/ProfilePicture.css';
 
-export default function ProfilePicture(){
+export default function ProfilePicture() {
     const [profilePictureFile, setProfilePictureFile] = useState(null);
     const [profilePictureUncropped, setProfilePictureUncropped] = useState(null);
     const [profilePictureUploaded, setProfilePictureUploaded] = React.useState(false);
     const [cropper, setCropper] = useState(null);
+    const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
 
     useEffect(() => {
         setProfilePictureFile(personImage2);
@@ -46,7 +49,7 @@ export default function ProfilePicture(){
         <div>
             <label htmlFor='pfp-upload-modal'>
                 <div className="avatar" >
-                    <div className="w-48 rounded-full">
+                    <div className="w-64 rounded-full">
                         <div id="wrapperpfp">
                             <img id="pfp" src={profilePictureFile} />
                             <p id="changepfp">+</p>
