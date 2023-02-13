@@ -9,8 +9,12 @@ export default function Me() {
 
 
     return (
-        <div>
-            <ProfilePicture/>
+        <div className='w-9/12'>
+            <span>
+                <ProfilePicture />
+                <p>hello</p>
+            </span>
+
         </div>
     )
 }
