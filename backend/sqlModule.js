@@ -5,6 +5,7 @@ const process = require('process');
 const CREDENTIALS_PATH = path.join(process.cwd() + '/credentials/sql_credentials.json');
 
 var mysql = require('mysql');
+var connection;
 
 // Create a connection to the SQL database
 async function createConnection() {
@@ -29,9 +30,21 @@ async function createConnection() {
     return await con;
 }
 
+async function getConnection() {
+    if (connection == null) {
+        let c = await createConnection();
+        connection = c;
+        return c;
+    } else {
+        return connection;
+    }
+}
+
+
 // Send a query to the SQL database
 async function makeQuery({query: query}) {
-    let con = await createConnection();
+    // let con = createConnection();
+    let con = await getConnection();
 
     // console.log(query);
     const resultPromise = new Promise((resolve, reject) => {

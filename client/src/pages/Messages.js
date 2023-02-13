@@ -34,8 +34,8 @@ export default function Messages() {
   let input;
 
   let testData = {
-    senderID: 1,
-    receiverID: 0
+    senderID: 0,
+    receiverID: 1
   }
 
   let inputHandler = (e) => {
@@ -48,8 +48,8 @@ export default function Messages() {
 
   const getPackedData = () => {
     return {
-      senderID: 1,
-      receiverID: 0,
+      senderID: 0,
+      receiverID: 1,
       messageBody: messageBody
     }
   }

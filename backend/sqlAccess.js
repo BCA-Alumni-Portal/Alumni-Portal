@@ -74,7 +74,9 @@ async function readAlumniDataFromSQL(startID=0, endID=readLastEffectiveSqlAlumni
 }
 
 async function readMessageFromSQLByBothIDs(senderID, receiverID) {
-    let query = "SELECT * FROM Messages WHERE sender_id = " + senderID + " AND receiver_id = " + receiverID;
+    let query = "SELECT * FROM Messages WHERE " + 
+        "(sender_id = " + senderID + " AND receiver_id = " + receiverID + ") OR " +
+        "(sender_id = " + receiverID + " AND receiver_id = " + senderID + ")";
     // console.log(query);
     let data = await sqlModule.makeQuery({ query: query });
     return data;

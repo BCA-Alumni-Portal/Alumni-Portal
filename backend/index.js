@@ -210,13 +210,10 @@ app.get('/getMessageRequest', async (req, res) => {
     console.log("getMessage");
     let senderID = req.query.senderID;
     let receiverID = req.query.receiverID;
-    let result_sr = await sqlAccess.readMessageFromSQLByBothIDs(senderID, receiverID);
-    let result_rs = await sqlAccess.readMessageFromSQLByBothIDs(receiverID, senderID);
+    let result = await sqlAccess.readMessageFromSQLByBothIDs(senderID, receiverID);
 
-    let data = mergeTwo(result_sr, result_rs);
-
-    console.log(data);
-    return res.send(data);
+    console.log(result);
+    return res.send(result);
 })
 
 console.log("Automatically running here!");
