@@ -86,7 +86,7 @@ export default function Messages() {
 
   useInterval(() => {
     submitGetMessageRequest();
-  }, 30000);
+  }, 3000);
 
   return (
     <div className="container-fluid">
