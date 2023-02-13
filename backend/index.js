@@ -170,6 +170,26 @@ app.get('/syncData', (req, res) => {
     return res.send("Finished syncing");
 })
 
+app.get('/sendMessageRequest', async (req, res) => {
+    console.log("sendMessage");
+    // console.log(req);
+    let senderID = req.query.senderID;
+    let receiverID = req.query.receiverID;
+    let body = req.query.messageBody
+    let result = await sqlAccess.writeMessageToSQL(senderID, receiverID, body);
+    // console.log(result);
+    return res.send("Finished sending");
+})
+
+app.get('/getMessageRequest', async (req, res) => {
+    console.log("getMessage");
+    let senderID = req.query.senderID;
+    let receiverID = req.query.receiverID;
+    let result = await sqlAccess.readMessageFromSQLByBothIDs(senderID, receiverID);
+    // console.log(result);
+    return res.send(result);
+})
+
 console.log("Automatically running here!");
 // databaseSync.sync({sheetID: sourceSheetsID});
 // databaseSync.exportSqlToSheets(exportSheetsID);
