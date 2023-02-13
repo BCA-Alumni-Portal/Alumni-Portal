@@ -43,10 +43,12 @@ export default function ProfilePicture() {
         }
         document.getElementById('pfp-upload-modal').checked = false;
         setProfilePictureUploaded(false)
+
+        //push profilePictureFile to database
     }
 
     return (
-        <div>
+        <div className='mt-8'>
             <label htmlFor='pfp-upload-modal'>
                 <div className="avatar" >
                     <div className="w-64 rounded-full">
