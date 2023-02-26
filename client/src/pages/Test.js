@@ -327,7 +327,25 @@ export default function App() {
                 </div>
             </div>
             <div className="row flex flex-wrap items-center gap-2 content-center">
+            <ul className="block menu menu-horizontal bg-base-100 w-30">
+                <li tabindex="0">
+                  <span className="text-xs">Graduation Year</span>
+                  <ul>
+                    <div className="bg-base-100">
+                      <form >
+                        <input type="text" placeholder="2023" class="text-xs input input-bordered input-warning w-full max-w-xs focus:border-amber-400 focus:ring-0"></input>
+                        <div>
+                          <br></br>
+                          <button className="drop-shadow-md text-xs hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500 bg-amber-100 border  rounded py-2 px-2 border-amber-100 hover:border-amber-400">
+                            Add
+                          </button>
+                        </div>
+                      </form>
+                    </div>
 
+                  </ul>
+                </li>
+              </ul>
             </div>
 
         </div>

@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { NestedMenuItem } from 'mui-nested-menu';
+// import { NestedMenuItem } from 'mui-nested-menu';
 import { TextInput } from 'flowbite-react/lib/cjs/components/TextInput';
 import List from "../components/SearchBar";
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import FormGroup from '@mui/material/FormGroup';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+// import Menu from '@mui/material/Menu';
+// import MenuItem from '@mui/material/MenuItem';
+// import FormGroup from '@mui/material/FormGroup';
+// import Checkbox from '@mui/material/Checkbox';
+// import FormControlLabel from '@mui/material/FormControlLabel';
 import { Label } from 'flowbite-react/lib/cjs/components/Label';
 
 function People() {
@@ -36,11 +36,11 @@ function People() {
               onChange={inputHandler}
               placeholder="Search Name"
               className="bg-defaultblue border border-defaultblue placeholder-defaultblue rounded-lg focus:ring-defaultblue focus:border-defaultblue block w-full"
-            /> 
+            />
           </div>
           <div>
-            <div className="py-1">
-            <button
+            {/* <div className="py-1"> */}
+            {/* <button
               id="align-left"
               className="focus:outline-none bg-defaultblue inline-block block border border-defaultblue rounded py-2 px-4  text-cream hover:bg-hover-defaultblue "
               onClick={handleClick}
@@ -94,7 +94,71 @@ function People() {
                   </form>
                 </MenuItem>
               </NestedMenuItem>
-            </Menu>
+            </Menu> */}
+          </div>
+          <div className="grid flex gaps-2 grid-cols-3">
+            <div>
+              
+            </div>
+            <div>
+              <ul className="block menu menu-horizontal bg-base-100 w-30">
+                <li tabindex="0">
+                  <span className="text-sm">Academy</span>
+                  <ul className="menu bg-base-100 w-30">
+                    <li className="hover:bg-stone-200 focus:none">
+                      <div className="hover:bg-stone-200 text-black hover:border-stone-100">
+                        <label className="flex space-x-6 ">
+                          <p className="text-xs">AAST</p>
+                          <input type="checkbox" class="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                        </label>
+                      </div>
+                    </li>
+                    <li className="hover:bg-stone-200 focus:none">
+                      <div className="hover:bg-stone-200 text-black hover:border-stone-100">
+                        <label className="flex space-x-5 ">
+                          <p className="text-xs">AMST</p>
+                          <input type="checkbox" class="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                        </label>
+                      </div>
+                    </li>
+                    <li className="hover:bg-stone-200 focus:none">
+                      <div className="hover:bg-stone-200 text-black hover:border-stone-100">
+                        <label className="flex space-x-6 ">
+                          <p className="text-xs">AVPA</p>
+                          <input type="checkbox" class="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                        </label>
+                      </div>
+                    </li>
+                    <li className="hover:bg-stone-200 focus:none">
+                      <div className="hover:bg-stone-200 text-black hover:border-stone-100">
+                        <label className="flex space-x-9 ">
+                          <p className="text-xs">ABF</p>
+                          <input type="checkbox" class="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                        </label>
+                      </div>
+                    </li>
+                    <li className="hover:bg-stone-200 focus:none">
+                      <div className="hover:bg-stone-200 text-black hover:border-stone-100">
+                        <label className="flex space-x-7 ">
+                          <p className="text-xs">ATCS</p>
+                          <input type="checkbox" class="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                        </label>
+                      </div>
+                    </li>
+                    <li className="hover:bg-stone-200 focus:none">
+                      <div className="hover:bg-stone-200 text-black hover:border-stone-100">
+                        <label className="flex space-x-3 ">
+                          <p className="text-xs">ACAHA</p>
+                          <input type="checkbox" class="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                        </label>
+                      </div>
+                    </li>
+                    <button class="drop-shadow-lg border-2 text-xs border rounded py-2 px-2 bg-red-300 hover:bg-red-400 border-red-300 hover:text-white hover:border-red-400">Add</button>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+
           </div>
           <List input={inputText} />
         </div>
