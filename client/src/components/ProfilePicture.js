@@ -11,9 +11,12 @@ export default function ProfilePicture() {
     const [profilePictureUploaded, setProfilePictureUploaded] = React.useState(false);
     const [cropper, setCropper] = useState(null);
     const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
-
+    // user.email == remkim23@bergen.org
 
     useEffect(() => {
+        // pull profilepicture from database
+        // if null: setProfilePictureFile(personImage2);
+        // else: setProfilePictureFile(string)
         setProfilePictureFile(personImage2);
     }, []);
 
@@ -45,6 +48,7 @@ export default function ProfilePicture() {
         setProfilePictureUploaded(false)
 
         //push profilePictureFile to database
+        
     }
 
     return (

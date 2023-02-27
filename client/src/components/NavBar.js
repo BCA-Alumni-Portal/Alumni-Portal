@@ -20,9 +20,6 @@ export default function NavBar() {
           </ul>
         ): (
           <ul>
-            <CustomLink to="/jobs">
-              <p class="text-2xl font-semibold hover:font-bold">Jobs</p>
-            </CustomLink>
             <CustomLink to="/people">
               <p class="text-2xl font-semibold hover:font-bold">People</p>
             </CustomLink>

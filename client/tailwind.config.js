@@ -13,7 +13,8 @@ module.exports = {
       amber: colors.amber,
       stone: colors.stone,
       red: colors.red,
-      sky: colors.sky
+      sky: colors.sky,
+      green: colors.green,
     },
     extend: {},
   },
