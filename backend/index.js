@@ -210,13 +210,53 @@ app.get('/getMessageRequest', async (req, res) => {
     console.log("getMessage");
     let senderID = req.query.senderID;
     let receiverID = req.query.receiverID;
-    let result_sr = await sqlAccess.readMessageFromSQLByBothIDs(senderID, receiverID);
-    let result_rs = await sqlAccess.readMessageFromSQLByBothIDs(receiverID, senderID);
+    let result = await sqlAccess.readMessageFromSQLByBothIDs(senderID, receiverID);
 
-    let data = mergeTwo(result_sr, result_rs);
+    console.log(result);
+    return res.send(result);
+})
 
-    console.log(data);
-    return res.send(data);
+app.get('/getClientID', async (req, res) => {
+    console.log("getClientID");
+    let result = await sqlAccess.readClientID(req.query.email);
+    return res.send(result);
+})
+
+app.get('/updateProfileDataRequest', async (req, res) => {
+    console.log("updateProfileDataRequest");
+    // console.log(req);
+    let query = req.query;
+    console.log(req.query);
+
+    let email = query.email_address;
+    let clientID = await sqlAccess.readClientID(email);
+    console.log(clientID);
+    let company = query.company;
+    let graduationYear = query.graduationYear;
+    let pronouns = query.pronouns;
+    let academy = query.academy;
+
+    let result = await sqlAccess.updateProfileInfoToSQL(clientID, company, graduationYear, pronouns, academy);
+    console.log("Update result:");
+    console.log(result);
+    return res.send("Finished sending");
+})
+
+app.get('/readProfileDataRequest', async (req, res) => {
+    console.log("readProfileDataRequest");
+    // console.log(req);
+    let query = req.query;
+
+    let email = query.email_address;
+    let clientID = await sqlAccess.readClientID(email);
+    
+    console.log(email);
+    console.log(clientID);
+    let result = await sqlAccess.readProfileInfoFromSQL(clientID);
+    console.log("Read result:");
+    console.log(result);
+    result[0].academy = await sqlAccess.getAcademyStringFromID(result[0].academy_id);
+    return res.send(result[0]);
 })
 
 console.log("Automatically running here!");

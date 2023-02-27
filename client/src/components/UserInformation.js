@@ -1,5 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function UserInformation() {
   const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
@@ -30,11 +31,22 @@ export default function UserInformation() {
     // graduationYear, academy = required
     // pronouns, company = optional
     // SQL -> client
-
-  
-
-  
+    getInfo();
   }, []);
+
+  const getInfo = () => {
+    let data = packGetData();
+    let result = axios.get("http://localhost:5000/readProfileDataRequest", { params: data }).then(res => {
+      let data = res.data;
+      console.log(data);
+      if (data != null) {
+        setCompany(data.company || "");
+        setGraduationYear(data.graduation_year);
+        setPronouns(data.pronouns || "");
+        setAcademy(data.academy);
+      }
+    });
+  }
 
   const changeCompany = (e) => {
     setCompany(e.target.value);
@@ -64,12 +76,38 @@ export default function UserInformation() {
     setEditing(true);
   }
 
+  const packSendData = () => {
+    return {
+      email_address: user.email,
+      company: company,
+      graduationYear: graduationYear,
+      pronouns: pronouns,
+      academy: academy
+    }
+  }
+
+  const packGetData = () => {
+    return {
+      email_address: user.email
+    }
+  }
+
   const saveChanges = () => {
     setEditing(false);
     
     // push to database
+
+    let data = packSendData();
+    let result = axios.get("http://localhost:5000/updateProfileDataRequest", { params: data }).then(res => {
+      let data = res.data;
+      console.log(data);
+      if (data != null) {
+        
+      }
+    });
   }
 
+  
 
   return (
     <div className="text-left ml-8">
