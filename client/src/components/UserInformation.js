@@ -71,10 +71,17 @@ export default function UserInformation() {
       let data = res.data;
       console.log(data);
       if (data != null) {
-
+        setCompany(data.company || "");
+        setGraduationYear(data.graduation_year);
+        setPronouns(data.pronouns || "");
+        setAcademy(data.academy);
       }
     });
   }
+
+  useEffect(() => {
+    getInfo();
+  }, []);
 
   return (
     <div className="text-left ml-8">

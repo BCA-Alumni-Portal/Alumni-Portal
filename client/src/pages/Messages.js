@@ -51,7 +51,7 @@ export default function Messages() {
       let data = res.data;
       console.log(data);
       console.log(clientID);
-      setClientID(data.alumni_id);
+      setClientID(data);
       console.log(clientID);
     });
   }

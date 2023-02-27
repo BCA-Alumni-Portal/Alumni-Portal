@@ -152,7 +152,7 @@ async function readClientID(email) {
         "(email_address = \"" + email + "\")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
-    return data[0];
+    return data[0].alumni_id;
 }
 
 async function writeProfilePictureToSQL(alumni_id, picture) {
@@ -171,12 +171,20 @@ async function readProfileInfoFromSQL() {
 
 }
 
-async function getAcademyIDFromString(academy) {
+async function getAcademyIDFromString(academy_name) {
     let query = "SELECT academy_id FROM Academy WHERE " + 
-        "(academy_name = \"" + academy + "\")"
+        "(academy_name = \"" + academy_name + "\")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     return data[0].academy_id;
+}
+
+async function getAcademyStringFromID(academy_id) {
+    let query = "SELECT academy_id FROM Academy WHERE " + 
+        "(academy_id = \"" + academy_id + "\")"
+    let data = await sqlModule.makeQuery({ query: query });
+    // Only return the first result
+    return data[0].academy_name;
 }
 
 async function updateProfileInfoToSQL(alumniID, company="", graduationYear, pronouns="", academy) {
@@ -224,5 +232,8 @@ module.exports = {
     readProfilePictureFromSQL,
 
     updateProfileInfoToSQL,
-    readProfileInfoFromSQL
+    readProfileInfoFromSQL,
+
+    getAcademyIDFromString,
+    getAcademyStringFromID
 }

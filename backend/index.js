@@ -229,7 +229,7 @@ app.get('/updateProfileDataRequest', async (req, res) => {
     console.log(req.query);
 
     let email = query.email_address;
-    let clientID = (await sqlAccess.readClientID(email)).alumni_id;
+    let clientID = await sqlAccess.readClientID(email);
     console.log(clientID);
     let company = query.company;
     let graduationYear = query.graduationYear;
@@ -248,12 +248,15 @@ app.get('/readProfileDataRequest', async (req, res) => {
     let query = req.query;
 
     let email = query.email_address;
-    let clientID = sqlAccess.readClientID(email);
+    let clientID = await sqlAccess.readClientID(email);
     
+    console.log(email);
+    console.log(clientID);
     let result = await sqlAccess.readProfileInfoFromSQL(clientID);
     console.log("Read result:");
     console.log(result);
-    return res.send(result);
+    result[0].academy = await sqlAccess.getAcademyStringFromID(result[0].academy_id);
+    return res.send(result[0]);
 })
 
 console.log("Automatically running here!");
