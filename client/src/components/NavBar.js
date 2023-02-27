@@ -19,13 +19,13 @@ export default function NavBar() {
         ) : (
           <ul>
             <CustomLink to="/me">
-              <p class="text-2xl font-semibold hover:font-bold">Me</p>
+              <p className="nav-item text-2xl font-semibold border rounded py-2 px-2 hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500  border border-amber-50 rounded py-2 px-2  hover:border-amber-400 hover:text-white">Me</p>
             </CustomLink>  
             <CustomLink to="/people">
-              <p class="text-2xl font-semibold hover:font-bold">People</p>
+              <p className="nav-item text-2xl font-semibold border rounded py-2 px-2 hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500  border border-amber-50 rounded py-2 px-2  hover:border-amber-400 hover:text-white">People</p>
             </CustomLink>
             <CustomLink to="/messages">
-              <p class="text-2xl font-semibold hover:font-bold">Messages</p>
+              <p className="nav-item text-2xl font-semibold border rounded py-2 px-2 hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500  border border-amber-50 rounded py-2 px-2  hover:border-amber-400 hover:text-white">Messages</p>
             </CustomLink>
           <Link onClick={() => logout({ returnTo: "http://localhost:3000" })}>
             <p className="nav-item text-2xl font-semibold border rounded py-2 px-2 hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500  border border-amber-50 rounded py-2 px-2  hover:border-amber-400 hover:text-white">Logout</p>
