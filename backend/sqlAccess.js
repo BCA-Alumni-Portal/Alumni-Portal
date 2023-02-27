@@ -180,7 +180,7 @@ async function getAcademyIDFromString(academy_name) {
 }
 
 async function getAcademyStringFromID(academy_id) {
-    let query = "SELECT academy_id FROM Academy WHERE " + 
+    let query = "SELECT academy_name FROM Academy WHERE " + 
         "(academy_id = \"" + academy_id + "\")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
