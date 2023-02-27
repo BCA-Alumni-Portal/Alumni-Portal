@@ -48,6 +48,22 @@ export default function UserInformation() {
     });
   }
 
+  const packSendData = () => {
+    return {
+      email_address: user.email,
+      company: company,
+      graduationYear: graduationYear,
+      pronouns: pronouns,
+      academy: academy
+    }
+  }
+
+  const packGetData = () => {
+    return {
+      email_address: user.email
+    }
+  }
+
   const changeCompany = (e) => {
     setCompany(e.target.value);
   }
@@ -76,22 +92,6 @@ export default function UserInformation() {
     setEditing(true);
   }
 
-  const packSendData = () => {
-    return {
-      email_address: user.email,
-      company: company,
-      graduationYear: graduationYear,
-      pronouns: pronouns,
-      academy: academy
-    }
-  }
-
-  const packGetData = () => {
-    return {
-      email_address: user.email
-    }
-  }
-
   const saveChanges = () => {
     setEditing(false);
     
@@ -107,7 +107,6 @@ export default function UserInformation() {
     });
   }
 
-  
 
   return (
     <div className="text-left ml-8">
