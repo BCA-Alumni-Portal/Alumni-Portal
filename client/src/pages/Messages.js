@@ -2,6 +2,7 @@ import * as React from 'react';
 import axios from 'axios';
 import { TextInput } from 'flowbite-react/lib/cjs/components/TextInput';
 import MessageList from "../components/MessageGenerator";
+import { useAuth0 } from '@auth0/auth0-react';
 
 import '../index.css'
 import 'boxicons'
@@ -28,35 +29,54 @@ function useInterval(callback, delay) {
 }
 
 export default function Messages() {
-  //search bar filtering 
   const [messages, setMessages] = React.useState([]);
+  const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const [clientID, setClientID] = React.useState(0);
+  // let clientID = 0;
+  let targetID = 10;
   let messageBody = "";
   let input;
 
-  let testData = {
-    senderID: 0,
-    receiverID: 1
-  }
-
   let inputHandler = (e) => {
-    //convert input text to lower case
-    // var lowerCase = e.target.value.toLowerCase();
-    // setInputText(lowerCase);
+    // Get text from the message inp\ut
     messageBody = e.target.value;
     input = e.target;
   };
 
-  const getPackedData = () => {
+  const requestClientID = () => {
+    console.log("called requestClientID");
+    let email = user.email;
+    console.log(email);
+    let result = axios.get("http://localhost:5000/getClientID", { params: {email: email} }).then(res => {
+      let data = res.data;
+      console.log(data);
+      console.log(clientID);
+      setClientID(data.alumni_id);
+      console.log(clientID);
+    });
+  }
+
+  const packSendData = () => {
     return {
-      senderID: 0,
-      receiverID: 1,
+      senderID: clientID,
+      receiverID: targetID,
       messageBody: messageBody
     }
   }
 
+  const packGetData = () => {
+    return {
+      senderID: targetID,
+      receiverID: clientID
+    }
+  }
+
   const submitGetMessageRequest = () => {
-    let result = axios.get("http://localhost:5000/getMessageRequest", { params: testData }).then(res => {
+    const data = packGetData();
+    console.log(data)
+    let result = axios.get("http://localhost:5000/getMessageRequest", { params: data }).then(res => {
       let data = res.data;
+      console.log(data);
       if (data != null) {
         setMessages(data);
       }
@@ -64,7 +84,7 @@ export default function Messages() {
   }
 
   const submitSendMessageRequest = () => {
-    const data = getPackedData();
+    const data = packSendData();
     console.log(data)
     axios.get("http://localhost:5000/sendMessageRequest", { params: data }).then(res => console.log(res)).catch((err) => {
       if (err.response) {
@@ -85,8 +105,15 @@ export default function Messages() {
   };
 
   useInterval(() => {
+    // console.log("interval called");
+    requestClientID();
     submitGetMessageRequest();
   }, 3000);
+
+  // useEffect(() => {
+  //   console.log("Called useEffect!");
+  //   requestClientID();
+  // }, []); 
 
   return (
     <div className="container-fluid">
