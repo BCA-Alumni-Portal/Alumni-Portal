@@ -256,6 +256,7 @@ app.get('/readProfileDataRequest', async (req, res) => {
     console.log("Read result:");
     console.log(result);
     result[0].academy = await sqlAccess.getAcademyStringFromID(result[0].academy_id);
+    console.log(result[0].academy);
     return res.send(result[0]);
 })
 
