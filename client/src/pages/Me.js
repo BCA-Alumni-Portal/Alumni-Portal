@@ -15,7 +15,7 @@ export default function Me() {
 
     return (
         <div className='flex justify-center'>
-            <div className='max-w-4xl grid grid-rows-2 grid-cols-3 gap-8 mt-4'>
+            <div className='max-w-4xl grid grid-cols-3 gap-8 mt-4'>
                 <div>
                     <ProfilePicture />
                 </div>
@@ -24,6 +24,9 @@ export default function Me() {
                 </div>
                 <div className='col-span-3'>
                     <Description/>
+                </div>
+                <div className='col-span-3'>
+                    <Socials/>
                 </div>
             </div>
 
