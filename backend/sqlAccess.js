@@ -26,13 +26,22 @@ const profileInfoColumns = [
     "graduation_year",
     "pronouns",
     "academy_id"
-]
+];
+
+const readSocialColumns = [
+    "social_id",
+    "alumni_id",
+    "linkedin"
+];
+const updateSocialColumns = readSocialColumns.slice(2);
+const writeSocialColumns = readSocialColumns.slice(1);
 
 const TABLE_ALUMNI = "Alumni";
 const TABLE_MESSAGES = "Messages";
+const TABLE_SOCIAL = "Social"
 
 // Construct a query which writes <values> to <sqlColumns> in the same order
-function constructSQLWriteQuery(sqlColumns, values, tableName=TABLE_ALUMNI) {
+function constructSQLWriteQuery(sqlColumns, values, tableName = TABLE_ALUMNI) {
     let query = "INSERT INTO " + tableName + " (";
     let firstCol = true;
     for (let col of sqlColumns) {
@@ -69,7 +78,7 @@ function constructSQLWriteQuery(sqlColumns, values, tableName=TABLE_ALUMNI) {
 }
 
 // Construct a query which updates <values> to <sqlColumns> in the same order
-function constructSQLUpdateQuery(pkName, pkVal, sqlColumns, values, tableName=TABLE_ALUMNI) {
+function constructSQLUpdateQuery(pkName, pkVal, sqlColumns, values, tableName = TABLE_ALUMNI) {
     console.log(sqlColumns);
     console.log(values);
 
@@ -88,8 +97,13 @@ function constructSQLUpdateQuery(pkName, pkVal, sqlColumns, values, tableName=TA
     return query;
 }
 
+// Construct a query which reads the values of <readColumns> from <tableName>, where <whereColumns> == <whereValues>
+function constructSQLReadQuery(readColumns, whereColumns, whereValues, tableName = TABLE_ALUMNI) {
+
+}
+
 // Pull data from the SQL database and write to the Google Sheets
-async function readAlumniDataFromSQL(startID=0, endID=readLastEffectiveSqlAlumniID(), columns=readAlumniColumns) {
+async function readAlumniDataFromSQL(startID = 0, endID = readLastEffectiveSqlAlumniID(), columns = readAlumniColumns) {
     endID = await endID;
     // Sync things from SQL to Sheets
     // Query the rows that the Sheets doesn't have
@@ -101,7 +115,7 @@ async function readAlumniDataFromSQL(startID=0, endID=readLastEffectiveSqlAlumni
 }
 
 async function readMessageFromSQLByBothIDs(senderID, receiverID) {
-    let query = "SELECT * FROM Messages WHERE " + 
+    let query = "SELECT * FROM Messages WHERE " +
         "(sender_id = " + senderID + " AND receiver_id = " + receiverID + ") OR " +
         "(sender_id = " + receiverID + " AND receiver_id = " + senderID + ")";
     // console.log(query);
@@ -125,9 +139,9 @@ async function writeMessageToSQL(senderID, receiverID, body) {
 
     let values = [
         [
-            senderID, 
-            receiverID, 
-            body, 
+            senderID,
+            receiverID,
+            body,
             new Date().toISOString().slice(0, 19).replace('T', ' ') // Have the database log the current date
         ]
     ]
@@ -148,31 +162,24 @@ async function readLastSqlAlumniID() {
 }
 
 async function readClientID(email) {
-    let query = "SELECT alumni_id FROM Alumni WHERE " + 
+    let query = "SELECT alumni_id FROM Alumni WHERE " +
         "(email_address = \"" + email + "\")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
+    console.log(data);
     return data[0].alumni_id;
 }
 
 async function writeProfilePictureToSQL(alumni_id, picture) {
-    
+
 }
 
 async function readProfilePictureFromSQL(alumni_id) {
-    
-}
-
-async function writeProfileInfoToSQL() {
-    
-}
-
-async function readProfileInfoFromSQL() {
 
 }
 
 async function getAcademyIDFromString(academy_name) {
-    let query = "SELECT academy_id FROM Academy WHERE " + 
+    let query = "SELECT academy_id FROM Academy WHERE " +
         "(academy_name = \"" + academy_name + "\")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
@@ -180,17 +187,17 @@ async function getAcademyIDFromString(academy_name) {
 }
 
 async function getAcademyStringFromID(academy_id) {
-    let query = "SELECT academy_name FROM Academy WHERE " + 
+    let query = "SELECT academy_name FROM Academy WHERE " +
         "(academy_id = \"" + academy_id + "\")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     return data[0].academy_name;
 }
 
-async function updateProfileInfoToSQL(alumniID, company="", graduationYear, pronouns="", academy) {
+async function updateProfileInfoToSQL(alumniID, company = "", graduationYear, pronouns = "", academy) {
     let academyID = await getAcademyIDFromString(academy);
 
-    let columns = profileInfoColumns
+    let columns = profileInfoColumns;
     let values = [
         company,
         graduationYear,
@@ -204,11 +211,69 @@ async function updateProfileInfoToSQL(alumniID, company="", graduationYear, pron
 }
 
 async function readProfileInfoFromSQL(alumniID) {
-    let query = "SELECT * FROM Alumni WHERE " + 
+    let query = "SELECT * FROM " + TABLE_ALUMNI + " WHERE " +
         "(alumni_id = \"" + alumniID + "\")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     return data;
+}
+
+async function readSocialsFromSQL(alumniID) {
+    let query = "SELECT * FROM " + TABLE_SOCIALS + " WHERE " +
+        "(alumni_id = \"" + alumniID + "\")"
+    let data = await sqlModule.makeQuery({ query: query });
+    // Only return the first result
+    return data[0];
+}
+
+async function updateSocialsToSQL(alumniID, socials) {
+    let columns = updateSocialColumns;
+    let query = constructSQLUpdateQuery("alumni_id", alumniID, columns, socials, TABLE_SOCIAL);
+    console.log("query: \n" + query);
+    let queryResult = await sqlModule.makeQuery({ query: query });
+    return queryResult;
+}
+
+async function writeSocialsToSQL(alumniID, socials) {
+    let columns = writeSocialColumns;
+    socials.alumni_id = alumniID;
+
+    let result = writeDataToSQL(columns, socials, TABLE_SOCIAL);
+    console.log("query: \n" + query);
+    let queryResult = await sqlModule.makeQuery({ query: query });
+    return queryResult;
+}
+
+async function readSocialsFromSQL(alumniID) {
+    let query = "SELECT * FROM " + TABLE_SOCIAL + " WHERE " +
+        "(alumni_id = \"" + alumniID + "\")"
+    let data = await sqlModule.makeQuery({ query: query });
+    // Only return the first result
+    return data[0];
+}
+
+async function updateSocialsToSQL(alumniID, socials) {
+    let columns = updateSocialColumns;
+    let query = constructSQLUpdateQuery("alumni_id", alumniID, columns, socials, TABLE_SOCIAL);
+    console.log("query: \n" + query);
+    let queryResult = await sqlModule.makeQuery({ query: query });
+    return queryResult;
+}
+
+async function writeSocialsToSQL(alumniID, socials) {
+    let columns = writeSocialColumns;
+    let values = [
+        [
+            alumniID,
+            socials[0]
+        ]
+    ]
+    console.log(columns);
+    console.log(values);
+    let result = await writeDataToSQL(columns, values, TABLE_SOCIAL);
+    console.log("result: \n" + result);
+    // let queryResult = await sqlModule.makeQuery({ query: query });
+    return result;
 }
 
 // Write <values> to SQL in the order of <columns>
@@ -218,13 +283,13 @@ async function writeDataToSQL(columns, values, tableName) {
     return queryResult;
 }
 
-module.exports = { 
-    readAlumniDataFromSQL, 
+module.exports = {
+    readAlumniDataFromSQL,
     readMessageFromSQLByBothIDs,
-    writeDataToSQL, 
+    writeDataToSQL,
     writeMessageToSQL,
-    readLastEffectiveSqlAlumniID, 
-    readLastSqlAlumniID, 
+    readLastEffectiveSqlAlumniID,
+    readLastSqlAlumniID,
     writeAlumniColumns,
     readClientID,
 
@@ -235,5 +300,9 @@ module.exports = {
     readProfileInfoFromSQL,
 
     getAcademyIDFromString,
-    getAcademyStringFromID
+    getAcademyStringFromID,
+
+    readSocialsFromSQL,
+    updateSocialsToSQL,
+    writeSocialsToSQL
 }

@@ -1,5 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function Socials() {
     const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
@@ -20,10 +21,43 @@ export default function Socials() {
         setLinkedIn(e.target.value);
     }
 
+    const packGetData = () => {
+        return {
+            email_address: user.email
+        }
+    }
+
+    const packSendData = () => {
+        return {
+            email_address: user.email,
+            linkedin: linkedIn
+        }
+    }
+
+    const getInfo = () => {
+        let data = packGetData();
+        let result = axios.get("http://localhost:5000/readSocialsRequest", { params: data }).then(res => {
+            let data = res.data;
+            console.log(data);
+            if (data != null) {
+                setLinkedIn(data.linkedin);
+            }
+        });
+    }
 
     const saveChanges = () => {
         document.getElementById('linkedin-modal').checked = false;
+
         // push linkedin to database
+
+        let data = packSendData();
+        let result = axios.get("http://localhost:5000/updateSocialsRequest", { params: data }).then(res => {
+            let data = res.data;
+            console.log(data);
+            if (data != null) {
+
+            }
+        });
     }
 
     return (
@@ -54,7 +88,7 @@ export default function Socials() {
                         </label>
                         <label className="input-group">
                             <span>linkedin.com/in/</span>
-                            <input type="text" placeholder="username" value={linkedIn} onChange={(e) => changeLinkedIn(e)}  className="input input-bordered input-info input-lg focus:border-sky-400 focus:ring-0 w-full max-w-xs" />
+                            <input type="text" placeholder="username" value={linkedIn} onChange={(e) => changeLinkedIn(e)} className="input input-bordered input-info input-lg focus:border-sky-400 focus:ring-0 w-full max-w-xs" />
                         </label>
                     </div>
                     <div>

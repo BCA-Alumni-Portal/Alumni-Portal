@@ -226,19 +226,16 @@ app.get('/updateProfileDataRequest', async (req, res) => {
     console.log("updateProfileDataRequest");
     // console.log(req);
     let query = req.query;
-    console.log(req.query);
 
     let email = query.email_address;
     let clientID = await sqlAccess.readClientID(email);
-    console.log(clientID);
     let company = query.company;
     let graduationYear = query.graduationYear;
     let pronouns = query.pronouns;
     let academy = query.academy;
 
     let result = await sqlAccess.updateProfileInfoToSQL(clientID, company, graduationYear, pronouns, academy);
-    console.log("Update result:");
-    console.log(result);
+
     return res.send("Finished sending");
 })
 
@@ -249,15 +246,46 @@ app.get('/readProfileDataRequest', async (req, res) => {
 
     let email = query.email_address;
     let clientID = await sqlAccess.readClientID(email);
-    
-    console.log(email);
-    console.log(clientID);
     let result = await sqlAccess.readProfileInfoFromSQL(clientID);
-    console.log("Read result:");
-    console.log(result);
+
     result[0].academy = await sqlAccess.getAcademyStringFromID(result[0].academy_id);
-    console.log(result[0].academy);
+
     return res.send(result[0]);
+})
+
+app.get('/readSocialsRequest', async (req, res) => {
+    console.log("readSocialsRequest");
+
+    let query = req.query;
+
+    let email = query.email_address;
+    let clientID = await sqlAccess.readClientID(email);
+    let result = await sqlAccess.readSocialsFromSQL(clientID);
+    return res.send(result[0]);
+})
+
+app.get('/updateSocialsRequest', async (req, res) => {
+    console.log("updateSocialsRequest");
+
+    let query = req.query;
+
+    let email = query.email_address;
+    let clientID = await sqlAccess.readClientID(email);
+
+    let socials = [
+        query.linkedin
+    ];
+    
+    let result = await sqlAccess.readSocialsFromSQL(clientID);
+    console.log("result: " + result);
+    if (result == undefined) {
+        console.log("writing");
+        let result = await sqlAccess.writeSocialsToSQL(clientID, socials);
+    } else {
+        console.log("updating");
+        let result = await sqlAccess.updateSocialsToSQL(clientID, socials);
+    }
+    return res.send("Finished updating");
 })
 
 console.log("Automatically running here!");
