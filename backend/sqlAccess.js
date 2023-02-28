@@ -36,9 +36,18 @@ const readSocialColumns = [
 const updateSocialColumns = readSocialColumns.slice(2);
 const writeSocialColumns = readSocialColumns.slice(1);
 
+const readDescriptionColumns = [
+    "description_id",
+    "alumni_id",
+    "text"
+];
+const updateDescriptionColumns = readDescriptionColumns.slice(2);
+const writeDescriptionColumns = readDescriptionColumns.slice(1);
+
 const TABLE_ALUMNI = "Alumni";
 const TABLE_MESSAGES = "Messages";
-const TABLE_SOCIAL = "Social"
+const TABLE_SOCIAL = "Social";
+const TABLE_DESCRIPTION = "Description";
 
 // Construct a query which writes <values> to <sqlColumns> in the same order
 function constructSQLWriteQuery(sqlColumns, values, tableName = TABLE_ALUMNI) {
@@ -276,6 +285,41 @@ async function writeSocialsToSQL(alumniID, socials) {
     return result;
 }
 
+async function readDescriptionFromSQL(alumniID) {
+    let query = "SELECT * FROM " + TABLE_DESCRIPTION + " WHERE " +
+        "(alumni_id = \"" + alumniID + "\")"
+    let data = await sqlModule.makeQuery({ query: query });
+    // Only return the first result
+    return data[0];
+}
+
+async function updateDescriptionToSQL(alumniID, description) {
+    let columns = updateDescriptionColumns;
+    let values = [
+        description
+    ];
+    let query = constructSQLUpdateQuery("alumni_id", alumniID, columns, values, TABLE_DESCRIPTION);
+    console.log("query: \n" + query);
+    let queryResult = await sqlModule.makeQuery({ query: query });
+    return queryResult;
+}
+
+async function writeDescriptionToSQL(alumniID, description) {
+    let columns = writeDescriptionColumns;
+    let values = [
+        [
+            alumniID,
+            description
+        ]
+    ]
+    console.log(columns);
+    console.log(values);
+    let result = await writeDataToSQL(columns, values, TABLE_DESCRIPTION);
+    console.log("result: \n" + result);
+    // let queryResult = await sqlModule.makeQuery({ query: query });
+    return result;
+}
+
 // Write <values> to SQL in the order of <columns>
 async function writeDataToSQL(columns, values, tableName) {
     let query = constructSQLWriteQuery(columns, values, tableName);
@@ -304,5 +348,9 @@ module.exports = {
 
     readSocialsFromSQL,
     updateSocialsToSQL,
-    writeSocialsToSQL
+    writeSocialsToSQL,
+
+    readDescriptionFromSQL,
+    updateDescriptionToSQL,
+    writeDescriptionToSQL
 }

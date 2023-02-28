@@ -288,6 +288,41 @@ app.get('/updateSocialsRequest', async (req, res) => {
     return res.send("Finished updating");
 })
 
+app.get('/readDescriptionRequest', async (req, res) => {
+    console.log("readDescriptionRequest");
+
+    let query = req.query;
+
+    let email = query.email_address;
+    let clientID = await sqlAccess.readClientID(email);
+    let result = await sqlAccess.readDescriptionFromSQL(clientID);
+    return res.send(result[0]);
+})
+
+app.get('/updateDescriptionRequest', async (req, res) => {
+    console.log("updateDescriptionRequest");
+
+    let query = req.query;
+
+    let email = query.email_address;
+    let clientID = await sqlAccess.readClientID(email);
+
+    let description = [
+        query.text
+    ];
+    
+    let result = await sqlAccess.readDescriptionFromSQL(clientID);
+    console.log("result: " + result);
+    if (result == undefined) {
+        console.log("writing");
+        let result = await sqlAccess.writeDescriptionToSQL(clientID, description);
+    } else {
+        console.log("updating");
+        let result = await sqlAccess.updateDescriptionToSQL(clientID, description);
+    }
+    return res.send("Finished updating");
+})
+
 console.log("Automatically running here!");
 // databaseSync.sync({sheetID: sourceSheetsID});
 // databaseSync.exportSqlToSheets(exportSheetsID);
