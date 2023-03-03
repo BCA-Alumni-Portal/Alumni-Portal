@@ -1,13 +1,9 @@
 import * as React from 'react';
-// import { NestedMenuItem } from 'mui-nested-menu';
-import { TextInput } from 'flowbite-react/lib/cjs/components/TextInput';
+import ReactDOM from 'react-dom/client'
+import { Toast } from 'flowbite-react/lib/cjs/components/Toast';
+// import { TextInput } from 'flowbite-react/lib/cjs/components/TextInput';
 import List from "../components/SearchBar";
-// import Menu from '@mui/material/Menu';
-// import MenuItem from '@mui/material/MenuItem';
-// import FormGroup from '@mui/material/FormGroup';
-// import Checkbox from '@mui/material/Checkbox';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-import { Label } from 'flowbite-react/lib/cjs/components/Label';
+// import { Label } from 'flowbite-react/lib/cjs/components/Label';
 
 function People() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -23,29 +19,46 @@ function People() {
     setInputText(lowerCase);
   };
 
+  function Year_filter() {
+    const inputYear = document.getElementsByClassName("year").value;
+    const tag = (
+      <Toast>
+        <div className="inline-flex h-3 w-3 shrink-0 items-center justify-center rounded-lg bg-amber-300">
+        </div>
+        <div className="ml-3 text-black text-xs">
+          <p>{inputYear} </p>
+        </div>
+        <Toast.Toggle />
+      </Toast>
+    );
+    ReactDOM.render(tag, document.getElementById('tag-area'));
+
+  };
+
+
 
   return (
     <div className="container-fluid">
 
       <div className="columns-2 gap-8 block divide-x-8">
-        <h2 className="py-3">Directory</h2>
         <div className="overflow-auto">
-          <div className="search">
-            <input type="search" onChange={inputHandler} placeholder="Text" class="input input-bordered input-info w-full max-w-xs focus:border-sky-400 focus:ring-0"></input>
+          <h2 className="py-3 text-lg">Directory</h2>
+          <div className="search px-10">
+            <input type="search" onChange={inputHandler} placeholder="Text" className="input input-bordered input-info w-full max-w-xs focus:border-sky-400 focus:ring-0"></input>
             <br className="space-y-8"></br>
             <br className="space-y-1"></br>
-            <div className="grid flex gaps-2 grid-cols-3">
+            <div className="px-10 flex grid grid-cols-3 gap-1 place-content-center">
               <div>
-                <ul className="block menu menu-horizontal bg-base-100 w-30">
-                  <li tabindex="0">
-                    <span className="text-xs">Graduation Year</span>
+                <ul className="block menu menu-horizontal bg-base-100 border border border-1 border-amber-300">
+                  <li tabIndex="0">
+                    <span className="text-sm">Graduation Year</span>
                     <ul>
-                      <div className="bg-base-100">
-                        <form >
-                          <input type="text" placeholder="2023" class="text-xs input input-bordered input-warning w-full max-w-xs focus:border-amber-400 focus:ring-0"></input>
+                      <div className="bg-base-100 border border-1 border-amber-300">
+                        <form className="px-2 py-3">
+                          <input type="text" placeholder="2023" className="year text-xs input input-bordered input-warning w-full max-w-xs focus:border-amber-400 focus:ring-0"></input>
                           <div>
                             <br></br>
-                            <button className="drop-shadow-md text-xs hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500 bg-amber-100 border  rounded py-2 px-2 border-amber-100 hover:border-amber-400">
+                            <button onClick={(e) => Year_filter(e)} className="drop-shadow-md border-2 text-xs bg-amber-200 border border-amber-300 rounded hover:bg-amber-300 py-2 px-10">
                               Add
                             </button>
                           </div>
@@ -59,14 +72,14 @@ function People() {
               <br className="space-x-4"></br>
               <div>
                 <ul className="block menu menu-horizontal bg-base-100 w-30 align-self-left">
-                  <li tabindex="0">
-                    <span className="text-sm">Academy</span>
-                    <ul className="menu bg-base-100 w-30">
+                  <li tabIndex="0">
+                    <span className="text-sm border border-1 border-red-300">Academy</span>
+                    <ul className="menu bg-base-100 w-30 border border-1 border-red-300">
                       <li className="hover:bg-stone-200 focus:none">
                         <div className="hover:bg-stone-200 text-black hover:border-stone-100">
                           <label className="flex space-x-6 ">
                             <p className="text-xs">AAST</p>
-                            <input type="checkbox" class="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                            <input type="checkbox" className="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
                           </label>
                         </div>
                       </li>
@@ -74,7 +87,7 @@ function People() {
                         <div className="hover:bg-stone-200 text-black hover:border-stone-100">
                           <label className="flex space-x-5 ">
                             <p className="text-xs">AMST</p>
-                            <input type="checkbox" class="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                            <input type="checkbox" className="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
                           </label>
                         </div>
                       </li>
@@ -82,7 +95,7 @@ function People() {
                         <div className="hover:bg-stone-200 text-black hover:border-stone-100">
                           <label className="flex space-x-6 ">
                             <p className="text-xs">AVPA</p>
-                            <input type="checkbox" class="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                            <input type="checkbox" className="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
                           </label>
                         </div>
                       </li>
@@ -90,93 +103,39 @@ function People() {
                         <div className="hover:bg-stone-200 text-black hover:border-stone-100">
                           <label className="flex space-x-8 ">
                             <p className="text-xs">ABF</p>
-                            <input type="checkbox" class="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                            <input type="checkbox" className="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
                           </label>
                         </div>
                       </li>
                       <li className="hover:bg-stone-200 focus:none">
                         <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex space-x-7 ">
+                          <label className="flex space-x-6 ">
                             <p className="text-xs">ATCS</p>
-                            <input type="checkbox" class="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                            <input type="checkbox" className="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
                           </label>
                         </div>
                       </li>
                       <li className="hover:bg-stone-200 focus:none">
                         <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex space-x-4 ">
+                          <label className="flex space-x-3 ">
                             <p className="text-xs">ACAHA</p>
-                            <input type="checkbox" class="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                            <input type="checkbox" className="focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
                           </label>
                         </div>
                       </li>
-                      <button class="drop-shadow-lg border-2 text-xs border rounded py-2 px-2 bg-red-300 hover:bg-red-400 border-red-300 hover:text-white hover:border-red-400">Add</button>
+                      <button className="drop-shadow-lg border-2 text-xs border  py-2 px-2 bg-red-300 hover:bg-red-400 border-red-300 hover:text-white hover:border-red-400">Add</button>
                     </ul>
                   </li>
                 </ul>
               </div>
             </div>
+            <div className="space-y-8 " id="tag-area">
+
+            </div>
+
             <br className="space-y-8"></br>
             <List input={inputText} />
           </div>
-          {/* <div>
-            {/* <div className="py-1"> */}
-          {/* <button
-              id="align-left"
-              className="focus:outline-none bg-defaultblue inline-block block border border-defaultblue rounded py-2 px-4  text-cream hover:bg-hover-defaultblue "
-              onClick={handleClick}
-            >
-              Filters:
-            </button>
-            </div>
-            <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-              <NestedMenuItem
-                label="Academy"
-                parentMenuOpen={open}
-              >
-                <MenuItem>
-                  <FormGroup>
-                    <FormControlLabel control={<Checkbox />} label="AAST" />
-                    <FormControlLabel control={<Checkbox />} label="AMST" />
-                    <FormControlLabel control={<Checkbox />} label="AVPA" />
-                    <FormControlLabel control={<Checkbox />} label="ABF" />
-                    <FormControlLabel control={<Checkbox />} label="ATCS" />
-                    <FormControlLabel control={<Checkbox />} label="ACAHA" />
-                    <button className=" focus:outline-none bg-defaultblue inline-block block border border-defaultblue rounded border-r-4 text-base text-cream hover:bg-hover-defaultblue py-1 px-2">Apply</button>
-                  </FormGroup>
-                </MenuItem>
-              </NestedMenuItem>
-
-
-              <NestedMenuItem
-                label="Year"
-                parentMenuOpen={open}
-              >
-                <MenuItem className=" ">
-                  <form>
-                    <div>
-                      <div className="mb-2 block">
-                        <Label
-                          value="Graduation Year:"
-                        />
-                      </div>
-                      <TextInput
-                        type="search"
-                        placeholder="2023"
-                        className="bg-defaultblueborder border-defaultblue placeholder-defaultblue rounded-lg focus:ring-defaultblue focus:border-defaultblue block w-full p-2.5"
-                      />
-                    </div>
-                    <div>
-                      <br></br>
-                      <button className="focus:outline-none bg-defaultblue inline-block block border text-base border-defaultblue rounded text-cream hover:bg-hover-defaultblue py-1 px-4">
-                        Apply
-                      </button>
-                    </div>
-                  </form>
-                </MenuItem>
-              </NestedMenuItem>
-            </Menu> */}
-          {/* </div> */}
         </div>
 
 
