@@ -6,11 +6,11 @@ export default function Socials() {
     const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
 
-    const [linkedIn, setLinkedIn] = useState("dfdfd");
+    const [linkedIn, setLinkedIn] = useState("");
 
     useEffect(() => {
         // pull from database and setLinkedIn
-
+        getInfo();
     }, []);
 
     const toggleLinkedInModal = () => {
