@@ -176,8 +176,9 @@ async function readClientID(email) {
         "(email_address = \"" + email + "\")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
+    console.log(query);
     console.log(data);
-    if (data == undefined) {
+    if (data[0] == undefined) {
         return undefined;
     }
     return data[0].alumni_id;

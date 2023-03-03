@@ -261,6 +261,9 @@ app.get('/readSocialsRequest', async (req, res) => {
     let email = query.email_address;
     let clientID = await sqlAccess.readClientID(email);
     let result = await sqlAccess.readSocialsFromSQL(clientID);
+    if (result == undefined) {
+        return res.send(undefined);
+    }
     return res.send(result[0]);
 })
 
