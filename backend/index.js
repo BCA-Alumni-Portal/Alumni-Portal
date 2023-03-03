@@ -296,7 +296,7 @@ app.get('/readDescriptionRequest', async (req, res) => {
     let email = query.email_address;
     let clientID = await sqlAccess.readClientID(email);
     let result = await sqlAccess.readDescriptionFromSQL(clientID);
-    return res.send(result[0]);
+    return res.send(result);
 })
 
 app.get('/updateDescriptionRequest', async (req, res) => {
@@ -308,7 +308,7 @@ app.get('/updateDescriptionRequest', async (req, res) => {
     let clientID = await sqlAccess.readClientID(email);
 
     let description = [
-        query.text
+        query.description
     ];
     
     let result = await sqlAccess.readDescriptionFromSQL(clientID);

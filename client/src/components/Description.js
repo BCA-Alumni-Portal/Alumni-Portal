@@ -1,5 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function Description() {
     const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
@@ -10,7 +11,7 @@ export default function Description() {
 
     useEffect(() => {
         // pull from database and setDescription
-
+        getInfo();
     }, []);
 
     const changeDescription = (e) => {
@@ -20,9 +21,44 @@ export default function Description() {
     const edit = () => {
         setEditing(true);
     }
+
+    const packGetData = () => {
+        return {
+            email_address: user.email
+        }
+    }
+
+    const packSendData = () => {
+        return {
+            email_address: user.email,
+            description: description
+        }
+    }
+
+    const getInfo = () => {
+        let data = packGetData();
+        let result = axios.get("http://localhost:5000/readDescriptionRequest", { params: data }).then(res => {
+            let data = res.data;
+            console.log(res);
+            console.log(data);
+            if (data != null) {
+                setDescription(data.description);
+            }
+        });
+    }
+
     const saveChanges = () => {
         setEditing(false);
         // push description to database
+
+        let data = packSendData();
+        let result = axios.get("http://localhost:5000/updateDescriptionRequest", { params: data }).then(res => {
+            let data = res.data;
+            console.log(data);
+            if (data != null) {
+
+            }
+        });
     }
 
     return (

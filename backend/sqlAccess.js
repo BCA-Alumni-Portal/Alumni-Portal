@@ -36,18 +36,19 @@ const readSocialColumns = [
 const updateSocialColumns = readSocialColumns.slice(2);
 const writeSocialColumns = readSocialColumns.slice(1);
 
-const readDescriptionColumns = [
+const allDescriptionColumns = [
     "description_id",
     "alumni_id",
-    "text"
+    "description"
 ];
-const updateDescriptionColumns = readDescriptionColumns.slice(2);
-const writeDescriptionColumns = readDescriptionColumns.slice(1);
+const readDescriptionColumns = allDescriptionColumns[1];
+const updateDescriptionColumns = allDescriptionColumns.slice(2);
+const writeDescriptionColumns = allDescriptionColumns.slice(1);
 
 const TABLE_ALUMNI = "Alumni";
 const TABLE_MESSAGES = "Messages";
 const TABLE_SOCIAL = "Social";
-const TABLE_DESCRIPTION = "Description";
+const TABLE_DESCRIPTION = "ProfileDescription";
 
 // Construct a query which writes <values> to <sqlColumns> in the same order
 function constructSQLWriteQuery(sqlColumns, values, tableName = TABLE_ALUMNI) {
@@ -290,6 +291,7 @@ async function readDescriptionFromSQL(alumniID) {
         "(alumni_id = \"" + alumniID + "\")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
+    console.log(data);
     return data[0];
 }
 
