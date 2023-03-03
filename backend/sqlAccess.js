@@ -177,6 +177,9 @@ async function readClientID(email) {
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     console.log(data);
+    if (data == undefined) {
+        return undefined;
+    }
     return data[0].alumni_id;
 }
 
@@ -193,6 +196,9 @@ async function getAcademyIDFromString(academy_name) {
         "(academy_name = \"" + academy_name + "\")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
+    if (data == undefined) {
+        return undefined;
+    }
     return data[0].academy_id;
 }
 
@@ -201,6 +207,9 @@ async function getAcademyStringFromID(academy_id) {
         "(academy_id = \"" + academy_id + "\")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
+    if (data == undefined) {
+        return undefined;
+    }
     return data[0].academy_name;
 }
 
@@ -233,6 +242,9 @@ async function readSocialsFromSQL(alumniID) {
         "(alumni_id = \"" + alumniID + "\")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
+    if (data == undefined) {
+        return undefined;
+    }
     return data[0];
 }
 
@@ -259,6 +271,9 @@ async function readSocialsFromSQL(alumniID) {
         "(alumni_id = \"" + alumniID + "\")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
+    if (data == undefined) {
+        return undefined;
+    }
     return data[0];
 }
 
@@ -292,6 +307,9 @@ async function readDescriptionFromSQL(alumniID) {
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     console.log(data);
+    if (data == undefined) {
+        return undefined;
+    }
     return data[0];
 }
 
