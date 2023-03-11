@@ -7,6 +7,7 @@ import Messages from "./pages/Messages"
 import Me from "./pages/Me"
 import Register from "./pages/Register"
 import Test from "./pages/Test"
+import Admin from "./pages/Admin"
 
 import { Route, Routes } from "react-router-dom"
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/me" element={<Me />}/>
           <Route path="/register" element={<Register />}/>
           <Route path="/test" element={<Test />}/>
+          <Route path="/admin" element={<Admin />}/>
         </Routes>
       </div>
     </div>

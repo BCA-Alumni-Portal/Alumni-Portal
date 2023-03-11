@@ -326,6 +326,18 @@ app.get('/updateDescriptionRequest', async (req, res) => {
     return res.send("Finished updating");
 })
 
+app.get('/syncMissingData', async (req, res) => {
+    console.log("syncMissingData");
+    let result = await databaseSync.sync(sourceSheetsID);
+    return res.send(result);
+})
+
+app.get('/exportData', async (req, res) => {
+    console.log("exportData");
+    let result = await databaseSync.exportSqlToSheets(exportSheetsID);
+    return res.send(result);
+})
+
 console.log("Automatically running here!");
 // databaseSync.sync({sheetID: sourceSheetsID});
 // databaseSync.exportSqlToSheets(exportSheetsID);

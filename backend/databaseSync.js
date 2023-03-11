@@ -1,7 +1,7 @@
 const sheetsAccess = require("./sheetsAccess");
 const sqlAccess = require("./sqlAccess");
 
-const writeAlumniColumns = sqlAccess.writeAlumniColumns;
+const writeAlumniColumns = sqlAccess.writeSheetsAlumniColumns;
 
 // Pull data from the SQL database and write to the Google Sheets
 async function exportSqlToSheets(sheetID) {

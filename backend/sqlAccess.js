@@ -10,6 +10,7 @@ const readAlumniColumns = [
 ];
 // When adding alumni, <alumni_id> is autoincremented
 const writeAlumniColumns = readAlumniColumns.slice(1);
+const writeSheetsAlumniColumns = readAlumniColumns;
 
 const readMessageColumns = [
     "id",
@@ -356,6 +357,7 @@ module.exports = {
     readLastEffectiveSqlAlumniID,
     readLastSqlAlumniID,
     writeAlumniColumns,
+    writeSheetsAlumniColumns,
     readClientID,
 
     writeProfilePictureToSQL,
