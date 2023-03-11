@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Toast } from 'flowbite-react/lib/cjs/components/Toast';
-
+import person from "../images/person1.png"
 
 export default function App() {
     return (
-        <div className="h-screen bg-amber-50 flex grid px-20">
+        <div className="h-screen  flex grid px-20">
             <div className="row flex flex-wrap items-center gap-2 content-center">
                 <div>
                     <button
@@ -327,25 +327,25 @@ export default function App() {
                 </div>
             </div>
             <div className="row flex flex-wrap items-center gap-2 content-center">
-            <ul className="block menu menu-horizontal bg-base-100 w-30">
-                <li tabindex="0">
-                  <span className="text-xs">Graduation Year</span>
-                  <ul>
-                    <div className="bg-base-100">
-                      <form >
-                        <input type="text" placeholder="2023" class="text-xs input input-bordered input-warning w-full max-w-xs focus:border-amber-400 focus:ring-0"></input>
-                        <div>
-                          <br></br>
-                          <button className="drop-shadow-md text-xs hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500 bg-amber-100 border  rounded py-2 px-2 border-amber-100 hover:border-amber-400">
-                            Add
-                          </button>
+                <div className="flex flex-col w-full">
+                    <div className="grid card h-30 hover:bg-stone-200 focus:bg-stone-200 rounded-box place-items-center">
+                        <div className="avatar py-3 text-sm row flex gap-3">
+                            <div className="w-20 rounded-full">
+                                <img src={person} />
+                            </div>
+                            <p>Content</p>
                         </div>
-                      </form>
                     </div>
-
-                  </ul>
-                </li>
-              </ul>
+                    <div className="divider"></div> 
+                    <div className="grid card h-30 hover:bg-stone-200  focus:bg-stone-200 rounded-box place-items-center">
+                        <div className="avatar py-3 text-sm row flex gap-3">
+                            <div className=" w-20 rounded-full">
+                                <img src={person} />
+                            </div>
+                            <p>Content</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>

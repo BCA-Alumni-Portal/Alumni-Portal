@@ -8,6 +8,8 @@ import '../index.css'
 import 'boxicons'
 import { useState, useEffect, useRef } from 'react';
 
+import person from "../images/person1.png"
+
 function useInterval(callback, delay) {
   const savedCallback = useRef();
 
@@ -47,7 +49,7 @@ export default function Messages() {
     console.log("called requestClientID");
     let email = user.email;
     console.log(email);
-    let result = axios.get("http://localhost:5000/getClientID", { params: {email: email} }).then(res => {
+    let result = axios.get("http://localhost:5000/getClientID", { params: { email: email } }).then(res => {
       let data = res.data;
       console.log(data);
       console.log(clientID);
@@ -117,41 +119,81 @@ export default function Messages() {
 
   return (
     <div className="container-fluid">
-      <div className="columns-2 gap-8 block min-h-screen">
-        <div className="directory">
-          <div className="overflow-auto">
-            <h2 className="py-3">Directory</h2>
-            {/* <text>Here!</text> */}
+      <div className="columns-2 gap-8 block divide-x-8">
+        <div className="overflow-auto">
+          <div className="flex grid px-20">
+            <div className="py-3 text-2xl row flex gap-3">
+              <h2>Inbox </h2>
+              <button
+                className="drop-shadow-lg border-2 w-7 border rounded py-1 px-1 btn-info hover:bg-gradient-to-r hover:from-sky-400 hover:to-sky-500 hover:sky-400">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="16" height="16" viewBox="0 0 24 24"> <path d="M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zm2-10h4V7h2v4h4v2h-4v4h-2v-4H7v-2z"></path></svg>
+              </button>
+            </div>
+
+            <br className="space-y-5"></br>
+            <div className="btn-group place-content-center">
+              <button className="btn btn-md sm:px-2  h-10 text-white btn-info hover:bg-gradient-to-r hover:from-sky-100 hover:to-sky-200 hover:border-sky-200 hover:text-black">Accepted</button>
+              <button className="btn btn-md sm:px-2    h-10 text-white btn-info hover:bg-gradient-to-r hover:from-sky-100 hover:to-sky-200 hover:border-sky-200 hover:text-black">Pending</button>
+              <button className="btn btn-md sm:px-2   h-10 text-white btn-info hover:bg-gradient-to-r hover:from-sky-100 hover:to-sky-200 hover:border-sky-200 hover:text-black">Blocked</button>
+            </div>
+
+            <br className="space-y-2"></br>
+            <div className="flex flex-col place-content-left">
+              <div className="grid card h-25 hover:bg-stone-200  focus:bg-stone-200 rounded-box">
+                <div className="avatar py-3 text-sm row flex gap-3 px-2">
+                  <div className="lg:w-20 rounded-full">
+                    <img src={person} />
+                  </div>
+                  <p className="text-lg ">Hayun Jung </p>
+                </div>
+              </div>
+              <div className="divider"></div>
+              <div className="grid card h-25 hover:bg-stone-200  focus:bg-stone-200 rounded-box">
+                <div className="avatar py-3 text-sm row flex gap-3 px-2">
+                  <div className="lg:w-20  rounded-full">
+                    <img src={person} />
+                  </div>
+                  <p className="text-lg place-content-center">Kevin Liu</p>
+                </div>
+              </div>
+              <div className="divider"></div>
+              <div className="grid card h-25 hover:bg-stone-200  focus:bg-stone-200 rounded-box">
+                <div className="avatar py-3 text-sm row flex gap-3 px-2">
+                  <div className="lg:w-20 rounded-full">
+                    <img src={person} />
+                  </div>
+                  <p className="text-lg ">Remington Kim </p>
+                </div>
+              </div>
+              <div className="divider"></div>
+              <div className="grid card h-25 hover:bg-stone-200  focus:bg-stone-200 rounded-box">
+                <div className="avatar py-3 text-sm row flex gap-3 px-2">
+                  <div className="lg:w-20 rounded-full">
+                    <img src={person} />
+                  </div>
+                  <p className="text-lg ">Benen Sullivan </p>
+                </div>
+              </div>
+              <div className="divider"></div>
+              <div className="grid card h-25 hover:bg-stone-200  focus:bg-stone-200 rounded-box">
+                <div className="avatar py-3 text-sm row flex gap-3 px-2">
+                  <div className="lg:w-20 rounded-full">
+                    <img src={person} />
+                  </div>
+                  <p className="text-lg ">Jack Sparrow</p>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
+
+
         <div className="conversation">
           <div className="overflow-auto" id="conversation-box">
-            <h2 className="py-3">Jonathan Doe</h2>
+            <h2 className="py-3 text-2xl">Jonathan Doe</h2>
 
-            {/* <div class="message-container">
-              <box-icon name='user-circle' type='solid' color='#4691f2' class="img-left"></box-icon>
-              <p>Hello. How are you today?</p>
-              <span class="time-right">11:00</span>
-            </div>
-
-            <div class="message-container darker">
-              <box-icon name='user-circle' type='solid' color='#4691f2' class="img-right"></box-icon>
-              <p>Hey! I'm fine. Thanks for asking!</p>
-              <span class="time-left">11:01</span>
-            </div>
-
-            <div class="message-container">
-              <box-icon name='user-circle' type='solid' color='#4691f2' class="img-left"></box-icon>
-              <p>Sweet! So, what do you wanna do today?</p>
-              <span class="time-right">11:02</span>
-            </div>
-
-            <div class="message-container darker">
-              <box-icon name='user-circle' type='solid' color='#4691f2' class="img-right"></box-icon>
-              <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
-              <span class="time-left">11:05</span>
-            </div> */}
             <MessageList input={messages} />
             <div className="search">
               <TextInput
@@ -174,14 +216,8 @@ export default function Messages() {
             </div>
           </div>
         </div>
-
-
-        {/* where the rest of directory will be implemented */}
-        {/* <h2 className="py-3">Jonathan Doe</h2> */}
-        <div className="">
-
-        </div>
       </div>
     </div>
+
   )
 }
