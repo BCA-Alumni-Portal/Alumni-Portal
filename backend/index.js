@@ -7,6 +7,7 @@ const sqlAccess = require('./sqlAccess');
 
 const express = require('express');
 const cors = require('cors');
+const session = require('cookie-session');
 const { auth, requiresAuth } = require('express-openid-connect');
 const fs = require('fs');
 
