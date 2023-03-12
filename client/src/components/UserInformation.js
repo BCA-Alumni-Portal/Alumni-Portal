@@ -60,7 +60,7 @@ export default function UserInformation() {
       pronouns: pronouns,
       academy: academy,
       first_name: name.split(" ")[0],
-      last_name: name.split(" ").length>1 ? name.split(" ").slice(1, name.split.length(" ")).join(" ") : ""
+      last_name: name.split(" ").length>1 ? name.split(" ").slice(1, name.split(" ").length).join(" ") : ""
     }
   }
 
