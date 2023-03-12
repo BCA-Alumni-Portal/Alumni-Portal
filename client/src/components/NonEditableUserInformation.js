@@ -22,7 +22,7 @@ function NonEditableUserInformation(props) {
 
   const getInfo = () => {
       let data = packGetData();
-      let result = axios.get("http://localhost:5000/readProfileDataRequest", { params: data }).then(res => {
+      let result = axios.get("http://localhost:5000/readProfileDataRequestByID", { params: data }).then(res => {
         let data = res.data;
         console.log(data);
         if (data != null) {

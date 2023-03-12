@@ -70,9 +70,8 @@ function People() {
 
 
   return (
-    <div className="container-fluid">
-
-      <div className="columns-2 w-full gap-8 block divide-x-8">
+    <div className="grid grid-cols-2 gap-12">
+      <div className="">
         <div className="overflow-auto">
           <h2 className="py-3 text-lg">Directory</h2>
           <div className="search px-10">
@@ -171,15 +170,12 @@ function People() {
             <List input={inputText} />
           </div>
         </div>
-
-
-        {/* where the rest of directory will be implemented */}
-        {/* <h2 className="py-3 text-lg">Information</h2> */}
-        <div >
-          <Person alumniID={1}/>
-          {/* replace 1 with the ID of the alumni that you clicked on */}
-        </div>
+        
       </div>
+      <div className="">
+          <Person alumniID={11}/>
+          {/* replace 11 with the ID of the alumni that you clicked on */}
+        </div>
     </div>
 
 

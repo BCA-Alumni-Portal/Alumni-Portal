@@ -237,6 +237,21 @@ app.get('/readProfileDataRequest', async (req, res) => {
     return res.send(result[0]);
 })
 
+app.get('/readProfileDataRequestByID', async (req, res) => {
+    console.log("readProfileDataRequestByID");
+    // console.log(req);
+    let query = req.query;
+
+    let clientID = query.alumni_id
+    let result = await sqlAccess.readProfileInfoFromSQL(clientID);
+
+    result[0].academy = await sqlAccess.getAcademyStringFromID(result[0].academy_id);
+
+    return res.send(result[0]);
+})
+
+
+
 app.get('/readSocialsRequest', async (req, res) => {
     console.log("readSocialsRequest");
 
