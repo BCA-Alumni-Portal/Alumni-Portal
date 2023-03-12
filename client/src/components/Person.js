@@ -4,15 +4,15 @@ import NonEditableProfilePicture from './NonEditableProfilePicture';
 import NonEditableUserInformation from './NonEditableUserInformation';
 import NonEditableDescription from './NonEditableDescription';
 import ClickableSocials from './ClickableSocials';
+
 function Person(props) {
-    console.log(props.alumniID);
     return (
         <div className='w-full grid grid-cols-3 gap-8 mt-4 ml-10'>
             <div>
                 <NonEditableProfilePicture alumniID={props.alumniID} />
             </div>
             <div className='col-span-2'>
-                <NonEditableUserInformation alumniID={props.alumniID} input={props} />
+                <NonEditableUserInformation alumniID={props.alumniID} />
             </div>
             <div className='col-span-3'>
                 <NonEditableDescription alumniID={props.alumniID} />
