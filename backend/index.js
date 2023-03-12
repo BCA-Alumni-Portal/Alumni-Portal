@@ -379,6 +379,7 @@ app.get('/getConversationsRequest', async (req, res) => {
 
 app.get('/getPeopleList', async (req, res) => {
     let query = req.query;
+    let nameFilter = query.name_filter || "";
     let yearFilters = query.year_filter || [];
     let academyFilters = query.academy_filter || [];
     // console.log("getPeopleList");
@@ -387,7 +388,7 @@ app.get('/getPeopleList', async (req, res) => {
     // console.log(yearFilters);
     // console.log(academyFilters);
 
-    let result = await sqlAccess.readAlumniDataWithFilter(yearFilters, academyFilters);
+    let result = await sqlAccess.readAlumniDataWithFilter(nameFilter, yearFilters, academyFilters);
     
     // console.log(result)
     return res.send(result);

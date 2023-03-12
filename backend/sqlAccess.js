@@ -387,21 +387,27 @@ async function writeDescriptionToSQL(alumniID, description) {
     return result;
 }
 
-async function readAlumniDataWithFilter(yearFilters, academyFilters) {
+async function readAlumniDataWithFilter(nameFilter, yearFilters, academyFilters) {
     let query = constructSQLReadQuery(readPublicAlumniColumns);
     // console.log("query: " + query);
     // console.log("year or: " + yearOr);
     // console.log("academy or: " + academyOr);
     query += " INNER JOIN Academy" 
-    if ((yearFilters.length + academyFilters.length) > 0) {
+    if ((yearFilters.length + academyFilters.length + nameFilter.length) > 0) {
         query += " WHERE ";
     } 
+    if (nameFilter.length > 0) {
+        query += ` Alumni.first_name LIKE \"${nameFilter}` + `%\" OR Alumni.last_name LIKE \"${nameFilter}` + `%\"`;
+    }
     if (yearFilters.length > 0) {
+        if (nameFilter.length > 0) {
+            query += " AND ";
+        }
         let yearOr = constructSQLOrSequence("Alumni.graduation_year", yearFilters);
         query += yearOr;
     }
     if (academyFilters.length > 0) {
-        if (yearFilters.length > 0) {
+        if ((yearFilters.length > 0) || (nameFilter.length > 0)) {
             query += " AND ";
         }
         let academyOr = constructSQLOrSequence("Academy.academy_name", academyFilters);

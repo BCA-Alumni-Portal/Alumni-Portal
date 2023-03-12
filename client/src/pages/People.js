@@ -105,6 +105,7 @@ function People() {
 
   const getPackedData = () => {
     return {
+      name_filter: inputText,
       academy_filter: AcademyFilter,
       year_filter: YearFilter
     };
@@ -114,7 +115,7 @@ function People() {
     // console.log("Get people!");
 
     let data = getPackedData();
-    // console.log(data);
+    console.log(data);
     let result = axios.get("http://localhost:5000/getPeopleList", { params: data }).then(res => {
       let data = res.data;
       // console.log(data);
