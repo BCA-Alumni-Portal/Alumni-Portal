@@ -42,9 +42,10 @@ export default function Messages() {
 
   let inputHandler = (e) => {
     // Get text from the message inp\ut
-    messageBody = e.target.value;
-    console.log(e);
-    input = e.target;
+    // messageBody = e.target.value;
+    // console.log(e);
+    // input = e.target;
+    messageBody = document.getElementById("message-input").value;
   };
 
   const requestClientID = () => {
@@ -199,7 +200,7 @@ export default function Messages() {
             <MessageList input={messages} />
             <div className="row flex gap-2 place-content-center py-3">
               <div> 
-                <input type="text" onChange={inputHandler} placeholder="Message" className=" input input-bordered input-info w-full max-w-xs focus:border-sky-400 focus:ring-0" />
+                <input type="text" onChange={inputHandler} id="message-input" placeholder="Message" className=" input input-bordered input-info w-full max-w-xs focus:border-sky-400 focus:ring-0" />
               </div>
               <br className="space-x-2"></br>
               <div>
