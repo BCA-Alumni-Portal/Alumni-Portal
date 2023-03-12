@@ -2,6 +2,7 @@ import * as React from 'react';
 import axios from 'axios';
 import { TextInput } from 'flowbite-react/lib/cjs/components/TextInput';
 import MessageList from "../components/MessageGenerator";
+import ConversationGenerator from "../components/ConversationGenerator";
 import { useAuth0 } from '@auth0/auth0-react';
 
 //will change this to messages.css later after consulting Kevin
@@ -36,6 +37,9 @@ export default function Messages() {
   const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const [clientID, setClientID] = React.useState(0);
   const [targetID, setTargetID] = React.useState(0);
+  const [conversationID, setConversationID] = React.useState(0);
+  const [conversations, setConversations] = React.useState([]);
+  const [currentName, setCurrentName] = React.useState("John Doe");
   // let clientID = 0;
   // let targetID = 10;
   let messageBody = "";
@@ -52,11 +56,7 @@ export default function Messages() {
   const requestClientID = () => {
     // console.log("called requestClientID");
     let email = user.email;
-    // console.log(email);
-    // console.log("HERE!1");
-    // console.log(clientID);
-    // console.log(targetID);
-    let result = axios.get("http://localhost:5000/getClientID", { params: {email: email} }).then(res => {
+    let result = axios.get("http://localhost:5000/getClientID", { params: { email: email } }).then(res => {
       let data = res.data.clientID;
       // console.log("HERE!2");
       // console.log(res.data);
@@ -67,15 +67,14 @@ export default function Messages() {
   const packSendData = () => {
     return {
       senderID: clientID,
-      receiverID: targetID,
+      conversationID: conversationID,
       messageBody: messageBody
     }
   }
 
   const packGetData = () => {
     return {
-      senderID: targetID,
-      receiverID: clientID
+      conversationID: conversationID
     }
   }
 
@@ -106,17 +105,56 @@ export default function Messages() {
     }
   };
 
+  const submitGetConversationsRequest = () => {
+    // const data = packSendData();
+    // console.log(data)
+    let email = user.email;
+    console.log("submitGetConversationsRequest");
+    axios.get("http://localhost:5000/getConversationsRequest", { params: { email: email } }).then(res => {
+      let data = res.data;
+      console.log(data);
+      if (data != null) {
+        setConversations(data);
+      }
+    });
+
+    // if (input != null) {
+    //   input.value = "";
+    // }
+  };
+
   const handleClick = (e = React.MouseEvent) => {
-    console.log("Clicked!");
+    // console.log("Clicked!");
     submitSendMessageRequest();
     submitGetMessageRequest();
   };
+
+  const switchConversation = (conversation) => {
+    console.log("Switching:");
+    console.log(conversation);
+    setConversationID(conversation.conversation_id);
+    setCurrentName(conversation.first_name + " " + conversation.last_name);
+    submitGetMessageRequest();
+  }
 
   useInterval(() => {
     // console.log("interval called");
     requestClientID();
     submitGetMessageRequest();
+    submitGetConversationsRequest();
   }, 3000);
+
+  const conversationSelectionFunctionGenerator = (conversation) => {
+    // console.log("Make a function for:");
+    // process.stdout.write("Make a function for: ");
+    // console.log(conversation);
+    return () => {
+      // console.log("Called!");
+      // console.log(th);
+      // console.log(conversation);
+      switchConversation(conversation);
+    }
+  };
 
   // useEffect(() => {
   //   console.log("Called useEffect!");
@@ -143,7 +181,9 @@ export default function Messages() {
               <button className="btn btn-md sm:px-2   h-10 text-white btn-info hover:bg-gradient-to-r hover:from-sky-100 hover:to-sky-200 hover:border-sky-200 hover:text-black">Blocked</button>
             </div>
 
-            <br className="space-y-2"></br>
+            <ConversationGenerator conversations={conversations} functionGenerator={conversationSelectionFunctionGenerator}></ConversationGenerator>
+
+            {/* <br className="space-y-2"></br>
             <div className="flex flex-col place-content-left">
               <div className="grid card h-25 hover:bg-stone-200  focus:bg-stone-200 rounded-box">
                 <div className="avatar py-3 text-sm row flex gap-3 px-2">
@@ -189,7 +229,7 @@ export default function Messages() {
                   <p className="text-lg ">Jack Sparrow</p>
                 </div>
               </div>
-            </div>
+            </div> */}
 
           </div>
         </div>
@@ -198,11 +238,11 @@ export default function Messages() {
 
         <div className="conversation">
           <div className="overflow-auto flex grid " id="conversation-box">
-            <h2 className="py-3 text-2xl text-sky-400">Jonathan Doe</h2>
+            <h2 className="py-3 text-2xl text-sky-400">{currentName}</h2>
 
             <MessageList input={messages} />
             <div className="row flex gap-2 place-content-center py-3">
-              <div> 
+              <div>
                 <input type="text" onChange={inputHandler} id="message-input" placeholder="Message" className=" input input-bordered input-info w-full max-w-xs focus:border-sky-400 focus:ring-0" />
               </div>
               <br className="space-x-2"></br>

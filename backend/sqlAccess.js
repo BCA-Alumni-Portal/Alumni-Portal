@@ -21,13 +21,12 @@ const readPublicAlumniColumns = [
 
 const readMessageColumns = [
     "id",
+    "conversation_id",
     "sender_id",
-    "receiver_id",
     "body",
     "sent_datetime"
 ];
-// When sending messages, <id> is autoincremented
-const writeMessageColumns = readMessageColumns.slice(1);
+const writeMessageColumns = readMessageColumns;
 
 const profileInfoColumns = [
     "company",
@@ -180,11 +179,17 @@ async function readMessageFromSQLByBothIDs(senderID, receiverID) {
     return data;
 }
 
-async function writeMessageToSQL(senderID, receiverID, body) {
+async function readMessageFromSqlByConversation(conversationID) {
+    let query = `SELECT * FROM Messages WHERE conversation_id=${conversationID}`;
+    let data = await sqlModule.makeQuery({ query: query });
+    return data;
+}
+
+async function writeMessageToSQL(senderID, conversationID, body) {
     // Check that the IDs are valid
     let lastID = readLastEffectiveSqlAlumniID();
-    if ((senderID > lastID) || (receiverID > lastID)) {
-        console.log("Invalid senderID or receiverID (sqlAccess:writeMessageToSQL");
+    if ((senderID > lastID)) {
+        console.log("Invalid senderID (sqlAccess:writeMessageToSQL");
         return -1;
     }
 
@@ -196,8 +201,9 @@ async function writeMessageToSQL(senderID, receiverID, body) {
 
     let values = [
         [
+            null,
+            conversationID,
             senderID,
-            receiverID,
             body,
             new Date().toISOString().slice(0, 19).replace('T', ' ') // Have the database log the current date
         ]
@@ -223,8 +229,8 @@ async function readClientID(email) {
         "(email_address = \"" + email + "\")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
-    console.log(query);
-    console.log(data);
+    // console.log(query);
+    // console.log(data);
     if (data[0] == undefined) {
         return undefined;
     }
@@ -274,7 +280,7 @@ async function updateProfileInfoToSQL(alumniID, company = "", graduationYear, pr
         last_name
     ];
     let query = constructSQLUpdateQuery("alumni_id", alumniID, columns, values, TABLE_ALUMNI);
-    console.log("query: \n" + query);
+    // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
@@ -301,7 +307,7 @@ async function readSocialsFromSQL(alumniID) {
 async function updateSocialsToSQL(alumniID, socials) {
     let columns = updateSocialColumns;
     let query = constructSQLUpdateQuery("alumni_id", alumniID, columns, socials, TABLE_SOCIAL);
-    console.log("query: \n" + query);
+    // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
@@ -330,7 +336,7 @@ async function readSocialsFromSQL(alumniID) {
 async function updateSocialsToSQL(alumniID, socials) {
     let columns = updateSocialColumns;
     let query = constructSQLUpdateQuery("alumni_id", alumniID, columns, socials, TABLE_SOCIAL);
-    console.log("query: \n" + query);
+    // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
@@ -343,10 +349,10 @@ async function writeSocialsToSQL(alumniID, socials) {
             socials[0]
         ]
     ]
-    console.log(columns);
-    console.log(values);
+    // console.log(columns);
+    // console.log(values);
     let result = await writeDataToSQL(columns, values, TABLE_SOCIAL);
-    console.log("result: \n" + result);
+    // console.log("result: \n" + result);
     // let queryResult = await sqlModule.makeQuery({ query: query });
     return result;
 }
@@ -356,7 +362,7 @@ async function readDescriptionFromSQL(alumniID) {
         "(alumni_id = \"" + alumniID + "\")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
-    console.log(data);
+    // console.log(data);
     if (data == undefined) {
         return undefined;
     }
@@ -369,7 +375,7 @@ async function updateDescriptionToSQL(alumniID, description) {
         description
     ];
     let query = constructSQLUpdateQuery("alumni_id", alumniID, columns, values, TABLE_DESCRIPTION);
-    console.log("query: \n" + query);
+    // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
@@ -383,10 +389,10 @@ async function writeDescriptionToSQL(alumniID, description) {
             description
         ]
     ]
-    console.log(columns);
-    console.log(values);
+    // console.log(columns);
+    // console.log(values);
     let result = await writeDataToSQL(columns, values, TABLE_DESCRIPTION);
-    console.log("result: \n" + result);
+    // console.log("result: \n" + result);
     // let queryResult = await sqlModule.makeQuery({ query: query });
     return result;
 }
@@ -407,17 +413,36 @@ async function readAlumniDataWithFilter(yearFilters, academyFilters) {
 
 async function writeConversation(alumniID, targetID) {
     let query = "INSERT INTO " + TABLE_CONVERSATION + "(conversation_id, first_id, second_id) VALUES (null, " + alumniID + ", " + targetID + ")";
-    console.log(query);
+    // console.log(query);
     let result = await sqlModule.makeQuery({ query: query });
     return result;
 }
 
-async function readConversation(alumniID) {
+async function readAvailableConversations(alumniID) {
     let query = "SELECT * FROM " + TABLE_CONVERSATION + " WHERE " +
         "(first_id=" + alumniID + ") OR (second_id=" + alumniID + ")";
-    console.log(query);
+
+    query = `SELECT Conversation.conversation_id, Alumni.first_name, Alumni.last_name
+    FROM Conversation
+    INNER JOIN Alumni ON (
+    (Conversation.first_id=Alumni.alumni_id AND Conversation.first_id!=${alumniID})
+    OR 
+    (Conversation.second_id=Alumni.alumni_id AND Conversation.second_id!=${alumniID})
+    )
+    WHERE (Conversation.first_id=${alumniID} OR Conversation.second_id=${alumniID})`
+
+    // console.log(query);
     let result = await sqlModule.makeQuery({ query: query });
-    console.log(result);
+    // console.log(result);
+    return result;
+}
+
+async function readSpecificConversation(alumniID, targetID) {
+    let query = "SELECT * FROM " + TABLE_CONVERSATION + " WHERE " +
+        "(first_id=" + alumniID + " AND second_id=" + targetID + ") OR (second_id=" + targetID + " AND first_id=" + alumniID + ")";
+    // console.log(query);
+    let result = await sqlModule.makeQuery({ query: query });
+    // console.log(result);
     return result;
 }
 
@@ -459,5 +484,8 @@ module.exports = {
 
     readAlumniDataWithFilter,
     writeConversation,
-    readConversation
+    readAvailableConversations,
+    readSpecificConversation,
+
+    readMessageFromSqlByConversation
 }

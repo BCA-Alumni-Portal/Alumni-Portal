@@ -174,46 +174,27 @@ app.get('/sendMessageRequest', async (req, res) => {
     console.log("sendMessage");
     // console.log(req);
     let senderID = req.query.senderID;
-    let receiverID = req.query.receiverID;
+    let conversationID = req.query.conversationID;
     let body = req.query.messageBody
-    let result = await sqlAccess.writeMessageToSQL(senderID, receiverID, body);
+    // return {
+    //     senderID: clientID,
+    //     // receiverID: targetID,
+    //     messageBody: messageBody,
+    //     conversationID: conversationID
+    //   }
+    let result = await sqlAccess.writeMessageToSQL(senderID, conversationID, body);
     // console.log(result);
     return res.send("Finished sending");
 })
 
-function mergeTwo(arr1, arr2) {
-    let merged = [];
-    let index1 = 0;
-    let index2 = 0;
-    let current = 0;
-
-    while (current < (arr1.length + arr2.length)) {
-
-        let isArr1Depleted = index1 >= arr1.length;
-        let isArr2Depleted = index2 >= arr2.length;
-
-        if (!isArr1Depleted && (isArr2Depleted || (arr1[index1].id < arr2[index2].id))) {
-            merged[current] = arr1[index1];
-            index1++;
-        } else {
-            merged[current] = arr2[index2];
-            index2++;
-        }
-
-        current++;
-    }
-
-    return merged;
-}
-
 app.get('/getMessageRequest', async (req, res) => {
     console.log("getMessage");
-    let senderID = req.query.senderID;
-    let receiverID = req.query.receiverID;
-    console.log("213:", senderID, receiverID);
-    let result = await sqlAccess.readMessageFromSQLByBothIDs(senderID, receiverID);
+    // let senderID = req.query.senderID;
+    let conversationID = req.query.conversationID;
+    // let result = await sqlAccess.readMessageFromSQLByBothIDs(senderID, receiverID);
+    let result = await sqlAccess.readMessageFromSqlByConversation(conversationID);
 
-    console.log(result);
+    // console.log(result);
     return res.send(result);
 })
 
@@ -339,6 +320,20 @@ app.get('/syncMissingData', async (req, res) => {
 app.get('/exportData', async (req, res) => {
     console.log("exportData");
     let result = await databaseSync.exportSqlToSheets(exportSheetsID);
+    return res.send(result);
+})
+
+app.get('/getConversationsRequest', async (req, res) => {
+    console.log("getConversationsRequest");
+    
+    let query = req.query;
+
+    let email = query.email;
+    // console.log(email);
+    let clientID = await sqlAccess.readClientID(email);
+    // console.log(clientID);
+    let result = await sqlAccess.readAvailableConversations(clientID);
+    // console.log(result);
     return res.send(result);
 })
 
