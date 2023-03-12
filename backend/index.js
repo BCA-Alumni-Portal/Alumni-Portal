@@ -272,7 +272,7 @@ app.get('/readSocialsRequestByID', async (req, res) => {
 
     let query = req.query;
 
-    let clientID = query.alumniID;
+    let clientID = query.alumni_id;
     let result = await sqlAccess.readSocialsFromSQL(clientID);
     if (result == undefined) {
         return res.send(undefined);

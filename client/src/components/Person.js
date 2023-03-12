@@ -6,7 +6,7 @@ import NonEditableDescription from './NonEditableDescription';
 import ClickableSocials from './ClickableSocials';
 function Person(props) {
     return (
-        <div className='w-full grid grid-cols-3 gap-8 mt-4'>
+        <div className='w-full grid grid-cols-3 gap-8 mt-4 ml-10'>
             <div>
                 <NonEditableProfilePicture alumniID={props.alumniID} />
             </div>
@@ -17,7 +17,7 @@ function Person(props) {
                 <NonEditableDescription alumniID={props.alumniID} />
             </div>
             <div className='col-span-3'>
-                <ClickableSocials />
+                <ClickableSocials alumniID={props.alumniID}/>
             </div>
         </div>
     )

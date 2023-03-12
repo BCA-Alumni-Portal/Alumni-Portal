@@ -9,6 +9,7 @@ export default function ClickableSocials(props) {
     useEffect(() => {
         // pull from database and setLinkedIn
         getInfo();
+        console.log(linkedIn)
         setLinkedInLink("https://linkedin.com/in/" + linkedIn + "/");
     }, []);
 
@@ -30,8 +31,6 @@ export default function ClickableSocials(props) {
             }
         });
     }
-
-
 
     return (
         <div>
