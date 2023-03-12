@@ -132,7 +132,7 @@ function People() {
   }, 1000);
 
   return (
-    <div className="grid grid-cols-2 gap-12">
+    <div className="grid grid-cols-2 divide-x ">
       <div className="">
         <div className="overflow-auto">
           <h2 className="py-3 text-lg">Directory</h2>

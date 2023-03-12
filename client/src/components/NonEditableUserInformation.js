@@ -79,7 +79,7 @@ function NonEditableUserInformation(props) {
   }
 
   return (
-    <div className="text-left ml-8">
+    <div className="text-left ml-12">
       <div className='mb-5'>
         <h1 className="text-5xl font-bold text-stone-600 mr-6 inline-block align-middle">{name}</h1>
         <div>
