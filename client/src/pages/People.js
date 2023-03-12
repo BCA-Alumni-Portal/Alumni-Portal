@@ -2,7 +2,8 @@ import * as React from 'react';
 import ReactDOM from 'react-dom/client'
 // import { TextInput } from 'flowbite-react/lib/cjs/components/TextInput';
 import List from "../components/SearchBar";
-import Filters from "../components/FilterToast";
+import YearFilterComponent from "../components/YearFilterToast";
+import AcademyFilterComponent from "../components/AcademyFilterToast";
 // import { Label } from 'flowbite-react/lib/cjs/components/Label';
 
 function People() {
@@ -20,32 +21,45 @@ function People() {
   };
 
   //for filters
-  const [filter, setFilter] = React.useState([]);
-
+  const [YearFilter, setYearFilter] = React.useState([]);
+  const [AcademyFilter, setAcademyFilter] = React.useState([]);
 
   let inputYear = "";
   const academy_array = ['AAST', 'AMST', 'AVPA', 'ABF', 'ATCS', 'ACAHA']
 
-  let FilterHandler = (newElement) => {
-    setFilter(filter => [...filter, newElement]);
+  let YearFilterHandler = (newElement) => {
+    var current_array = [...YearFilter, newElement];
+    let uniqueArray = current_array.filter(function (item, pos) {
+      return current_array.indexOf(item) == pos;
+    })
+    setYearFilter(uniqueArray);
+  };
+
+  let AcademyFilterHandler = (newElement) => {
+    // var current_array = [...AcademyFilter, newElement];
+    // let uniqueArray = current_array.filter(function (item, pos) {
+    //   return current_array.indexOf(item) == pos;
+    // })
+    // setAcademyFilter(uniqueArray);
+    setAcademyFilter(AcademyFilter => [...AcademyFilter, newElement]);
   };
 
   //check if year is valid 
   function Year_filter() {
     inputYear = document.getElementById("year").value;
     console.log(document.getElementById("year").value);
-    if (isNaN(inputYear) == false ){
+    if (isNaN(inputYear) == false) {
       inputYear = Number(inputYear);
-      FilterHandler(inputYear);
+      YearFilterHandler(inputYear);
     }
   };
 
   //Pushing Academy Values, checking if checkbox checked
-  function Academy_filter(){
-    for(let i = 0; i < 6; i++){
+  function Academy_filter() {
+    for (let i = 0; i < 6; i++) {
       var checkedValue = document.querySelector('.' + academy_array[i]).checked;
-      if (checkedValue == true){
-        FilterHandler(academy_array[i]);
+      if (checkedValue == true) {
+        AcademyFilterHandler(academy_array[i]);
       }
     }
   };
@@ -70,7 +84,7 @@ function People() {
                     <ul>
                       <div className="bg-base-100 border border-1 border-amber-300">
                         <div className="px-2 py-3">
-                          <input type="text" placeholder="2023" id="year"className="text-xs input input-bordered input-warning w-full max-w-xs focus:border-amber-400 focus:ring-0"></input>
+                          <input type="text" placeholder="2023" id="year" className="text-xs input input-bordered input-warning w-full max-w-xs focus:border-amber-400 focus:ring-0"></input>
                           <div>
                             <br></br>
                             <button onClick={Year_filter} className="drop-shadow-md border-2 text-xs bg-amber-200 border border-amber-300 rounded hover:bg-amber-300 py-2 px-10">
@@ -144,11 +158,13 @@ function People() {
                 </ul>
               </div>
             </div>
+            <br className="space-y-8"></br>
             <div className="space-y-8" id="tag-area">
-              <Filters input={filter}/>
+              <YearFilterComponent input={YearFilter} />
+              <AcademyFilterComponent input={AcademyFilter} />
             </div>
 
-            <br className="space-y-8"></br>
+            <br className="space-y-5"></br>
             <List input={inputText} />
           </div>
         </div>
