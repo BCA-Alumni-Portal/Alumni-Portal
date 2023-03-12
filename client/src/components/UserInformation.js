@@ -2,7 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export default function UserInformation() {
+function UserInformation() {
   const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
   
   // user.email == remkim23@bergen.org
@@ -122,7 +122,7 @@ export default function UserInformation() {
     <div className="text-left ml-8">
       <div className='mb-5'>
         {editing ?
-        <input type="text" placeholder="Company" value={name} className="input input-bordered input-info input-lg text-4xl focus:border-sky-400 focus:ring-0 w-full max-w-xs mr-8 inline-block align-middle" onChange={(e) => changeName(e)} />:
+        <input type="text" placeholder="Your name" value={name} className="input input-bordered input-info input-lg text-4xl focus:border-sky-400 focus:ring-0 w-full max-w-xs mr-8 inline-block align-middle" onChange={(e) => changeName(e)} />:
         <h1 className="text-5xl font-bold text-stone-600 mr-6 inline-block align-middle">{name}</h1>
       }
         {editing ?
@@ -218,3 +218,6 @@ export default function UserInformation() {
     </div>
   );
 }
+
+
+export default UserInformation;
