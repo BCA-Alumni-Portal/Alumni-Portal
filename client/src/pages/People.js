@@ -46,7 +46,6 @@ function People() {
   const [currentAlumniID, setCurrentAlumniID] = React.useState(0);
   const [people, setPeople] = React.useState([]);
   const [clientID, setClientID] = React.useState(0);
-  const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   //search bar filtering 
   const [inputText, setInputText] = React.useState("");
@@ -137,7 +136,7 @@ function People() {
 
   const requestClientID = () => {
     // console.log("called requestClientID");
-    let email = user.email;
+    let email = auth.email;
     let result = axios.get("http://localhost:5000/getClientID", { params: { email: email } }).then(res => {
       let data = res.data.clientID;
       // console.log("HERE!2");
