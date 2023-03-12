@@ -173,10 +173,10 @@ export default function Messages() {
     }
   };
 
-  // useEffect(() => {
-  //   console.log("Called useEffect!");
-  //   requestClientID();
-  // }, []); 
+  useEffect(() => {
+    // console.log("Called useEffect!");
+    submitGetMessageRequest();
+  }, [conversationID]); 
 
   return (
     <div className="container-fluid">
