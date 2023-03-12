@@ -5,7 +5,7 @@ import personImage from "../images/person1.png"
 
 function PeopleGenerator(props) {
     let people = props.people;
-    console.log(people);
+    // console.log(people);
     return (
         <div class="list-group">
             {

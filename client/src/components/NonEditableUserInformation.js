@@ -18,17 +18,17 @@ function NonEditableUserInformation(props) {
     // pronouns, company = optional
     // SQL -> client
     getInfo();
-    console.log("UPDATING USER INFO");
+    // console.log("UPDATING USER INFO");
   }, [props]);
   
 
   const getInfo = () => {
       let data = packGetData();
-      console.log(props.info);
-      console.log(props.alumniID);
+      // console.log(props.info);
+      // console.log(props.alumniID);
       let result = axios.get("http://localhost:5000/readProfileDataRequestByID", { params: data }).then(res => {
         let data = res.data;
-        console.log(data);
+        // console.log(data);
         if (data != null) {
           setCompany(data.company || "");
           setGraduationYear(data.graduation_year);
