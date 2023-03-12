@@ -23,7 +23,7 @@ app.get('/hello', (req, res) => res.send("hello"));
 
 // for MySQL
 app.get('/getSQLData', async (req, res) => {
-    console.log("getSQLData");
+    // console.log("getSQLData");
 
     let additionalSpecifiers = {
         alumni_id: req.alumniID,
@@ -57,7 +57,7 @@ app.get('/getSQLData', async (req, res) => {
 
 app.get('/createSQLData', async (req, res) => {
     // console.log(req)
-    console.log("createSQLData");
+    // console.log("createSQLData");
     let additionalSpecifiers = {
         alumni_id: req.query.alumniID,
         first_name: req.query.firstName,
@@ -104,7 +104,7 @@ app.get('/createSQLData', async (req, res) => {
 })
 
 app.get('/updateSQLData', async (req, res) => {
-    console.log("updateSQLData");
+    // console.log("updateSQLData");
 
     let additionalSpecifiers = {
         first_name: req.query.firstName,
@@ -148,14 +148,14 @@ app.get('/updateSQLData', async (req, res) => {
 
 // for Google Sheets
 app.get('/getGSData', (req, res) => {
-    console.log("getGSData");
+    // console.log("getGSData");
     let range = "A1:C5";
     sheetsModule.readSheets({ range: range, sheetID: sourceSheetsID });
     return res.send("Finished reading");
 });
 
 app.get('/writeGSData', (req, res) => {
-    console.log("writeGSData");
+    // console.log("writeGSData");
     sheetsModule.updateSheets({ query: "dummy", sheetID: sourceSheetsID });
     return res.send("Finished writing");
 })
@@ -165,13 +165,13 @@ app.listen(port, () => {
 })
 
 app.get('/syncData', (req, res) => {
-    console.log("syncData");
+    // console.log("syncData");
     databaseSync.sync(sourceSheetsID);
     return res.send("Finished syncing");
 })
 
 app.get('/sendMessageRequest', async (req, res) => {
-    console.log("sendMessage");
+    // console.log("sendMessage");
     // console.log(req);
     let senderID = req.query.senderID;
     let conversationID = req.query.conversationID;
@@ -188,7 +188,7 @@ app.get('/sendMessageRequest', async (req, res) => {
 })
 
 app.get('/getMessageRequest', async (req, res) => {
-    console.log("getMessage");
+    // console.log("getMessage");
     // let senderID = req.query.senderID;
     let conversationID = req.query.conversationID;
     // let result = await sqlAccess.readMessageFromSQLByBothIDs(senderID, receiverID);
@@ -199,13 +199,13 @@ app.get('/getMessageRequest', async (req, res) => {
 })
 
 app.get('/getClientID', async (req, res) => {
-    console.log("getClientID");
+    // console.log("getClientID");
     let result = await sqlAccess.readClientID(req.query.email);
     return res.send({clientID: result});
 })
 
 app.get('/updateProfileDataRequest', async (req, res) => {
-    console.log("updateProfileDataRequest");
+    // console.log("updateProfileDataRequest");
     // console.log(req);
     let query = req.query;
 
@@ -224,7 +224,7 @@ app.get('/updateProfileDataRequest', async (req, res) => {
 })
 
 app.get('/readProfileDataRequest', async (req, res) => {
-    console.log("readProfileDataRequest");
+    // console.log("readProfileDataRequest");
     // console.log(req);
     let query = req.query;
 
@@ -238,7 +238,7 @@ app.get('/readProfileDataRequest', async (req, res) => {
 })
 
 app.get('/readSocialsRequest', async (req, res) => {
-    console.log("readSocialsRequest");
+    // console.log("readSocialsRequest");
 
     let query = req.query;
 
@@ -248,12 +248,12 @@ app.get('/readSocialsRequest', async (req, res) => {
     if (result == undefined) {
         return res.send(undefined);
     }
-    console.log(result);
+    // console.log(result);
     return res.send(result[0]);
 })
 
 app.get('/updateSocialsRequest', async (req, res) => {
-    console.log("updateSocialsRequest");
+    // console.log("updateSocialsRequest");
 
     let query = req.query;
 
@@ -265,19 +265,19 @@ app.get('/updateSocialsRequest', async (req, res) => {
     ];
     
     let result = await sqlAccess.readSocialsFromSQL(clientID);
-    console.log("result: " + result);
+    // console.log("result: " + result);
     if (result == undefined) {
-        console.log("writing");
+        // console.log("writing");
         let result = await sqlAccess.writeSocialsToSQL(clientID, socials);
     } else {
-        console.log("updating");
+        // console.log("updating");
         let result = await sqlAccess.updateSocialsToSQL(clientID, socials);
     }
     return res.send("Finished updating");
 })
 
 app.get('/readDescriptionRequest', async (req, res) => {
-    console.log("readDescriptionRequest");
+    // console.log("readDescriptionRequest");
 
     let query = req.query;
 
@@ -288,7 +288,7 @@ app.get('/readDescriptionRequest', async (req, res) => {
 })
 
 app.get('/updateDescriptionRequest', async (req, res) => {
-    console.log("updateDescriptionRequest");
+    // console.log("updateDescriptionRequest");
 
     let query = req.query;
 
@@ -300,31 +300,31 @@ app.get('/updateDescriptionRequest', async (req, res) => {
     ];
     
     let result = await sqlAccess.readDescriptionFromSQL(clientID);
-    console.log("result: " + result);
+    // console.log("result: " + result);
     if (result == undefined) {
-        console.log("writing");
+        // console.log("writing");
         let result = await sqlAccess.writeDescriptionToSQL(clientID, description);
     } else {
-        console.log("updating");
+        // console.log("updating");
         let result = await sqlAccess.updateDescriptionToSQL(clientID, description);
     }
     return res.send("Finished updating");
 })
 
 app.get('/syncMissingData', async (req, res) => {
-    console.log("syncMissingData");
+    // console.log("syncMissingData");
     let result = await databaseSync.sync(sourceSheetsID);
     return res.send(result);
 })
 
 app.get('/exportData', async (req, res) => {
-    console.log("exportData");
+    // console.log("exportData");
     let result = await databaseSync.exportSqlToSheets(exportSheetsID);
     return res.send(result);
 })
 
 app.get('/getConversationsRequest', async (req, res) => {
-    console.log("getConversationsRequest");
+    // console.log("getConversationsRequest");
     
     let query = req.query;
 
@@ -342,21 +342,21 @@ console.log("Automatically running here!");
 // databaseSync.exportSqlToSheets(exportSheetsID);
 // databaseSync.writeNewEntriesToSQL(sourceSheetsID);
 
-let sender_id = 3;
-let receiver_id = 4;
-let body = "Message from index.js";
+// let sender_id = 3;
+// let receiver_id = 4;
+// let body = "Message from index.js";
 // let result = sqlAccess.writeMessageToSQL(sender_id, receiver_id, body);
 // console.log(result);
 
 // let result = sqlAccess.readMessageFromSQLByReceiverID(receiver_id);
 
-let yearFilters = [
-    1111, 2017, 2004, 2012, 2022
-];
-let academyFilters = [
-    1, 5, 8
-]
-let test = sqlAccess.readAlumniDataWithFilter(yearFilters, academyFilters);
+// let yearFilters = [
+//     1111, 2017, 2004, 2012, 2022
+// ];
+// let academyFilters = [
+//     1, 5, 8
+// ]
+// let test = sqlAccess.readAlumniDataWithFilter(yearFilters, academyFilters);
 // console.log(test);
 
 // sqlAccess.writeConversation(0, 1);

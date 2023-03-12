@@ -13,7 +13,7 @@ function MessageGenerator(props) {
     return (
         <div class="list-group">
             {messages.map((item) => {
-                console.log(item);
+                // console.log(item);
                 if (item.sender_id != clientID) {
                     return (
                         <div className="chat chat-start">

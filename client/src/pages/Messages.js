@@ -60,7 +60,7 @@ export default function Messages() {
     };
     let result = axios.get("http://localhost:5000/readProfileDataRequest", { params: data }).then(res => {
       let data = res.data;
-      console.log(data);
+      // console.log(data);
       if (data != null) {
         setClientName(data.first_name + " " + data.last_name);
       }
@@ -159,7 +159,7 @@ export default function Messages() {
     requestClientID();
     submitGetMessageRequest();
     submitGetConversationsRequest();
-  }, 3000);
+  }, 1000);
 
   const conversationSelectionFunctionGenerator = (conversation) => {
     // console.log("Make a function for:");

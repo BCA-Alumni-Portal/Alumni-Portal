@@ -409,10 +409,7 @@ async function writeConversation(alumniID, targetID) {
 }
 
 async function readAvailableConversations(alumniID) {
-    let query = "SELECT * FROM " + TABLE_CONVERSATION + " WHERE " +
-        "(first_id=" + alumniID + ") OR (second_id=" + alumniID + ")";
-
-    query = `SELECT Conversation.conversation_id, Alumni.first_name, Alumni.last_name
+    let query = `SELECT Conversation.conversation_id, Alumni.first_name, Alumni.last_name
     FROM Conversation
     INNER JOIN Alumni ON (
     (Conversation.first_id=Alumni.alumni_id AND Conversation.first_id!=${alumniID})
