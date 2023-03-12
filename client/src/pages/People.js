@@ -5,6 +5,9 @@ import List from "../components/SearchBar";
 import YearFilterComponent from "../components/YearFilterToast";
 import AcademyFilterComponent from "../components/AcademyFilterToast";
 // import { Label } from 'flowbite-react/lib/cjs/components/Label';
+import Person from '../components/Person';
+
+
 
 function People() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -69,7 +72,7 @@ function People() {
   return (
     <div className="container-fluid">
 
-      <div className="columns-2 gap-8 block divide-x-8">
+      <div className="columns-2 w-full gap-8 block divide-x-8">
         <div className="overflow-auto">
           <h2 className="py-3 text-lg">Directory</h2>
           <div className="search px-10">
@@ -171,9 +174,10 @@ function People() {
 
 
         {/* where the rest of directory will be implemented */}
-        <h2 className="py-3 text-lg">Information</h2>
-        <div className="">
-
+        {/* <h2 className="py-3 text-lg">Information</h2> */}
+        <div >
+          <Person alumniID={1}/>
+          {/* replace 1 with the ID of the alumni that you clicked on */}
         </div>
       </div>
     </div>
