@@ -263,7 +263,7 @@ app.get('/readProfileDataRequest', async (req, res) => {
 })
 
 app.get('/readProfileDataRequestByID', async (req, res) => {
-    console.log("readProfileDataRequestByID");
+    // console.log("readProfileDataRequestByID");
     // console.log(req);
     let query = req.query;
 
@@ -418,9 +418,22 @@ app.get('/getPeopleList', async (req, res) => {
     // console.log(result)
     return res.send(result);
 })
+<<<<<<< HEAD
 app.listen(port, () => {
     console.log(`Listening to port ${port}!`)
 })
+=======
+
+app.get('/createConversation', async (req, res) => {
+    let query = req.query;
+    let clientID = query.clientID;
+    let targetID = query.targetID;
+
+    let result = await sqlAccess.writeConversation(clientID, targetID);
+    return res.send(result);
+})
+
+>>>>>>> 3d89ade92616ce93d7ef28b584304c6d6344117b
 console.log("Automatically running here!");
 // databaseSync.sync({sheetID: sourceSheetsID});
 // databaseSync.exportSqlToSheets(exportSheetsID);

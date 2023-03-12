@@ -414,14 +414,23 @@ async function readAlumniDataWithFilter(nameFilter, yearFilters, academyFilters)
         query += "(Alumni.academy_id=Academy.academy_id AND " + academyOr + ")"
     }
     // "WHERE " + yearOr + " AND " + "(Alumni.academy_id=Academy.academy_id AND " + academyOr + ")";
-    console.log("final query: " + query);
+    // console.log("final query: " + query);
     let result = await sqlModule.makeQuery({ query: query });
     return result;
 }
 
 async function writeConversation(alumniID, targetID) {
+    let checkQuery = "SELECT * FROM " + TABLE_CONVERSATION + 
+        " WHERE ((first_id=" + alumniID + " AND second_id=" + targetID + ") OR (first_id=" + targetID + " AND second_id=" + alumniID + "))";
+
+    console.log(checkQuery);
+    let checkResult = await sqlModule.makeQuery({ query: checkQuery });
+    if (checkResult.length != 0) {
+        return;
+    }
+
     let query = "INSERT INTO " + TABLE_CONVERSATION + "(conversation_id, first_id, second_id) VALUES (null, " + alumniID + ", " + targetID + ")";
-    // console.log(query);
+    console.log(query);
     let result = await sqlModule.makeQuery({ query: query });
     return result;
 }

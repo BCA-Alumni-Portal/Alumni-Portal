@@ -48,7 +48,7 @@ export default function Messages() {
   const [targetID, setTargetID] = React.useState(0);
   const [conversationID, setConversationID] = React.useState(0);
   const [conversations, setConversations] = React.useState([]);
-  const [currentName, setCurrentName] = React.useState("John Doe");
+  const [currentName, setCurrentName] = React.useState("Select a conversation");
   const [clientName, setClientName] = React.useState("Johnathan Dough");
   // let clientID = 0;
   // let targetID = 10;
