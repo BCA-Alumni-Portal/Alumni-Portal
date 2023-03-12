@@ -336,7 +336,7 @@ export default function App() {
                             <p>Content</p>
                         </div>
                     </div>
-                    <div className="divider"></div> 
+                    <div className="divider"></div>
                     <div className="grid card h-30 hover:bg-stone-200  focus:bg-stone-200 rounded-box place-items-center">
                         <div className="avatar py-3 text-sm row flex gap-3">
                             <div className=" w-20 rounded-full">
@@ -346,6 +346,28 @@ export default function App() {
                         </div>
                     </div>
                 </div>
+
+                <div className="chat chat-start">
+                    <div className="chat-image avatar">
+                        <div className="w-10 rounded-full">
+                            <img src={person} />
+                        </div>
+                    </div>
+                    <div className="chat-bubble">It was said that you would, destroy the Sith, not join them.</div>
+                </div>
+                <div className="chat chat-end">
+                    <div className="chat-image avatar">
+                        <div className="w-10 rounded-full">
+                            <img src={person}/>
+                        </div>
+                    </div>
+                    <div className="chat-header">
+                        Anakin
+                    </div>
+                    <div className="chat-bubble">I hate you!</div>
+ 
+                </div>
+
             </div>
 
         </div>

@@ -219,7 +219,7 @@ app.get('/getMessageRequest', async (req, res) => {
 app.get('/getClientID', async (req, res) => {
     console.log("getClientID");
     let result = await sqlAccess.readClientID(req.query.email);
-    return res.send(result);
+    return res.send({clientID: result});
 })
 
 app.get('/updateProfileDataRequest', async (req, res) => {
