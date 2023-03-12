@@ -1,30 +1,46 @@
 import { React, useState } from 'react'
-
+import person from "../images/person1.png"
 function MessageGenerator(props) {
     console.log(props);
     var senderID = 1;
     var messages = props.input;
     console.log(messages);
-    
+
     return (
         <div class="list-group">
             {messages.map((item) => {
                 var data = {}
                 if (item.sender_id == senderID) {
-                    data.class = "message-container";
-                    data.imgClass = "img-left";
-                    data.timeClass = "time-right";
+                    return (
+                        <div className="chat chat-start">
+                            <div className="chat-image avatar">
+                                <div className="w-10 rounded-full">
+                                    <img src={person} />
+                                </div>
+                            </div>
+                            <div className="chat-header">
+                                Anakin
+                                <time className="text-xs opacity-50">{item.sent_datetime}</time>
+                            </div>
+                            <div className="chat-bubble">{item.body}</div>
+                        </div>
+                    );
                 } else {
-                    data.class = "message-container darker";
-                    data.imgClass = "img-right";
-                    data.timeClass = "time-left";
+                    return (
+                        <div className="chat chat-end">
+                            <div className="chat-image avatar">
+                                <div className="w-10 rounded-full">
+                                    <img src={person} />
+                                </div>
+                            </div>
+                            <div className="chat-header">
+                                Anakin
+                                <time className="text-xs opacity-50">{item.sent_datetime}</time>
+                            </div>
+                            <div className="chat-bubble">{item.body}!</div>
+                        </div>
+                    );
                 }
-            
-                return (<div class={data.class}>
-                    <box-icon name='user-circle' type='solid' color='#4691f2' class={data.imgClass}></box-icon>
-                    <p>{item.body}</p>
-                    <span class={data.timeClass}>{item.sent_datetime}</span>
-                </div>)
             })}
         </div>
 

@@ -4,10 +4,7 @@
   box-sizing: border-box;
 }
 
-#align-left {
-  position: relative;
-  right: 44%;
-}
+
 
 .container{
   width: 100%;
@@ -109,12 +106,7 @@ button {
   /* display: inline-block; */
 }
 
-.message {
-  box-sizing: border-box;
 
-  /* display: inline-block; */
-  /* float: left; */
-}
 
 #job-info-icon {
   float: left;
@@ -153,21 +145,10 @@ button {
   color: #4691f2;
 }
 
-.message_box {
-  box-sizing: border-box;
-  border-style: solid;
-  border-color: #4691f2;
-  border-width: 5px;
-  padding: 1em;
-}
 
-.other-message {
-  text-align: left;
-}
 
-.self-message {
-  text-align: right;
-}
+
+
 
 .remington-kim {
   font-weight: 5px;
@@ -189,45 +170,5 @@ button {
   margin-right: 80%;
 }
 
-.time-right {
-  float: right;
-  color: #aaa;
-}
 
-.time-left {
-  float: left;
-  color: #999;
-}
 
-.message-container {
-  border: 2px solid #dedede;
-  background-color: #f1f1f1;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px 0;
-}
-
-.darker {
-  border-color: #ccc;
-  background-color: #ddd;
-}
-
-.message-container::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-.message-container .img-left {
-  float: left;
-  max-width: 60px;
-  width: 100%;
-  margin-right: 20px;
-  border-radius: 50%;
-}
-
-.message-container .img-right {
-  float: right;
-  margin-left: 20px;
-  margin-right:0;
-}
