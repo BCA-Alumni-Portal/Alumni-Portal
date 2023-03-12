@@ -371,9 +371,10 @@ async function updateDescriptionToSQL(alumniID, description) {
 }
 
 async function writeDescriptionToSQL(alumniID, description) {
-    let columns = writeDescriptionColumns;
+    let columns = allDescriptionColumns;
     let values = [
         [
+            null,
             alumniID,
             description
         ]
