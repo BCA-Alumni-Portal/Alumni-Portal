@@ -145,12 +145,12 @@ function constructSQLWhereSequence(whereColumns, whereValues) {
 
 // Construct a query which reads the values of <readColumns> from <tableName>, where <whereColumns> == <whereValues>
 function constructSQLReadQuery(readColumns, tableName = TABLE_ALUMNI) {
-    let query = "SELECT ";
+    let query = "SELECT DISTINCT ";
     for (let i = 0; i < readColumns.length; i++) {
         if (i != 0) {
             query += ", ";
         }
-        query += readColumns[i]
+        query += tableName + "." + readColumns[i];
     }
     query += " FROM " + tableName;
 
@@ -389,15 +389,27 @@ async function writeDescriptionToSQL(alumniID, description) {
 
 async function readAlumniDataWithFilter(yearFilters, academyFilters) {
     let query = constructSQLReadQuery(readPublicAlumniColumns);
-    let yearOr = constructSQLOrSequence("graduation_year", yearFilters);
-    let academyOr = constructSQLOrSequence("academy_id", academyFilters);
     // console.log("query: " + query);
     // console.log("year or: " + yearOr);
     // console.log("academy or: " + academyOr);
-    query += " WHERE " + yearOr + " AND " + academyOr;
-    // console.log("final query: " + query);
+    query += " INNER JOIN Academy" 
+    if ((yearFilters.length + academyFilters.length) > 0) {
+        query += " WHERE ";
+    } 
+    if (yearFilters.length > 0) {
+        let yearOr = constructSQLOrSequence("Alumni.graduation_year", yearFilters);
+        query += yearOr;
+    }
+    if (academyFilters.length > 0) {
+        if (yearFilters.length > 0) {
+            query += " AND ";
+        }
+        let academyOr = constructSQLOrSequence("Academy.academy_name", academyFilters);
+        query += "(Alumni.academy_id=Academy.academy_id AND " + academyOr + ")"
+    }
+    // "WHERE " + yearOr + " AND " + "(Alumni.academy_id=Academy.academy_id AND " + academyOr + ")";
+    console.log("final query: " + query);
     let result = await sqlModule.makeQuery({ query: query });
-    // console.log(await result);
     return result;
 }
 

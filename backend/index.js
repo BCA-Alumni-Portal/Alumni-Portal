@@ -352,6 +352,22 @@ app.get('/getConversationsRequest', async (req, res) => {
     return res.send(result);
 })
 
+app.get('/getPeopleList', async (req, res) => {
+    let query = req.query;
+    let yearFilters = query.year_filter || [];
+    let academyFilters = query.academy_filter || [];
+    // console.log("getPeopleList");
+    // console.log(req);
+    // console.log(query);
+    // console.log(yearFilters);
+    // console.log(academyFilters);
+
+    let result = await sqlAccess.readAlumniDataWithFilter(yearFilters, academyFilters);
+    
+    // console.log(result)
+    return res.send(result);
+})
+
 console.log("Automatically running here!");
 // databaseSync.sync({sheetID: sourceSheetsID});
 // databaseSync.exportSqlToSheets(exportSheetsID);
@@ -369,7 +385,7 @@ console.log("Automatically running here!");
 //     1111, 2017, 2004, 2012, 2022
 // ];
 // let academyFilters = [
-//     1, 5, 8
+//     "\"AMST\"", "\"ATCS\""
 // ]
 // let test = sqlAccess.readAlumniDataWithFilter(yearFilters, academyFilters);
 // console.log(test);

@@ -4,16 +4,40 @@ import ReactDOM from 'react-dom/client'
 import List from "../components/SearchBar";
 import YearFilterComponent from "../components/YearFilterToast";
 import AcademyFilterComponent from "../components/AcademyFilterToast";
+import PeopleGeneratorComponent from "../components/PeopleGenerator";
 // import { Label } from 'flowbite-react/lib/cjs/components/Label';
 import Person from '../components/Person';
+import { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 
 
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
 
 function People() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (e = React.MouseEvent) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
+  const [currentAlumniID, setCurrentAlumniID] = React.useState(0);
+  const [people, setPeople] = React.useState([]);
 
   //search bar filtering 
   const [inputText, setInputText] = React.useState("");
@@ -44,7 +68,7 @@ function People() {
     //   return current_array.indexOf(item) == pos;
     // })
     // setAcademyFilter(uniqueArray);
-    setAcademyFilter(AcademyFilter => [...AcademyFilter, newElement]);
+    setAcademyFilter(AcademyFilter => [...AcademyFilter, "\"" + newElement + "\""]);
   };
 
   //check if year is valid 
@@ -67,7 +91,45 @@ function People() {
     }
   };
 
+  const getPackedData = () => {
+    return {
+      academy_filter: AcademyFilter,
+      year_filter: YearFilter
+    };
+  }
 
+  const submitGetPeopleRequest = () => {
+    console.log("Get people!");
+
+    let data = getPackedData();
+    console.log(data);
+    let result = axios.get("http://localhost:5000/getPeopleList", { params: data }).then(res => {
+      let data = res.data;
+      console.log(data);
+      if (data != null) {
+        // setClientName(data.first_name + " " + data.last_name);
+        setPeople(data);
+      }
+    });
+  }
+
+  const functionGenerator = (alumni_id) => {
+    console.log("Make a function");
+    // process.stdout.write("Make a function for: ");
+    // console.log(conversation);
+    return () => {
+      console.log("Called!");
+      // console.log(th);
+      console.log(alumni_id);
+      setCurrentAlumniID(alumni_id);
+      console.log(currentAlumniID);
+    }
+  };
+  
+  useInterval(() => {
+    // console.log("interval called");
+    submitGetPeopleRequest();
+  }, 1000);
 
   return (
     <div className="grid grid-cols-2 gap-12">
@@ -167,13 +229,23 @@ function People() {
             </div>
 
             <br className="space-y-5"></br>
-            <List input={inputText} />
+            <br className="space-y-5"></br>
+            <br className="space-y-5"></br>
+            <br className="space-y-5"></br>
+            <br className="space-y-5"></br>
+            <br className="space-y-5"></br>
+            <br className="space-y-5"></br>
+            <br className="space-y-5"></br>
+            <br className="space-y-5"></br>
+            <br className="space-y-5"></br>
+            {/* <List input={inputText} /> */}
+            <PeopleGeneratorComponent people={people} functionGenerator={functionGenerator} />
           </div>
         </div>
         
       </div>
       <div className="">
-          <Person alumniID={11}/>
+          <Person alumniID={currentAlumniID}/>
           {/* replace 11 with the ID of the alumni that you clicked on */}
         </div>
     </div>

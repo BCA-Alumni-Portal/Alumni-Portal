@@ -1,5 +1,26 @@
 import React, { useEffect, useState } from 'react';
+import { useRef } from 'react';
 import axios from 'axios';
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
 
 function NonEditableUserInformation(props) {
 
@@ -10,18 +31,26 @@ function NonEditableUserInformation(props) {
   const [pronouns, setPronouns] = useState("");
   const [academy, setAcademy] = useState("");
 
+  // useEffect(() => {
+  //   // pull from database and fill in fields: company, graduationYear (as string), pronouns, academy
+  //   // graduationYear, academy = required
+  //   // pronouns, company = optional
+  //   // SQL -> client
+  //   getInfo();
+  //   console.log("UPDATING USER INFO");
+  // }, []);
 
-
-  useEffect(() => {
-    // pull from database and fill in fields: company, graduationYear (as string), pronouns, academy
-    // graduationYear, academy = required
-    // pronouns, company = optional
-    // SQL -> client
+  
+  useInterval(() => {
+    // console.log("interval called");
     getInfo();
-  }, []);
+    console.log("UPDATING USER INFO");
+  }, 1000);
 
   const getInfo = () => {
       let data = packGetData();
+      console.log(props.info);
+      console.log(props.alumniID);
       let result = axios.get("http://localhost:5000/readProfileDataRequestByID", { params: data }).then(res => {
         let data = res.data;
         console.log(data);
