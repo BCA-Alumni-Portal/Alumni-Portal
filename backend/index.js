@@ -210,6 +210,7 @@ app.get('/getMessageRequest', async (req, res) => {
     console.log("getMessage");
     let senderID = req.query.senderID;
     let receiverID = req.query.receiverID;
+    console.log("213:", senderID, receiverID);
     let result = await sqlAccess.readMessageFromSQLByBothIDs(senderID, receiverID);
 
     console.log(result);
@@ -219,7 +220,7 @@ app.get('/getMessageRequest', async (req, res) => {
 app.get('/getClientID', async (req, res) => {
     console.log("getClientID");
     let result = await sqlAccess.readClientID(req.query.email);
-    return res.send(result);
+    return res.send({clientID: result});
 })
 
 app.get('/updateProfileDataRequest', async (req, res) => {
@@ -350,3 +351,17 @@ let body = "Message from index.js";
 // console.log(result);
 
 // let result = sqlAccess.readMessageFromSQLByReceiverID(receiver_id);
+
+let yearFilters = [
+    1111, 2017, 2004, 2012, 2022
+];
+let academyFilters = [
+    1, 5, 8
+]
+let test = sqlAccess.readAlumniDataWithFilter(yearFilters, academyFilters);
+// console.log(test);
+
+// sqlAccess.writeConversation(0, 1);
+// sqlAccess.writeConversation(0, 2);
+// sqlAccess.writeConversation(1, 2);
+// sqlAccess.readConversation(0);

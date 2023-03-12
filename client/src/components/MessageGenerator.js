@@ -3,21 +3,7 @@ import { React, useState } from 'react'
 function MessageGenerator(props) {
     console.log(props);
     var senderID = 1;
-    var messages = [
-        {
-            senderID: 0,
-            text: "Well, hello!"
-        },
-        {
-            senderID: 1,
-            text: "Hey, how's it going?"
-        },
-        {
-            senderID: 0,
-            text: "Not too bad, how about you?"
-        }
-    ]
-    messages = props.input;
+    var messages = props.input;
     console.log(messages);
     
     return (

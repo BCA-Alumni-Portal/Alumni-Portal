@@ -11,6 +11,13 @@ const readAlumniColumns = [
 // When adding alumni, <alumni_id> is autoincremented
 const writeAlumniColumns = readAlumniColumns.slice(1);
 const writeSheetsAlumniColumns = readAlumniColumns;
+const readPublicAlumniColumns = [
+    "alumni_id",
+    "first_name",
+    "last_name",
+    "graduation_year",
+    "academy_id"
+];
 
 const readMessageColumns = [
     "id",
@@ -50,6 +57,7 @@ const TABLE_ALUMNI = "Alumni";
 const TABLE_MESSAGES = "Messages";
 const TABLE_SOCIAL = "Social";
 const TABLE_DESCRIPTION = "ProfileDescription";
+const TABLE_CONVERSATION = "Conversation";
 
 // Construct a query which writes <values> to <sqlColumns> in the same order
 function constructSQLWriteQuery(sqlColumns, values, tableName = TABLE_ALUMNI) {
@@ -94,9 +102,8 @@ function constructSQLUpdateQuery(pkName, pkVal, sqlColumns, values, tableName = 
     console.log(values);
 
     let query = "UPDATE " + tableName + " SET ";
-    let firstRow = true;
     for (let i = 0; i < sqlColumns.length; i++) {
-        if (firstRow) {
+        if (i == 0) {
             firstRow = false;
         } else {
             query += ", ";
@@ -108,9 +115,45 @@ function constructSQLUpdateQuery(pkName, pkVal, sqlColumns, values, tableName = 
     return query;
 }
 
-// Construct a query which reads the values of <readColumns> from <tableName>, where <whereColumns> == <whereValues>
-function constructSQLReadQuery(readColumns, whereColumns, whereValues, tableName = TABLE_ALUMNI) {
+function constructSQLOrSequence(variable, possibleValues) {
+    let query = "(";
+    for (let i = 0; i < possibleValues.length; i++) {
+        if (i != 0) {
+            query += " OR ";
+        }
+        query += variable + "=" + possibleValues[i];
+    }
+    query += ")";
+    return query;
+}
 
+function constructSQLWhereSequence(whereColumns, whereValues) {
+    if (whereColumns.length != whereValues.length) {
+        print("Error constructing read query: <whereColumns> and <whereValues> must be of equal length");
+        return -1;
+    }
+    let query = " WHERE ";
+    for (let i = 0; i < whereColumns.length; i++) {
+        if (i != 0) {
+            query += "AND ";
+        }
+        query += whereColumns[i] + "=" + whereValues[i];
+    }
+    return query;
+}
+
+// Construct a query which reads the values of <readColumns> from <tableName>, where <whereColumns> == <whereValues>
+function constructSQLReadQuery(readColumns, tableName = TABLE_ALUMNI) {
+    let query = "SELECT ";
+    for (let i = 0; i < readColumns.length; i++) {
+        if (i != 0) {
+            query += ", ";
+        }
+        query += readColumns[i]
+    }
+    query += " FROM " + tableName;
+
+    return query;
 }
 
 // Pull data from the SQL database and write to the Google Sheets
@@ -126,6 +169,7 @@ async function readAlumniDataFromSQL(startID = 0, endID = readLastEffectiveSqlAl
 }
 
 async function readMessageFromSQLByBothIDs(senderID, receiverID) {
+    console.log(senderID, receiverID);
     let query = "SELECT * FROM Messages WHERE " +
         "(sender_id = " + senderID + " AND receiver_id = " + receiverID + ") OR " +
         "(sender_id = " + receiverID + " AND receiver_id = " + senderID + ")";
@@ -342,6 +386,36 @@ async function writeDescriptionToSQL(alumniID, description) {
     return result;
 }
 
+async function readAlumniDataWithFilter(yearFilters, academyFilters) {
+    let query = constructSQLReadQuery(readPublicAlumniColumns);
+    let yearOr = constructSQLOrSequence("graduation_year", yearFilters);
+    let academyOr = constructSQLOrSequence("academy_id", academyFilters);
+    // console.log("query: " + query);
+    // console.log("year or: " + yearOr);
+    // console.log("academy or: " + academyOr);
+    query += " WHERE " + yearOr + " AND " + academyOr;
+    // console.log("final query: " + query);
+    let result = await sqlModule.makeQuery({ query: query });
+    // console.log(await result);
+    return result;
+}
+
+async function writeConversation(alumniID, targetID) {
+    let query = "INSERT INTO " + TABLE_CONVERSATION + "(conversation_id, first_id, second_id) VALUES (null, " + alumniID + ", " + targetID + ")";
+    console.log(query);
+    let result = await sqlModule.makeQuery({ query: query });
+    return result;
+}
+
+async function readConversation(alumniID) {
+    let query = "SELECT * FROM " + TABLE_CONVERSATION + " WHERE " +
+        "(first_id=" + alumniID + ") OR (second_id=" + alumniID + ")";
+    console.log(query);
+    let result = await sqlModule.makeQuery({ query: query });
+    console.log(result);
+    return result;
+}
+
 // Write <values> to SQL in the order of <columns>
 async function writeDataToSQL(columns, values, tableName) {
     let query = constructSQLWriteQuery(columns, values, tableName);
@@ -358,6 +432,7 @@ module.exports = {
     readLastSqlAlumniID,
     writeAlumniColumns,
     writeSheetsAlumniColumns,
+    readPublicAlumniColumns,
     readClientID,
 
     writeProfilePictureToSQL,
@@ -375,5 +450,9 @@ module.exports = {
 
     readDescriptionFromSQL,
     updateDescriptionToSQL,
-    writeDescriptionToSQL
+    writeDescriptionToSQL,
+
+    readAlumniDataWithFilter,
+    writeConversation,
+    readConversation
 }

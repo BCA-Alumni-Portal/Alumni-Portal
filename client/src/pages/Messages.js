@@ -32,8 +32,9 @@ export default function Messages() {
   const [messages, setMessages] = React.useState([]);
   const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const [clientID, setClientID] = React.useState(0);
+  const [targetID, setTargetID] = React.useState(0);
   // let clientID = 0;
-  let targetID = 10;
+  // let targetID = 10;
   let messageBody = "";
   let input;
 
@@ -47,12 +48,14 @@ export default function Messages() {
     console.log("called requestClientID");
     let email = user.email;
     console.log(email);
+    console.log("HERE!1");
+    console.log(clientID);
+    console.log(targetID);
     let result = axios.get("http://localhost:5000/getClientID", { params: {email: email} }).then(res => {
-      let data = res.data;
-      console.log(data);
-      console.log(clientID);
+      let data = res.data.clientID;
+      console.log("HERE!2");
+      console.log(res.data);
       setClientID(data);
-      console.log(clientID);
     });
   }
 
@@ -152,7 +155,7 @@ export default function Messages() {
               <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
               <span class="time-left">11:05</span>
             </div> */}
-            <MessageList input={messages} />
+            <MessageList input={messages} target={targetID} />
             <div className="search">
               <TextInput
                 type="search"
