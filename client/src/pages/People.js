@@ -52,7 +52,7 @@ function People() {
   const [AcademyFilter, setAcademyFilter] = React.useState([]);
 
   let inputYear = "";
-  const academy_array = ['AAST', 'AMST', 'AVPA', 'ABF', 'ATCS', 'ACAHA']
+  const academy_array = ['AAST', 'AMST', 'AVPA', 'ABF', 'ATCS', 'ACAHA', 'AEDT'];
 
   let YearFilterHandler = (newElement) => {
     var current_array = [...YearFilter, newElement];
@@ -62,13 +62,22 @@ function People() {
     setYearFilter(uniqueArray);
   };
 
-  let AcademyFilterHandler = (newElement) => {
+  let AcademyFilterHandler = (newArray) => {
     // var current_array = [...AcademyFilter, newElement];
     // let uniqueArray = current_array.filter(function (item, pos) {
     //   return current_array.indexOf(item) == pos;
     // })
     // setAcademyFilter(uniqueArray);
-    setAcademyFilter(AcademyFilter => [...AcademyFilter, "\"" + newElement + "\""]);
+    // let chars = ['A', 'B', 'A', 'C', 'B'];
+    let mergedArray = [...AcademyFilter, ...newArray];
+
+    let uniqueArray = mergedArray.filter((e, index) => {
+        return mergedArray.indexOf(e) === index;
+    });
+
+    console.log(uniqueArray);
+
+    setAcademyFilter(uniqueArray); //[...AcademyFilter, "\"" + newElement + "\""]);
   };
 
   //check if year is valid 
@@ -83,12 +92,15 @@ function People() {
 
   //Pushing Academy Values, checking if checkbox checked
   function Academy_filter() {
-    for (let i = 0; i < 6; i++) {
-      var checkedValue = document.querySelector('.' + academy_array[i]).checked;
+    let checked_array = []
+    for (let i = 0; i < 7; i++) {
+      var current = academy_array[i]
+      var checkedValue = document.querySelector('.' + current).checked;
       if (checkedValue == true) {
-        AcademyFilterHandler(academy_array[i]);
+        checked_array.push("\"" + academy_array[i] + "\"");
       }
     }
+    AcademyFilterHandler(checked_array);
   };
 
   const getPackedData = () => {
@@ -99,13 +111,13 @@ function People() {
   }
 
   const submitGetPeopleRequest = () => {
-    console.log("Get people!");
+    // console.log("Get people!");
 
     let data = getPackedData();
-    console.log(data);
+    // console.log(data);
     let result = axios.get("http://localhost:5000/getPeopleList", { params: data }).then(res => {
       let data = res.data;
-      console.log(data);
+      // console.log(data);
       if (data != null) {
         // setClientName(data.first_name + " " + data.last_name);
         setPeople(data);
@@ -114,15 +126,15 @@ function People() {
   }
 
   const functionGenerator = (alumni_id) => {
-    console.log("Make a function");
+    // console.log("Make a function");
     // process.stdout.write("Make a function for: ");
     // console.log(conversation);
     return () => {
-      console.log("Called!");
+      // console.log("Called!");
       // console.log(th);
-      console.log(alumni_id);
+      // console.log(alumni_id);
       setCurrentAlumniID(alumni_id);
-      console.log(currentAlumniID);
+      // console.log(currentAlumniID);
     }
   };
   
@@ -216,6 +228,14 @@ function People() {
                           </label>
                         </div>
                       </li>
+                      <li className="hover:bg-stone-200 focus:none">
+                        <div className="hover:bg-stone-200 text-black hover:border-stone-100">
+                          <label className="flex space-x-3 ">
+                            <p className="text-xs">AEDT</p>
+                            <input id="AEDT" type="checkbox" className="AEDT focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                          </label>
+                        </div>
+                      </li>
                       <button onClick={Academy_filter} className="drop-shadow-lg border-2 text-xs border  py-2 px-2 bg-red-300 hover:bg-red-400 border-red-300 hover:text-white hover:border-red-400">Add</button>
                     </ul>
                   </li>
@@ -228,6 +248,8 @@ function People() {
               <AcademyFilterComponent input={AcademyFilter} />
             </div>
 
+            <br className="space-y-5"></br>
+            <br className="space-y-5"></br>
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
