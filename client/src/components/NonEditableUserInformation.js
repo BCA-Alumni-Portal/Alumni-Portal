@@ -31,21 +31,20 @@ function NonEditableUserInformation(props) {
   const [pronouns, setPronouns] = useState("");
   const [academy, setAcademy] = useState("");
 
-  // useEffect(() => {
-  //   // pull from database and fill in fields: company, graduationYear (as string), pronouns, academy
-  //   // graduationYear, academy = required
-  //   // pronouns, company = optional
-  //   // SQL -> client
-  //   getInfo();
-  //   console.log("UPDATING USER INFO");
-  // }, []);
-
-  
-  useInterval(() => {
-    // console.log("interval called");
+  useEffect(() => {
+    // pull from database and fill in fields: company, graduationYear (as string), pronouns, academy
+    // graduationYear, academy = required
+    // pronouns, company = optional
+    // SQL -> client
     getInfo();
     console.log("UPDATING USER INFO");
-  }, 1000);
+  }, [props]);
+  
+  // useInterval(() => {
+  //   // console.log("interval called");
+  //   getInfo();
+  //   console.log("UPDATING USER INFO");
+  // }, 1000);
 
   const getInfo = () => {
       let data = packGetData();
