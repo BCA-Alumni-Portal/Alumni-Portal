@@ -42,7 +42,7 @@ export default function Messages() {
   const [currentName, setCurrentName] = React.useState("John Doe");
   // let clientID = 0;
   // let targetID = 10;
-  let messageBody = "";
+  const [messageBody, setMessageBody] = useState("");
   let input;
 
   let inputHandler = (e) => {
@@ -50,7 +50,7 @@ export default function Messages() {
     // messageBody = e.target.value;
     // console.log(e);
     // input = e.target;
-    messageBody = document.getElementById("message-input").value;
+    setMessageBody(e.target.value);
   };
 
   const requestClientID = () => {
@@ -127,6 +127,7 @@ export default function Messages() {
     // console.log("Clicked!");
     submitSendMessageRequest();
     submitGetMessageRequest();
+    setMessageBody("")
   };
 
   const switchConversation = (conversation) => {
@@ -243,7 +244,7 @@ export default function Messages() {
             <MessageList input={messages} />
             <div className="row flex gap-2 place-content-center py-3">
               <div>
-                <input type="text" onChange={inputHandler} id="message-input" placeholder="Message" className=" input input-bordered input-info w-full max-w-xs focus:border-sky-400 focus:ring-0" />
+                <input type="text" value={messageBody} onChange={inputHandler} id="message-input" placeholder="Message" className=" input input-bordered input-info w-full max-w-xs focus:border-sky-400 focus:ring-0" />
               </div>
               <br className="space-x-2"></br>
               <div>
