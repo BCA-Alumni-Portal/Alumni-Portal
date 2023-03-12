@@ -2,15 +2,19 @@ import { React, useState } from 'react'
 import person from "../images/person1.png"
 function MessageGenerator(props) {
     // console.log(props);
-    var senderID = 1;
+    // var senderID = 1;
     var messages = props.input;
+    var conversation = props.conversation;
+    var clientID = props.clientID;
+    var currentName = props.currentName;
+    var clientName = props.clientName;
     // console.log(messages);
 
     return (
         <div class="list-group">
             {messages.map((item) => {
-                var data = {}
-                if (item.sender_id == senderID) {
+                // console.log(item);
+                if (item.sender_id != clientID) {
                     return (
                         <div className="chat chat-start">
                             <div className="chat-image avatar">
@@ -19,8 +23,8 @@ function MessageGenerator(props) {
                                 </div>
                             </div>
                             <div className="chat-header">
-                                Anakin
-                                <time className="text-xs opacity-50">{item.sent_datetime}</time>
+                                {currentName} -
+                                <time className="text-xs opacity-50"> {item.sent_datetime}</time>
                             </div>
                             <div className="chat-bubble">{item.body}</div>
                         </div>
@@ -34,8 +38,8 @@ function MessageGenerator(props) {
                                 </div>
                             </div>
                             <div className="chat-header">
-                                Anakin
-                                <time className="text-xs opacity-50">{item.sent_datetime}</time>
+                                {clientName} -
+                                <time className="text-xs opacity-50"> {item.sent_datetime}</time>
                             </div>
                             <div className="chat-bubble">{item.body}</div>
                         </div>

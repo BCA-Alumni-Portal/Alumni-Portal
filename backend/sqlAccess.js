@@ -169,16 +169,6 @@ async function readAlumniDataFromSQL(startID = 0, endID = readLastEffectiveSqlAl
     return data;
 }
 
-async function readMessageFromSQLByBothIDs(senderID, receiverID) {
-    console.log(senderID, receiverID);
-    let query = "SELECT * FROM Messages WHERE " +
-        "(sender_id = " + senderID + " AND receiver_id = " + receiverID + ") OR " +
-        "(sender_id = " + receiverID + " AND receiver_id = " + senderID + ")";
-    // console.log(query);
-    let data = await sqlModule.makeQuery({ query: query });
-    return data;
-}
-
 async function readMessageFromSqlByConversation(conversationID) {
     let query = `SELECT * FROM Messages WHERE conversation_id=${conversationID}`;
     let data = await sqlModule.makeQuery({ query: query });
@@ -419,10 +409,7 @@ async function writeConversation(alumniID, targetID) {
 }
 
 async function readAvailableConversations(alumniID) {
-    let query = "SELECT * FROM " + TABLE_CONVERSATION + " WHERE " +
-        "(first_id=" + alumniID + ") OR (second_id=" + alumniID + ")";
-
-    query = `SELECT Conversation.conversation_id, Alumni.first_name, Alumni.last_name
+    let query = `SELECT Conversation.conversation_id, Alumni.first_name, Alumni.last_name
     FROM Conversation
     INNER JOIN Alumni ON (
     (Conversation.first_id=Alumni.alumni_id AND Conversation.first_id!=${alumniID})
@@ -455,7 +442,6 @@ async function writeDataToSQL(columns, values, tableName) {
 
 module.exports = {
     readAlumniDataFromSQL,
-    readMessageFromSQLByBothIDs,
     writeDataToSQL,
     writeMessageToSQL,
     readLastEffectiveSqlAlumniID,
