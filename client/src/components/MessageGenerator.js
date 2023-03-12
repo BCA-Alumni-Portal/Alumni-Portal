@@ -1,10 +1,10 @@
 import { React, useState } from 'react'
 import person from "../images/person1.png"
 function MessageGenerator(props) {
-    console.log(props);
+    // console.log(props);
     var senderID = 1;
     var messages = props.input;
-    console.log(messages);
+    // console.log(messages);
 
     return (
         <div class="list-group">
@@ -37,7 +37,7 @@ function MessageGenerator(props) {
                                 Anakin
                                 <time className="text-xs opacity-50">{item.sent_datetime}</time>
                             </div>
-                            <div className="chat-bubble">{item.body}!</div>
+                            <div className="chat-bubble">{item.body}</div>
                         </div>
                     );
                 }
