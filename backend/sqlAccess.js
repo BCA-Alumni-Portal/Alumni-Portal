@@ -33,7 +33,9 @@ const profileInfoColumns = [
     "company",
     "graduation_year",
     "pronouns",
-    "academy_id"
+    "academy_id",
+    "first_name",
+    "last_name"
 ];
 
 const readSocialColumns = [
@@ -259,7 +261,7 @@ async function getAcademyStringFromID(academy_id) {
     return data[0].academy_name;
 }
 
-async function updateProfileInfoToSQL(alumniID, company = "", graduationYear, pronouns = "", academy) {
+async function updateProfileInfoToSQL(alumniID, company = "", graduationYear, pronouns = "", academy, first_name, last_name) {
     let academyID = await getAcademyIDFromString(academy);
 
     let columns = profileInfoColumns;
@@ -267,7 +269,9 @@ async function updateProfileInfoToSQL(alumniID, company = "", graduationYear, pr
         company,
         graduationYear,
         pronouns,
-        academyID
+        academyID,
+        first_name,
+        last_name
     ];
     let query = constructSQLUpdateQuery("alumni_id", alumniID, columns, values, TABLE_ALUMNI);
     console.log("query: \n" + query);

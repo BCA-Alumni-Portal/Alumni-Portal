@@ -4,13 +4,13 @@ import axios from 'axios';
 
 export default function UserInformation() {
   const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
-  const [username, setUsername] = useState(isAuthenticated ? user.name : "user");
   
   // user.email == remkim23@bergen.org
 
   const [editing, setEditing] = useState(false);
   
   // user information
+  const [name, setName] = useState("");
   const [company, setCompany] = useState("");
   const [graduationYear, setGraduationYear] = useState("");
   const [pronouns, setPronouns] = useState("");
@@ -35,17 +35,21 @@ export default function UserInformation() {
   }, []);
 
   const getInfo = () => {
-    let data = packGetData();
-    let result = axios.get("http://localhost:5000/readProfileDataRequest", { params: data }).then(res => {
-      let data = res.data;
-      console.log(data);
-      if (data != null) {
-        setCompany(data.company || "");
-        setGraduationYear(data.graduation_year);
-        setPronouns(data.pronouns || "");
-        setAcademy(data.academy);
-      }
-    });
+    if(isAuthenticated){
+      let data = packGetData();
+      let result = axios.get("http://localhost:5000/readProfileDataRequest", { params: data }).then(res => {
+        let data = res.data;
+        console.log(data);
+        if (data != null) {
+          setCompany(data.company || "");
+          setGraduationYear(data.graduation_year);
+          setPronouns(data.pronouns || "");
+          setAcademy(data.academy);
+          setName(data.first_name + " " + data.last_name);
+        }
+      });
+    }
+    
   }
 
   const packSendData = () => {
@@ -54,7 +58,9 @@ export default function UserInformation() {
       company: company,
       graduationYear: graduationYear,
       pronouns: pronouns,
-      academy: academy
+      academy: academy,
+      first_name: name.split(" ")[0],
+      last_name: name.split(" ").length>1 ? name.split(" ").slice(1, name.split.length(" ")).join(" ") : ""
     }
   }
 
@@ -78,6 +84,10 @@ export default function UserInformation() {
 
   const changeAcademy = (e) => {
     setAcademy(e.target.value);
+  }
+
+  const changeName = (e) => {
+    setName(e.target.value);
   }
 
   const checkCompany = () => {
@@ -111,7 +121,10 @@ export default function UserInformation() {
   return (
     <div className="text-left ml-8">
       <div className='mb-5'>
-        <h1 className="text-5xl font-bold text-stone-600 mr-6 inline-block align-middle">{isAuthenticated ? user.name : "user"}</h1>
+        {editing ?
+        <input type="text" placeholder="Company" value={name} className="input input-bordered input-info input-lg text-4xl focus:border-sky-400 focus:ring-0 w-full max-w-xs mr-8 inline-block align-middle" onChange={(e) => changeName(e)} />:
+        <h1 className="text-5xl font-bold text-stone-600 mr-6 inline-block align-middle">{name}</h1>
+      }
         {editing ?
           (<button className="btn btn-circle bg-green-400 hover:bg-gradient-to-r hover:from-green-300 hover:to-green-400 hover:border-green-300 border-green-100 inline-block align-middle" onClick={() => saveChanges()}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 inline-block align-middle">

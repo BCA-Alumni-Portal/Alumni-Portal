@@ -234,8 +234,10 @@ app.get('/updateProfileDataRequest', async (req, res) => {
     let graduationYear = query.graduationYear;
     let pronouns = query.pronouns;
     let academy = query.academy;
+    let first_name = query.first_name;
+    let last_name = query.last_name;
 
-    let result = await sqlAccess.updateProfileInfoToSQL(clientID, company, graduationYear, pronouns, academy);
+    let result = await sqlAccess.updateProfileInfoToSQL(clientID, company, graduationYear, pronouns, academy, first_name, last_name);
 
     return res.send("Finished sending");
 })
