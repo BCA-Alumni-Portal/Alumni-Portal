@@ -54,7 +54,7 @@ async function makeQuery({query: query}) {
             }
             // console.log("Actual Result");
             // console.log(result);
-            console.log("Made query to the MySQL server.");
+            // console.log("Made query to the MySQL server.");
             resolve(result);
         });
     });

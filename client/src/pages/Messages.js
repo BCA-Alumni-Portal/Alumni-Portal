@@ -40,6 +40,7 @@ export default function Messages() {
   const [conversationID, setConversationID] = React.useState(0);
   const [conversations, setConversations] = React.useState([]);
   const [currentName, setCurrentName] = React.useState("John Doe");
+  const [clientName, setClientName] = React.useState("Johnathan Dough");
   // let clientID = 0;
   // let targetID = 10;
   let messageBody = "";
@@ -53,6 +54,19 @@ export default function Messages() {
     messageBody = document.getElementById("message-input").value;
   };
 
+  const getName = () => {
+    let data = {
+      email_address: user.email
+    };
+    let result = axios.get("http://localhost:5000/readProfileDataRequest", { params: data }).then(res => {
+      let data = res.data;
+      console.log(data);
+      if (data != null) {
+        setClientName(data.first_name + " " + data.last_name);
+      }
+    });
+  }
+
   const requestClientID = () => {
     // console.log("called requestClientID");
     let email = user.email;
@@ -61,6 +75,8 @@ export default function Messages() {
       // console.log("HERE!2");
       // console.log(res.data);
       setClientID(data);
+      getName();
+      // setClientName(user.first_name + " " + user.last_name);
     });
   }
 
@@ -80,10 +96,10 @@ export default function Messages() {
 
   const submitGetMessageRequest = () => {
     const data = packGetData();
-    console.log(data)
+    // console.log(data)
     let result = axios.get("http://localhost:5000/getMessageRequest", { params: data }).then(res => {
       let data = res.data;
-      console.log(data);
+      // console.log(data);
       if (data != null) {
         setMessages(data);
       }
@@ -92,7 +108,7 @@ export default function Messages() {
 
   const submitSendMessageRequest = () => {
     const data = packSendData();
-    console.log(data)
+    // console.log(data)
     axios.get("http://localhost:5000/sendMessageRequest", { params: data }).then(res => console.log(res)).catch((err) => {
       if (err.response) {
         console.log(err.response)
@@ -109,10 +125,10 @@ export default function Messages() {
     // const data = packSendData();
     // console.log(data)
     let email = user.email;
-    console.log("submitGetConversationsRequest");
+    // console.log("submitGetConversationsRequest");
     axios.get("http://localhost:5000/getConversationsRequest", { params: { email: email } }).then(res => {
       let data = res.data;
-      console.log(data);
+      // console.log(data);
       if (data != null) {
         setConversations(data);
       }
@@ -130,11 +146,11 @@ export default function Messages() {
   };
 
   const switchConversation = (conversation) => {
-    console.log("Switching:");
-    console.log(conversation);
+    // console.log("Switching:");
+    // console.log(conversation);
     setConversationID(conversation.conversation_id);
     setCurrentName(conversation.first_name + " " + conversation.last_name);
-    submitGetMessageRequest();
+    // submitGetMessageRequest();
   }
 
   useInterval(() => {
@@ -240,7 +256,7 @@ export default function Messages() {
           <div className="overflow-auto flex grid " id="conversation-box">
             <h2 className="py-3 text-2xl text-sky-400">{currentName}</h2>
 
-            <MessageList input={messages} />
+            <MessageList input={messages} currentName={currentName} clientID={clientID} clientName={clientName} />
             <div className="row flex gap-2 place-content-center py-3">
               <div>
                 <input type="text" onChange={inputHandler} id="message-input" placeholder="Message" className=" input input-bordered input-info w-full max-w-xs focus:border-sky-400 focus:ring-0" />
