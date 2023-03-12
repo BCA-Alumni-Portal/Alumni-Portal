@@ -9,7 +9,7 @@ export default function NonEditableDescription(props) {
     useEffect(() => {
         // pull from database and setDescription
         getInfo();
-    }, []);
+    }, [props]);
 
     const packGetData = () => {
         return {

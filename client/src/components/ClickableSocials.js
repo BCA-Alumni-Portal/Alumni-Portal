@@ -11,7 +11,7 @@ export default function ClickableSocials(props) {
         getInfo();
         console.log(linkedIn)
         setLinkedInLink("https://linkedin.com/in/" + linkedIn + "/");
-    }, []);
+    }, [props]);
 
 
     const packGetData = () => {
