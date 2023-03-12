@@ -1,16 +1,21 @@
 import React from "react";
-import { useAuth0 } from "@auth0/auth0-react"; 
+import { useAuth0 } from "@auth0/auth0-react";
 import '../index.css'
 
 const LogoutButton = () => {
-  const { logout } = useAuth0();
+  // const { logout } = useAuth0();
 
   return (
-    <button class="bg-blue hover:bg-hover-blue text-2xl text-cream font-semibold py-2 px-4 rounded-full" onClick={() => logout({ returnTo: "http://localhost:3000" })}>
-      Logout
-    </button>
-    );
-  
+    <a href="/auth/logout">
+      <button
+        className="drop-shadow-lg text-3xl font-semibold hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500 bg-amber-100 border border-amber-100 hover:border-amber-400 rounded py-2 px-4 "
+      >
+        Logout
+      </button>
+    </a>
+
+  );
+
 };
 
 export default LogoutButton;

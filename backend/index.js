@@ -5,11 +5,22 @@ const databaseSync = require('./databaseSync');
 // Remove this after testing messages
 const sqlAccess = require('./sqlAccess');
 
+//https://javascript.plainenglish.io/secure-react-express-apps-jsonwebtoken-cookie-session-auth0-and-passport-tutorial-e58d6dce6c91
+const dotenv = require('dotenv');
+const path = require('path');
+dotenv.config({path: path.resolve(__dirname, '.env')});
+
 const express = require('express');
 const cors = require('cors');
 const session = require('cookie-session');
-const { auth, requiresAuth } = require('express-openid-connect');
+const helmet = require('helmet');
+const hpp = require('hpp');
+const csurf = require('csurf');
+const rateLimit = require('express-rate-limit') //https://www.npmjs.com/package/express-rate-limit look into this
+const passport = require('./middleware/passport');
 const fs = require('fs');
+
+
 
 const app = express();
 const port = 5000;
@@ -19,6 +30,21 @@ const exportSheetsID = "1nCnY_3uG0xUZSx9uSaS9ROFUF9hur70jBrUxFSEnZMY";
 
 app.use(cors());
 app.use(express.json())
+app.use(helmet());
+app.use(hpp());
+app.use(
+    session({
+        name: 'session',
+        secret: process.env.COOKIE_SECRET,
+        expires: new Date(Date.now() + 72 * 60 * 60 * 1000)
+    })
+)
+app.use(csurf());
+app.use(passport.initialize());
+
+const authRoutes = require('./routes/auth');
+app.use('/auth', authRoutes);
+
 
 app.get('/hello', (req, res) => res.send("hello"));
 
@@ -161,9 +187,7 @@ app.get('/writeGSData', (req, res) => {
     return res.send("Finished writing");
 })
 
-app.listen(port, () => {
-    console.log(`Listening to port ${port}!`)
-})
+
 
 app.get('/syncData', (req, res) => {
     // console.log("syncData");
@@ -394,7 +418,9 @@ app.get('/getPeopleList', async (req, res) => {
     // console.log(result)
     return res.send(result);
 })
-
+app.listen(port, () => {
+    console.log(`Listening to port ${port}!`)
+})
 console.log("Automatically running here!");
 // databaseSync.sync({sheetID: sourceSheetsID});
 // databaseSync.exportSqlToSheets(exportSheetsID);

@@ -1,13 +1,12 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export default function Description() {
-    const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
-    // user.email == remkim23@bergen.org
+export default function Description(props) {
 
     const [description, setDescription] = useState("");
     const [editing, setEditing] = useState(false);
+    const [auth, setAuth] = useState(props.auth);
+
 
     useEffect(() => {
         // pull from database and setDescription
@@ -24,13 +23,13 @@ export default function Description() {
 
     const packGetData = () => {
         return {
-            email_address: user.email
+            email_address: auth.email
         }
     }
 
     const packSendData = () => {
         return {
-            email_address: user.email,
+            email_address: auth.email,
             description: description
         }
     }

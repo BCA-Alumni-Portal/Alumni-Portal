@@ -13,6 +13,7 @@
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
     "csurf": "^1.11.0",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-openid-connect": "^2.10.0",
     "express-rate-limit": "^6.7.0",
@@ -20,8 +21,12 @@
     "googleapis": "^110.0.0",
     "helmet": "^6.0.1",
     "hpp": "^0.2.3",
+    "jsonwebtoken": "^9.0.0",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "passport": "^0.6.0",
+    "passport-auth0": "^1.4.3",
+    "passport-jwt": "^4.0.1"
   },
   "proxy": "http://localhost:5000/"
 }

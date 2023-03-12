@@ -5,13 +5,12 @@ import "cropperjs/dist/cropper.css";
 import React, { useEffect, useState } from 'react';
 import './styles/ProfilePicture.css';
 
-export default function ProfilePicture() {
+export default function ProfilePicture(props) {
     const [profilePictureFile, setProfilePictureFile] = useState(null);
     const [profilePictureUncropped, setProfilePictureUncropped] = useState(null);
     const [profilePictureUploaded, setProfilePictureUploaded] = React.useState(false);
     const [cropper, setCropper] = useState(null);
-    const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
-    // user.email == remkim23@bergen.org
+    const [auth, setAuth] = useState(props.auth);
 
     useEffect(() => {
         // pull profilepicture from database

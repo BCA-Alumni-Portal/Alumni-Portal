@@ -2,12 +2,9 @@ import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function UserInformation() {
-  const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
-  
-  // user.email == remkim23@bergen.org
-
+function UserInformation(props) {
   const [editing, setEditing] = useState(false);
+  const [auth, setAuth] = useState(props.auth);
   
   // user information
   const [name, setName] = useState("");
@@ -35,7 +32,7 @@ function UserInformation() {
   }, []);
 
   const getInfo = () => {
-    if(isAuthenticated){
+    if(auth){
       let data = packGetData();
       let result = axios.get("http://localhost:5000/readProfileDataRequest", { params: data }).then(res => {
         let data = res.data;
@@ -54,7 +51,7 @@ function UserInformation() {
 
   const packSendData = () => {
     return {
-      email_address: user.email,
+      email_address: auth.email,
       company: company,
       graduationYear: graduationYear,
       pronouns: pronouns,
@@ -66,7 +63,7 @@ function UserInformation() {
 
   const packGetData = () => {
     return {
-      email_address: user.email
+      email_address: auth.email
     }
   }
 

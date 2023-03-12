@@ -1,36 +1,48 @@
-import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './styles/Me.css';
 import ProfilePicture from '../components/ProfilePicture';
 import UserInformation from '../components/UserInformation';
 import Description from '../components/Description';
 import Socials from '../components/Socials';
+import Home from './Home';
+
 
 export default function Me() {
-    const lorem = "Deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+    const [auth, setAuth] = useState(null);
 
+    useEffect(() => {
+        axios.get('/auth/current-session').then(({ data }) => {
+            setAuth(data);
+        })
+    }, [])
+    if (auth) {
+        return (
+            <div className='flex justify-center'>
+                <div className='max-w-4xl grid grid-cols-3 gap-8 mt-4'>
+                    <div>
+                        <ProfilePicture auth={auth} />
+                    </div>
+                    <div className='col-span-2'>
+                        <UserInformation auth={auth} />
+                    </div>
+                    <div className='col-span-3'>
+                        <Description auth={auth} />
+                    </div>
+                    <div className='col-span-3'>
+                        <Socials auth={auth} />
+                    </div>
+                </div>
 
-
-
-    return (
-        <div className='flex justify-center'>
-            <div className='max-w-4xl grid grid-cols-3 gap-8 mt-4'>
-                <div>
-                    <ProfilePicture />
-                </div>
-                <div className='col-span-2'>
-                    <UserInformation />
-                </div>
-                <div className='col-span-3'>
-                    <Description/>
-                </div>
-                <div className='col-span-3'>
-                    <Socials/>
-                </div>
             </div>
+        )
+    }
+    else if (auth === null) {
+        // loading
+        return <div></div>
+    }
+    else {
+        return <Home />;
+    }
 
-        </div>
-
-    )
 }

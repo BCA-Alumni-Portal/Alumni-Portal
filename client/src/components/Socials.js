@@ -2,8 +2,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export default function Socials() {
-    const { user, isLoading, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+export default function Socials(props) {
+    const [auth, setAuth] = useState(props.auth);
 
 
     const [linkedIn, setLinkedIn] = useState("");
@@ -23,13 +23,13 @@ export default function Socials() {
 
     const packGetData = () => {
         return {
-            email_address: user.email
+            email_address: auth.email
         }
     }
 
     const packSendData = () => {
         return {
-            email_address: user.email,
+            email_address: auth.email,
             linkedin: linkedIn
         }
     }
