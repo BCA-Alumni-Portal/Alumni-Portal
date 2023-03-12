@@ -267,6 +267,20 @@ app.get('/readSocialsRequest', async (req, res) => {
     return res.send(result[0]);
 })
 
+app.get('/readSocialsRequestByID', async (req, res) => {
+    // console.log("readSocialsRequest");
+
+    let query = req.query;
+
+    let clientID = query.alumniID;
+    let result = await sqlAccess.readSocialsFromSQL(clientID);
+    if (result == undefined) {
+        return res.send(undefined);
+    }
+    // console.log(result);
+    return res.send(result[0]);
+})
+
 app.get('/updateSocialsRequest', async (req, res) => {
     // console.log("updateSocialsRequest");
 
@@ -298,6 +312,17 @@ app.get('/readDescriptionRequest', async (req, res) => {
 
     let email = query.email_address;
     let clientID = await sqlAccess.readClientID(email);
+    let result = await sqlAccess.readDescriptionFromSQL(clientID);
+    return res.send(result);
+})
+
+
+app.get('/readDescriptionRequestByID', async (req, res) => {
+    // console.log("readDescriptionRequest");
+
+    let query = req.query;
+
+    let clientID = query.alumni_id;
     let result = await sqlAccess.readDescriptionFromSQL(clientID);
     return res.send(result);
 })
