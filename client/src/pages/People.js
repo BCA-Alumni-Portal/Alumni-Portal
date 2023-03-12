@@ -20,16 +20,23 @@ function People() {
   };
 
   //for filters
-  const filter_array = []; 
-  const inputYear = "";
+  const [filter, setFilter] = React.useState([]);
+
+
+  let inputYear = "";
   const academy_array = ['AAST', 'AMST', 'AVPA', 'ABF', 'ATCS', 'ACAHA']
+
+  let FilterHandler = (newElement) => {
+    setFilter(filter => [...filter, newElement]);
+  };
 
   //check if year is valid 
   function Year_filter() {
-    inputYear = document.getElementsByClassName("year").value;
+    inputYear = document.getElementById("year").value;
+    console.log(document.getElementById("year").value);
     if (isNaN(inputYear) == false ){
       inputYear = Number(inputYear);
-      filter_array.push(inputYear);
+      FilterHandler(inputYear);
     }
   };
 
@@ -38,7 +45,7 @@ function People() {
     for(let i = 0; i < 6; i++){
       var checkedValue = document.querySelector('.' + academy_array[i]).checked;
       if (checkedValue == true){
-        academy_array.push(academy_array[i]);
+        FilterHandler(academy_array[i]);
       }
     }
   };
@@ -62,15 +69,15 @@ function People() {
                     <span className="text-sm">Graduation Year</span>
                     <ul>
                       <div className="bg-base-100 border border-1 border-amber-300">
-                        <form className="px-2 py-3">
-                          <input type="text" placeholder="2023" className="year text-xs input input-bordered input-warning w-full max-w-xs focus:border-amber-400 focus:ring-0"></input>
+                        <div className="px-2 py-3">
+                          <input type="text" placeholder="2023" id="year"className="text-xs input input-bordered input-warning w-full max-w-xs focus:border-amber-400 focus:ring-0"></input>
                           <div>
                             <br></br>
                             <button onClick={Year_filter} className="drop-shadow-md border-2 text-xs bg-amber-200 border border-amber-300 rounded hover:bg-amber-300 py-2 px-10">
                               Add
                             </button>
                           </div>
-                        </form>
+                        </div>
                       </div>
 
                     </ul>
@@ -138,7 +145,7 @@ function People() {
               </div>
             </div>
             <div className="space-y-8" id="tag-area">
-              <Filters input={filter_array}/>
+              <Filters input={filter}/>
             </div>
 
             <br className="space-y-8"></br>
