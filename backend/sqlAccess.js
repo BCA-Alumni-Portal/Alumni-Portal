@@ -320,7 +320,7 @@ async function readSocialsFromSQL(alumniID) {
     if (data == undefined) {
         return undefined;
     }
-    return data[0];
+    return data;
 }
 
 async function updateSocialsToSQL(alumniID, socials) {

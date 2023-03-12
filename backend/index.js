@@ -265,6 +265,7 @@ app.get('/readSocialsRequest', async (req, res) => {
     if (result == undefined) {
         return res.send(undefined);
     }
+    console.log(result);
     return res.send(result[0]);
 })
 
