@@ -31,7 +31,7 @@ const exportSheetsID = "1nCnY_3uG0xUZSx9uSaS9ROFUF9hur70jBrUxFSEnZMY";
 app.use(cors());
 app.use(express.json())
 app.use(helmet());
-app.use(hpp());
+// app.use(hpp());
 app.use(
     session({
         name: 'session',
@@ -409,9 +409,10 @@ app.get('/getPeopleList', async (req, res) => {
     let academyFilters = query.academy_filter || [];
     // console.log("getPeopleList");
     // console.log(req);
-    // console.log(query);
-    // console.log(yearFilters);
-    // console.log(academyFilters);
+    console.log(query);
+    console.log(nameFilter);
+    console.log(yearFilters);
+    console.log(academyFilters);
 
     let result = await sqlAccess.readAlumniDataWithFilter(nameFilter, yearFilters, academyFilters);
     

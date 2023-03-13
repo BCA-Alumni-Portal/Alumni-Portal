@@ -124,6 +124,7 @@ function People() {
 
     let data = getPackedData();
     console.log(data);
+    data.test_array = [];
     let result = axios.get("http://localhost:5000/getPeopleList", { params: data }).then(res => {
       let data = res.data;
       console.log(data);
