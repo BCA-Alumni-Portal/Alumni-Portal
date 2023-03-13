@@ -126,7 +126,7 @@ function People() {
     console.log(data);
     let result = axios.get("http://localhost:5000/getPeopleList", { params: data }).then(res => {
       let data = res.data;
-      // console.log(data);
+      console.log(data);
       if (data != null) {
         // setClientName(data.first_name + " " + data.last_name);
         setPeople(data);
@@ -185,7 +185,7 @@ function People() {
     return (
       <div className="grid grid-cols-2 divide-x">
         <div className="overflow-auto">
-          <h2 className="py-3 text-lg">Directory</h2>
+        <h1 className="py-3 text-3xl font-bold text-stone-600 mr-6 inline-block align-middle">Directory</h1>
           <div className="search px-10">
             <input type="search" onChange={inputHandler} placeholder="Text" className="input input-bordered input-info w-full max-w-xs focus:border-sky-400 focus:ring-0"></input>
             <br className="space-y-8"></br>
