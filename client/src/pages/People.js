@@ -194,6 +194,8 @@ function People() {
               </div>
               <input type="search" onChange={inputHandler} placeholder="Search for alum" className="input input-bordered input-info block w-full focus:border-sky-400 focus:ring-0 pl-10"></input>
             </div>
+            <br className="space-y-8"></br>
+
             <div className="px-10 flex grid grid-cols-3 gap-1 place-content-center">
               <div>
                 <ul className="block menu menu-horizontal bg-base-100 border border border-1 border-amber-300">
@@ -224,57 +226,70 @@ function People() {
                     <ul className="menu bg-base-100 w-30 border border-1 border-red-300">
                       <li className="hover:bg-stone-200 focus:none">
                         <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex space-x-6 " >
-                            <p className="text-xs">AAST</p>
-                            <input id="AAST" type="checkbox" className=" AAST focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                          <label className="flex" >
+                            <input id="AAST" type="checkbox" className="place-content-start AAST focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                            <br className="space-x-2"></br>
+                            <p className="text-xs place-content-right">AAST</p>
                           </label>
                         </div>
                       </li>
                       <li className="hover:bg-stone-200 focus:none">
                         <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex space-x-5 " >
-                            <p className="text-xs">AMST</p>
-                            <input id="AMST" type="checkbox" className="AMST focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                          <label className="flex " >
+
+                            <input id="AMST" type="checkbox" className="place-content-start  AMST focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                            <br className="space-x-2"></br>
+                            <p className="text-xs place-content-right">AMST</p>
                           </label>
                         </div>
                       </li>
                       <li className="hover:bg-stone-200 focus:none">
                         <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex space-x-6">
-                            <p className="text-xs">AVPA</p>
-                            <input id="AVPA" type="checkbox" className="AVPA focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                          <label className="flex  ">
+
+                            <input id="AVPA" type="checkbox" className="place-content-start  AVPA focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                            <br className="space-x-2"></br>
+                            <p className="text-xs place-content-right">AVPA</p>
                           </label>
                         </div>
                       </li>
                       <li className="hover:bg-stone-200 focus:none">
                         <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex space-x-8 ">
-                            <p className="text-xs">ABF</p>
-                            <input id="ABF" type="checkbox" className="ABF focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                          <label className="flex ">
+
+                            <input id="ABF" type="checkbox" className="place-content-start  ABF focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                            <br className="space-x-2"></br>
+                            <p className="place-content-right text-xs">ABF</p>
                           </label>
                         </div>
                       </li>
                       <li className="hover:bg-stone-200 focus:none">
                         <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex space-x-6 ">
-                            <p className="text-xs">ATCS</p>
-                            <input id="ATCS" type="checkbox" className="ATCS focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                          <label className="flex ">
+
+                            <input id="ATCS" type="checkbox" className="place-content-start  ATCS focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                            <br className="space-x-2"></br>
+                            <p className="text-xs place-content-right">ATCS</p>
                           </label>
                         </div>
                       </li>
                       <li className="hover:bg-stone-200 focus:none">
                         <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex space-x-3 ">
-                            <p className="text-xs">ACAHA</p>
-                            <input id="ACAHA" type="checkbox" className="ACAHA focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                          <label className="flex">
+
+                            <input id="ACAHA" type="checkbox" className="place-content-start  ACAHA focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                            <br className="space-x-2"></br>
+                            <p className="text-xs place-content-right">ACAHA</p>
                           </label>
                         </div>
                       </li>
                       <li className="hover:bg-stone-200 focus:none">
                         <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex space-x-6 ">
-                            <p className="text-xs">AEDT</p>
-                            <input id="AEDT" type="checkbox" className="AEDT focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                          <label className="flex">
+
+                            <input id="AEDT" type="checkbox" className="place-content-start  AEDT focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                            <br className="space-x"></br>
+                            <p className="text-xs place-content-right">AEDT</p>
                           </label>
                         </div>
                       </li>
@@ -284,9 +299,9 @@ function People() {
                 </ul>
               </div>
             </div>
+            <br className="space-y-5"></br>
             <YearFilterComponent input={YearFilter}></YearFilterComponent>
             <AcademyFilterComponent input={AcademyFilter}></AcademyFilterComponent>
-
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
