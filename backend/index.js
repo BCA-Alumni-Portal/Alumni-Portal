@@ -428,6 +428,10 @@ app.get('/createConversation', async (req, res) => {
     return res.send(result);
 })
 
+app.listen(port, () => {
+    console.log(`Listening to port ${port}!`)
+})
+
 console.log("Automatically running here!");
 // databaseSync.sync({sheetID: sourceSheetsID});
 // databaseSync.exportSqlToSheets(exportSheetsID);

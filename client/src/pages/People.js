@@ -183,8 +183,7 @@ function People() {
 
   if (auth) {
     return (
-      <div className="grid grid-cols-2 divide-x ">
-        <div className="">
+      <div className="grid grid-cols-2 divide-x">
           <div className="overflow-auto">
             <h2 className="py-3 text-lg">Directory</h2>
             <div className="search px-10">
@@ -365,7 +364,6 @@ function People() {
             <PeopleGeneratorComponent people={people} switchFunctionGenerator={switchFunctionGenerator} createConversationFunctionGenerator={createConversationFunctionGenerator} />
           </div>
 
-        </div>
         <div className="">
           <Person alumniID={currentAlumniID} />
           {/* replace 11 with the ID of the alumni that you clicked on */}
