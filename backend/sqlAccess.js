@@ -414,7 +414,7 @@ async function readAlumniDataWithFilter(nameFilter, yearFilters, academyFilters)
         query += "(Alumni.academy_id=Academy.academy_id AND " + academyOr + ")"
     }
     // "WHERE " + yearOr + " AND " + "(Alumni.academy_id=Academy.academy_id AND " + academyOr + ")";
-    // console.log("final query: " + query);
+    console.log("final query: " + query);
     let result = await sqlModule.makeQuery({ query: query });
     return result;
 }
