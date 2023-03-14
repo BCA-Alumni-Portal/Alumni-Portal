@@ -163,12 +163,19 @@ export default function Messages() {
     // submitGetMessageRequest();
   }
 
+  // Client pings
   useInterval(() => {
-    // console.log("interval called");
     requestClientID();
     submitGetMessageRequest();
     submitGetConversationsRequest();
-  }, 1000);
+  }, 5000);
+
+  // Initial update
+  useEffect(() => {
+    requestClientID();
+    submitGetMessageRequest();
+    submitGetConversationsRequest();
+  })
 
   const conversationSelectionFunctionGenerator = (conversation) => {
     // console.log("Make a function for:");
