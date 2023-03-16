@@ -42,7 +42,7 @@ function People() {
   }, [])
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (e = React.MouseEvent) => setAnchorEl(e.currentTarget);
+  // const handleClick = (e = React.MouseEvent) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const [currentAlumniID, setCurrentAlumniID] = React.useState(0);
   const [people, setPeople] = React.useState([]);
