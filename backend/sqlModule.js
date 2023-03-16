@@ -2,21 +2,26 @@ const fs = require('fs').promises;
 const path = require('path');
 const process = require('process');
 
-const CREDENTIALS_PATH = path.join(process.cwd() + '/credentials/sql_credentials.json');
+// const CREDENTIALS_PATH = path.join(process.cwd() + '/credentials/sql_credentials.json');
 
 var mysql = require('mysql');
+const { sql } = require('googleapis/build/src/apis/sql');
 var connection;
 
 // Create a connection to the SQL database
+// host: keys.host,
+// user: keys.user,
+// password: keys.password,
+// database: keys.database
 async function createConnection() {
-    const content = await fs.readFile(CREDENTIALS_PATH);
-    const keys = JSON.parse(content);
+    // const content = await fs.readFile(CRsEDENTIALS_PATH);
+    // const keys = JSON.parse(content);
 
     var con = mysql.createConnection({
-        host: keys.host,
-        user: keys.user,
-        password: keys.password,
-        database: keys.database
+        "host": process.env.SQL_HOST,
+        "user": process.env.SQL_USER,
+        "password": process.env.SQL_PASSWORD,
+        "database": process.env.SQL_DATABASE
     });
 
     con.connect(function (err) {
@@ -42,7 +47,7 @@ async function getConnection() {
 
 
 // Send a query to the SQL database
-async function makeQuery({query: query}) {
+async function makeQuery({ query: query }) {
     // let con = createConnection();
     let con = await getConnection();
 

@@ -1,6 +1,8 @@
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const JwtStrategy = require('passport-jwt').Strategy;
+
+
 const auth0Strategy = new Auth0Strategy(
     {
         domain: process.env.AUTH0_DOMAIN,

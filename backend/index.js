@@ -25,6 +25,9 @@ const fs = require('fs');
 const app = express();
 const port = 5000;
 
+app.use(express.static(path.resolve(__dirname, '../client/build')));
+
+
 const sourceSheetsID = "1oOohmDEw3R2AU8aHwt9-KWGpFCQSYz08HsGgcXQEDLQ";
 const exportSheetsID = "1nCnY_3uG0xUZSx9uSaS9ROFUF9hur70jBrUxFSEnZMY";
 
