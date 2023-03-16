@@ -9,6 +9,7 @@ import PeopleGeneratorComponent from "../components/PeopleGenerator";
 import Person from '../components/Person';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import './styles/People.css'
 import Home from './Home';
 
 function useInterval(callback, delay) {
@@ -180,7 +181,7 @@ function People() {
     // console.log("interval called");
     submitGetPeopleRequest();
     requestClientID();
-  }, 1000);
+  }, 5000);
 
   if (auth) {
     return (
@@ -225,7 +226,7 @@ function People() {
                   <ul className="block menu menu-horizontal bg-base-100 w-30 align-self-left">
                     <li tabIndex="0">
                       <span className="text-sm border border-1 border-red-300">Academy</span>
-                      <ul className="menu bg-base-100 w-30 border border-1 border-red-300">
+                      <ul className="people-list menu bg-base-100 w-30 border border-1 border-red-300">
                         <li className="hover:bg-stone-200 focus:none">
                           <div className="hover:bg-stone-200 text-black hover:border-stone-100">
                             <label className="flex" >
@@ -303,6 +304,7 @@ function People() {
             </div>
             <YearFilterToast input={YearFilter}></YearFilterToast>
             <AcademyFilterToast input={AcademyFilter}></AcademyFilterToast>
+            {/* <br className="space-y-5"></br>
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
@@ -318,9 +320,7 @@ function People() {
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
+            <br className="space-y-5"></br> */}
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
             <PeopleGeneratorComponent people={people} switchFunctionGenerator={switchFunctionGenerator} createConversationFunctionGenerator={createConversationFunctionGenerator} />
