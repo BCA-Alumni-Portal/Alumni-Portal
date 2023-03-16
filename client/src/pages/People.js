@@ -2,8 +2,8 @@ import * as React from 'react';
 import ReactDOM from 'react-dom/client'
 // import { TextInput } from 'flowbite-react/lib/cjs/components/TextInput';
 import List from "../components/SearchBar";
-import YearFilterComponent from "../components/YearFilterToast";
-import AcademyFilterComponent from "../components/AcademyFilterToast";
+import YearFilterToast from "../components/YearFilterToast";
+import AcademyFilterToast from "../components/AcademyFilterToast";
 import PeopleGeneratorComponent from "../components/PeopleGenerator";
 // import { Label } from 'flowbite-react/lib/cjs/components/Label';
 import Person from '../components/Person';
@@ -184,8 +184,8 @@ function People() {
 
   if (auth) {
     return (
-      <div className="grid grid-cols-2 divide-x">
-        <div className="overflow-auto">
+      <div className="grid grid-cols-2 divide-x h-full">
+        <div className="">
           <h1 className="py-3 text-3xl font-bold text-stone-600 mr-6 inline-block align-middle">Directory</h1>
           <div className="search px-10">
             <div class="relative">
@@ -220,89 +220,89 @@ function People() {
               </div>
               <br className="space-x-4"></br>
               <div>
-                <ul className="block menu menu-horizontal bg-base-100 w-30 align-self-left">
-                  <li tabIndex="0">
-                    <span className="text-sm border border-1 border-red-300">Academy</span>
-                    <ul className="menu bg-base-100 w-30 border border-1 border-red-300">
-                      <li className="hover:bg-stone-200 focus:none">
-                        <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex" >
-                            <input id="AAST" type="checkbox" className="place-content-start AAST focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
-                            <br className="space-x-2"></br>
-                            <p className="text-xs place-content-right">AAST</p>
-                          </label>
-                        </div>
-                      </li>
-                      <li className="hover:bg-stone-200 focus:none">
-                        <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex " >
+                {/*  */}
+                {/* <div className="dropdown"> */}
+                  <ul className="block menu menu-horizontal bg-base-100 w-30 align-self-left">
+                    <li tabIndex="0">
+                      <span className="text-sm border border-1 border-red-300">Academy</span>
+                      <ul className="menu bg-base-100 w-30 border border-1 border-red-300">
+                        <li className="hover:bg-stone-200 focus:none">
+                          <div className="hover:bg-stone-200 text-black hover:border-stone-100">
+                            <label className="flex" >
+                              <input id="AAST" type="checkbox" className="place-content-start AAST focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                              <br className="space-x-2"></br>
+                              <p className="text-xs place-content-right">AAST</p>
+                            </label>
+                          </div>
+                        </li>
+                        <li className="hover:bg-stone-200 focus:none">
+                          <div className="hover:bg-stone-200 text-black hover:border-stone-100">
+                            <label className="flex " >
 
-                            <input id="AMST" type="checkbox" className="place-content-start  AMST focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
-                            <br className="space-x-2"></br>
-                            <p className="text-xs place-content-right">AMST</p>
-                          </label>
-                        </div>
-                      </li>
-                      <li className="hover:bg-stone-200 focus:none">
-                        <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex  ">
+                              <input id="AMST" type="checkbox" className="place-content-start  AMST focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                              <br className="space-x-2"></br>
+                              <p className="text-xs place-content-right">AMST</p>
+                            </label>
+                          </div>
+                        </li>
+                        <li className="hover:bg-stone-200 focus:none">
+                          <div className="hover:bg-stone-200 text-black hover:border-stone-100">
+                            <label className="flex  ">
 
-                            <input id="AVPA" type="checkbox" className="place-content-start  AVPA focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
-                            <br className="space-x-2"></br>
-                            <p className="text-xs place-content-right">AVPA</p>
-                          </label>
-                        </div>
-                      </li>
-                      <li className="hover:bg-stone-200 focus:none">
-                        <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex ">
+                              <input id="AVPA" type="checkbox" className="place-content-start  AVPA focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                              <br className="space-x-2"></br>
+                              <p className="text-xs place-content-right">AVPA</p>
+                            </label>
+                          </div>
+                        </li>
+                        <li className="hover:bg-stone-200 focus:none">
+                          <div className="hover:bg-stone-200 text-black hover:border-stone-100">
+                            <label className="flex ">
 
-                            <input id="ABF" type="checkbox" className="place-content-start  ABF focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
-                            <br className="space-x-2"></br>
-                            <p className="place-content-right text-xs">ABF</p>
-                          </label>
-                        </div>
-                      </li>
-                      <li className="hover:bg-stone-200 focus:none">
-                        <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex ">
+                              <input id="ABF" type="checkbox" className="place-content-start  ABF focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                              <br className="space-x-2"></br>
+                              <p className="place-content-right text-xs">ABF</p>
+                            </label>
+                          </div>
+                        </li>
+                        <li className="hover:bg-stone-200 focus:none">
+                          <div className="hover:bg-stone-200 text-black hover:border-stone-100">
+                            <label className="flex ">
 
-                            <input id="ATCS" type="checkbox" className="place-content-start  ATCS focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
-                            <br className="space-x-2"></br>
-                            <p className="text-xs place-content-right">ATCS</p>
-                          </label>
-                        </div>
-                      </li>
-                      <li className="hover:bg-stone-200 focus:none">
-                        <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex">
+                              <input id="ATCS" type="checkbox" className="place-content-start  ATCS focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                              <br className="space-x-2"></br>
+                              <p className="text-xs place-content-right">ATCS</p>
+                            </label>
+                          </div>
+                        </li>
+                        <li className="hover:bg-stone-200 focus:none">
+                          <div className="hover:bg-stone-200 text-black hover:border-stone-100">
+                            <label className="flex">
 
-                            <input id="ACAHA" type="checkbox" className="place-content-start  ACAHA focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
-                            <br className="space-x-2"></br>
-                            <p className="text-xs place-content-right">ACAHA</p>
-                          </label>
-                        </div>
-                      </li>
-                      <li className="hover:bg-stone-200 focus:none">
-                        <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                          <label className="flex">
-
-                            <input id="AEDT" type="checkbox" className="place-content-start  AEDT focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
-                            <br className="space-x"></br>
-                            <p className="text-xs place-content-right">AEDT</p>
-                          </label>
-                        </div>
-                      </li>
-                      <button onClick={Academy_filter} className="drop-shadow-lg border-2 text-xs border  py-2 px-2 bg-red-300 hover:bg-red-400 border-red-300 hover:text-white hover:border-red-400">Add</button>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
+                              <input id="ACAHA" type="checkbox" className="place-content-start  ACAHA focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                              <br className="space-x-2"></br>
+                              <p className="text-xs place-content-right">ACAHA</p>
+                            </label>
+                          </div>
+                        </li>
+                        <li className="hover:bg-stone-200 focus:none">
+                          <div className="hover:bg-stone-200 text-black hover:border-stone-100">
+                            <label className="flex">
+                              <input id="AEDT" type="checkbox" className="place-content-start  AEDT focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
+                              <br className="space-x"></br>
+                              <p className="text-xs place-content-right">AEDT</p>
+                            </label>
+                          </div>
+                        </li>
+                        <button onClick={Academy_filter} className="drop-shadow-lg border-2 text-xs border  py-2 px-2 bg-red-300 hover:bg-red-400 border-red-300 hover:text-white hover:border-red-400">Add</button>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              {/* </div> */}
             </div>
-            <br className="space-y-5"></br>
-            <YearFilterComponent input={YearFilter}></YearFilterComponent>
-            <AcademyFilterComponent input={AcademyFilter}></AcademyFilterComponent>
-            <br className="space-y-5"></br>
+            <YearFilterToast input={YearFilter}></YearFilterToast>
+            <AcademyFilterToast input={AcademyFilter}></AcademyFilterToast>
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
@@ -321,7 +321,8 @@ function People() {
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
-            {/* <List input={inputText} /> */}
+            <br className="space-y-5"></br>
+            <br className="space-y-5"></br>
             <PeopleGeneratorComponent people={people} switchFunctionGenerator={switchFunctionGenerator} createConversationFunctionGenerator={createConversationFunctionGenerator} />
           </div>
         </div>
