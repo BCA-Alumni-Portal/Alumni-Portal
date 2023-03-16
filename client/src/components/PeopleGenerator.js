@@ -7,7 +7,7 @@ function PeopleGenerator(props) {
     let people = props.people;
     // console.log(people);
     return (
-        <div class="list-group">
+        <div class="list-group max-h-screen overflow-y-scroll">
             {
                 people.map((person) => {
                     let switchFunc = props.switchFunctionGenerator(person.alumni_id);

@@ -20,7 +20,7 @@ export default function Home() {
         <div className="container">
           <div className="centered space-y-2">
             <img class="h-auto max-w-3xl rounded-lg self-center mb-6 mt-6" src={alumni1} />
-            <h1 className="text-5xl font-bold text-stone-600 align-bottom mt-4 self-center">Welcome to BCA Alumni portal!</h1>
+            <h1 className="text-5xl font-bold text-stone-600 align-bottom mt-4 self-center">Welcome to the BCA Alumni portal!</h1>
           </div>
         </div>
       </div>
