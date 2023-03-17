@@ -39,7 +39,8 @@ function People() {
     axios.get('/auth/current-session').then(({ data }) => {
       setAuth(data);
     })
-  }, [])
+  }, []);
+  
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   // const handleClick = (e = React.MouseEvent) => setAnchorEl(e.currentTarget);

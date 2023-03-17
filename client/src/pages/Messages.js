@@ -37,9 +37,10 @@ export default function Messages() {
 
   useEffect(() => {
     axios.get('/auth/current-session').then(({ data }) => {
+      console.log("got auth");
       setAuth(data);
     })
-  }, [])
+  }, []);
 
 
 
@@ -165,6 +166,9 @@ export default function Messages() {
 
   // Client pings
   useInterval(() => {
+    if (auth == null) {
+      return;
+    }
     requestClientID();
     submitGetMessageRequest();
     submitGetConversationsRequest();
@@ -172,6 +176,9 @@ export default function Messages() {
 
   // Initial update
   useEffect(() => {
+    if (auth == null) {
+      return;
+    }
     requestClientID();
     submitGetMessageRequest();
     submitGetConversationsRequest();
