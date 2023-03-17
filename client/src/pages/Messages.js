@@ -148,7 +148,7 @@ export default function Messages() {
     // }
   };
 
-  const handleClick = (e) => {
+  const handleClick = (e = React.MouseEvent) => {
     // console.log("Clicked!");
     submitSendMessageRequest();
     submitGetMessageRequest();
