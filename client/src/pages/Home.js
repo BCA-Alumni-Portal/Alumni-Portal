@@ -9,6 +9,7 @@ export default function Home() {
   const [auth, setAuth] = useState(null);
 
   useEffect(() => {
+    console.log(process.env.NODE_ENV)
     axios.get('/auth/current-session').then(({ data }) => {
       setAuth(data);
       console.log(data)
