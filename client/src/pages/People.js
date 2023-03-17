@@ -127,7 +127,7 @@ function People() {
     let data = getPackedData();
     console.log(data);
     data.test_array = [];
-    let result = axios.get("http://localhost:5000/getPeopleList", { params: data }).then(res => {
+    let result = axios.get("/getPeopleList", { params: data }).then(res => {
       let data = res.data;
       console.log(data);
       if (data != null) {
@@ -140,7 +140,7 @@ function People() {
   const requestClientID = () => {
     // console.log("called requestClientID");
     let email = auth.email;
-    let result = axios.get("http://localhost:5000/getClientID", { params: { email: email } }).then(res => {
+    let result = axios.get("/getClientID", { params: { email: email } }).then(res => {
       let data = res.data.clientID;
       // console.log("HERE!2");
       // console.log(res.data);
@@ -156,7 +156,7 @@ function People() {
       targetID: alumni_id
     }
     console.log(data);
-    let result = axios.get("http://localhost:5000/createConversation", { params: data }).then(res => {
+    let result = axios.get("/createConversation", { params: data }).then(res => {
       let data = res.data;
       // console.log(data);
       if (data != null) {

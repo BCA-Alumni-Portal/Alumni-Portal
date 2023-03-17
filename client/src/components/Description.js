@@ -36,7 +36,7 @@ export default function Description(props) {
 
     const getInfo = () => {
         let data = packGetData();
-        let result = axios.get("http://localhost:5000/readDescriptionRequest", { params: data }).then(res => {
+        let result = axios.get("/readDescriptionRequest", { params: data }).then(res => {
             let data = res.data;
             console.log(res);
             console.log(data);
@@ -51,7 +51,7 @@ export default function Description(props) {
         // push description to database
 
         let data = packSendData();
-        let result = axios.get("http://localhost:5000/updateDescriptionRequest", { params: data }).then(res => {
+        let result = axios.get("/updateDescriptionRequest", { params: data }).then(res => {
             let data = res.data;
             console.log(data);
             if (data != null) {
