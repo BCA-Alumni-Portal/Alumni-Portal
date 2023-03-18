@@ -12,20 +12,22 @@ import Admin from "./pages/Admin"
 import { Route, Routes } from "react-router-dom"
 
 function App() {
+  console.log(process.env.NODE_ENV)
+
   return (
     <div>
-      <Navbar/>
-       <div className="container">
+      <Navbar />
+      <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/people" element={<People />}/>
-          <Route path="/jobs" element={<Jobs />}/>
-          <Route path="/messages" element={<Messages />}/>
-          <Route path="/me" element={<Me />}/>
-          <Route path="/register" element={<Register />}/>
-          <Route path="/test" element={<Test />}/>
-          <Route path="/admin" element={<Admin />}/>
+          <Route path="/people" element={<People />} />
+          <Route path="/jobs" element={<Jobs />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/me" element={<Me />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/test" element={<Test />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </div>
     </div>

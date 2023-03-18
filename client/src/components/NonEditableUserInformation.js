@@ -26,7 +26,7 @@ function NonEditableUserInformation(props) {
       let data = packGetData();
       // console.log(props.info);
       // console.log(props.alumniID);
-      let result = axios.get("/readProfileDataRequestByID", { params: data }).then(res => {
+      let result = axios.get("/api/readProfileDataRequestByID", { params: data }).then(res => {
         let data = res.data;
         // console.log(data);
         if (data != null) {

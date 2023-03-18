@@ -16,7 +16,6 @@ var connection;
 async function createConnection() {
     // const content = await fs.readFile(CRsEDENTIALS_PATH);
     // const keys = JSON.parse(content);
-
     var con = mysql.createConnection({
         "host": process.env.SQL_HOST,
         "user": process.env.SQL_USER,

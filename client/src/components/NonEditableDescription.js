@@ -19,7 +19,7 @@ export default function NonEditableDescription(props) {
 
     const getInfo = () => {
         let data = packGetData();
-        let result = axios.get("/readDescriptionRequestByID", { params: data }).then(res => {
+        let result = axios.get("/api/readDescriptionRequestByID", { params: data }).then(res => {
             let data = res.data;
             console.log(res);
             console.log(data);
