@@ -5,10 +5,10 @@ const databaseSync = require('./databaseSync');
 // Remove this after testing messages
 const sqlAccess = require('./sqlAccess');
 
-//https://javascript.plainenglish.io/secure-react-express-apps-jsonwebtoken-cookie-session-auth0-and-passport-tutorial-e58d6dce6c91
 const dotenv = require('dotenv');
 const path = require('path');
-dotenv.config({path: path.resolve(__dirname, '.env')});
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+const compression = require("compression");
 
 const express = require('express');
 const cors = require('cors');
@@ -21,10 +21,10 @@ const passport = require('./middleware/passport');
 const fs = require('fs');
 
 
-
 const app = express();
 const port = 5000;
 
+app.use(compression());
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 
@@ -47,9 +47,6 @@ app.use(passport.initialize());
 
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
-
-
-app.get('/hello', (req, res) => res.send("hello"));
 
 // for MySQL
 app.get('/getSQLData', async (req, res) => {
@@ -229,7 +226,7 @@ app.get('/getMessageRequest', async (req, res) => {
 app.get('/getClientID', async (req, res) => {
     // console.log("getClientID");
     let result = await sqlAccess.readClientID(req.query.email);
-    return res.send({clientID: result});
+    return res.send({ clientID: result });
 })
 
 app.get('/updateProfileDataRequest', async (req, res) => {
@@ -320,7 +317,7 @@ app.get('/updateSocialsRequest', async (req, res) => {
     let socials = [
         query.linkedin
     ];
-    
+
     let result = await sqlAccess.readSocialsFromSQL(clientID);
     // console.log("result: " + result);
     if (result == undefined) {
@@ -366,7 +363,7 @@ app.get('/updateDescriptionRequest', async (req, res) => {
     let description = [
         query.description
     ];
-    
+
     let result = await sqlAccess.readDescriptionFromSQL(clientID);
     // console.log("result: " + result);
     if (result == undefined) {
@@ -393,7 +390,7 @@ app.get('/exportData', async (req, res) => {
 
 app.get('/getConversationsRequest', async (req, res) => {
     // console.log("getConversationsRequest");
-    
+
     let query = req.query;
 
     let email = query.email;
@@ -418,7 +415,7 @@ app.get('/getPeopleList', async (req, res) => {
     console.log(academyFilters);
 
     let result = await sqlAccess.readAlumniDataWithFilter(nameFilter, yearFilters, academyFilters);
-    
+
     // console.log(result)
     return res.send(result);
 })
@@ -432,9 +429,12 @@ app.get('/createConversation', async (req, res) => {
     return res.send(result);
 })
 
-app.listen(port, () => {
-    console.log(`Listening to port ${port}!`)
-})
+if (process.env.NODE_ENV == "development") {
+    app.listen(port, () => {
+        console.log(`Listening to port ${port}!`)
+    })
+}
+
 
 console.log("Automatically running here!");
 // databaseSync.sync({sheetID: sourceSheetsID});
