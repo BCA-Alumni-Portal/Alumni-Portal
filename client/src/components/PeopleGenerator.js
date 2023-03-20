@@ -1,6 +1,6 @@
 import { React, useState } from 'react'
 import data from "./ListData.json"
-import personImage from "../images/person1.png"
+import personImage from "../images/leonardo.png"
 
 
 function PeopleGenerator(props) {
