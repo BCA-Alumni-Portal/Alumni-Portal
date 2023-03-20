@@ -34,7 +34,7 @@ function UserInformation(props) {
   const getInfo = () => {
     if(auth){
       let data = packGetData();
-      let result = axios.get("http://localhost:5000/readProfileDataRequest", { params: data }).then(res => {
+      let result = axios.get("/api/readProfileDataRequest", { params: data }).then(res => {
         let data = res.data;
         console.log(data);
         if (data != null) {
@@ -105,7 +105,7 @@ function UserInformation(props) {
     // push to database
 
     let data = packSendData();
-    let result = axios.get("http://localhost:5000/updateProfileDataRequest", { params: data }).then(res => {
+    let result = axios.get("/api/updateProfileDataRequest", { params: data }).then(res => {
       let data = res.data;
       console.log(data);
       if (data != null) {

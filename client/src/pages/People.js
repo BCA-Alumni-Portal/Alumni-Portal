@@ -39,10 +39,11 @@ function People() {
     axios.get('/auth/current-session').then(({ data }) => {
       setAuth(data);
     })
-  }, [])
+  }, []);
+  
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (e = React.MouseEvent) => setAnchorEl(e.currentTarget);
+  // const handleClick = (e = React.MouseEvent) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const [currentAlumniID, setCurrentAlumniID] = React.useState(0);
   const [people, setPeople] = React.useState([]);
@@ -126,7 +127,7 @@ function People() {
     let data = getPackedData();
     console.log(data);
     data.test_array = [];
-    let result = axios.get("http://localhost:5000/getPeopleList", { params: data }).then(res => {
+    let result = axios.get("/api/getPeopleList", { params: data }).then(res => {
       let data = res.data;
       console.log(data);
       if (data != null) {
@@ -139,7 +140,7 @@ function People() {
   const requestClientID = () => {
     // console.log("called requestClientID");
     let email = auth.email;
-    let result = axios.get("http://localhost:5000/getClientID", { params: { email: email } }).then(res => {
+    let result = axios.get("/api/getClientID", { params: { email: email } }).then(res => {
       let data = res.data.clientID;
       // console.log("HERE!2");
       // console.log(res.data);
@@ -155,7 +156,7 @@ function People() {
       targetID: alumni_id
     }
     console.log(data);
-    let result = axios.get("http://localhost:5000/createConversation", { params: data }).then(res => {
+    let result = axios.get("/api/createConversation", { params: data }).then(res => {
       let data = res.data;
       // console.log(data);
       if (data != null) {

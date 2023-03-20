@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"cd backend && npm run start\" \"cd client && yarn start\""
+    "start": "concurrently \"cd backend && npm run start\" \"cd client && yarn start\"",
+    "build": "cd backend && npm install && cd .. && cd client && npm install && CI=false node node_modules/react-scripts/bin/react-scripts build"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/RemingtonKim/AcademiesAlumni#readme",
   "dependencies": {
+    "compression": "^1.7.4",
     "concurrently": "^7.6.0",
     "react-images-uploading": "^3.1.7",
     "yarn": "^1.22.19"

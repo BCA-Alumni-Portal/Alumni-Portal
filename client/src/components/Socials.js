@@ -36,7 +36,7 @@ export default function Socials(props) {
 
     const getInfo = () => {
         let data = packGetData();
-        let result = axios.get("http://localhost:5000/readSocialsRequest", { params: data }).then(res => {
+        let result = axios.get("/api/readSocialsRequest", { params: data }).then(res => {
             let data = res.data;
             console.log(data);
             if (data != null) {
@@ -51,7 +51,7 @@ export default function Socials(props) {
         // push linkedin to database
 
         let data = packSendData();
-        let result = axios.get("http://localhost:5000/updateSocialsRequest", { params: data }).then(res => {
+        let result = axios.get("/api/updateSocialsRequest", { params: data }).then(res => {
             let data = res.data;
             console.log(data);
             if (data != null) {

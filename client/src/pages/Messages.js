@@ -37,9 +37,10 @@ export default function Messages() {
 
   useEffect(() => {
     axios.get('/auth/current-session').then(({ data }) => {
+      console.log("got auth");
       setAuth(data);
     })
-  }, [])
+  }, []);
 
 
 
@@ -67,7 +68,7 @@ export default function Messages() {
     let data = {
       email_address: auth.email
     };
-    let result = axios.get("http://localhost:5000/readProfileDataRequest", { params: data }).then(res => {
+    let result = axios.get("/api/readProfileDataRequest", { params: data }).then(res => {
       let data = res.data;
       // console.log(data);
       if (data != null) {
@@ -79,7 +80,7 @@ export default function Messages() {
   const requestClientID = () => {
     // console.log("called requestClientID");
     let email = auth.email;
-    let result = axios.get("http://localhost:5000/getClientID", { params: { email: email } }).then(res => {
+    let result = axios.get("/api/getClientID", { params: { email: email } }).then(res => {
       let data = res.data.clientID;
       // console.log("HERE!2");
       // console.log(res.data);
@@ -106,7 +107,7 @@ export default function Messages() {
   const submitGetMessageRequest = () => {
     const data = packGetData();
     // console.log(data)
-    let result = axios.get("http://localhost:5000/getMessageRequest", { params: data }).then(res => {
+    let result = axios.get("/api/getMessageRequest", { params: data }).then(res => {
       let data = res.data;
       // console.log(data);
       if (data != null) {
@@ -118,7 +119,7 @@ export default function Messages() {
   const submitSendMessageRequest = () => {
     const data = packSendData();
     // console.log(data)
-    axios.get("http://localhost:5000/sendMessageRequest", { params: data }).then(res => console.log(res)).catch((err) => {
+    axios.get("/api/sendMessageRequest", { params: data }).then(res => console.log(res)).catch((err) => {
       if (err.response) {
         console.log(err.response)
       }
@@ -135,7 +136,7 @@ export default function Messages() {
     // console.log(data)
     let email = auth.email;
     // console.log("submitGetConversationsRequest");
-    axios.get("http://localhost:5000/getConversationsRequest", { params: { email: email } }).then(res => {
+    axios.get("/api/getConversationsRequest", { params: { email: email } }).then(res => {
       let data = res.data;
       // console.log(data);
       if (data != null) {
@@ -147,8 +148,8 @@ export default function Messages() {
     //   input.value = "";
     // }
   };
-
-  const handleClick = (e = React.MouseEvent) => {
+  //= React.MouseEvent
+  const handleClick = (e) => {
     // console.log("Clicked!");
     submitSendMessageRequest();
     submitGetMessageRequest();
@@ -165,6 +166,9 @@ export default function Messages() {
 
   // Client pings
   useInterval(() => {
+    if (auth == null) {
+      return;
+    }
     requestClientID();
     submitGetMessageRequest();
     submitGetConversationsRequest();
@@ -172,6 +176,9 @@ export default function Messages() {
 
   // Initial update
   useEffect(() => {
+    if (auth == null) {
+      return;
+    }
     requestClientID();
     submitGetMessageRequest();
     submitGetConversationsRequest();

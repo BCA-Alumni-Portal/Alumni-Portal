@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "compression": "^1.7.4",
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
     "csurf": "^1.11.0",
@@ -27,6 +28,5 @@
     "passport": "^0.6.0",
     "passport-auth0": "^1.4.3",
     "passport-jwt": "^4.0.1"
-  },
-  "proxy": "http://localhost:5000/"
+  }
 }
