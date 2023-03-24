@@ -64,7 +64,7 @@ function People() {
   const [AcademyFilter, setAcademyFilter] = React.useState([]);
 
   let inputYear = "";
-  const academy_array = ['AAST', 'AMST', 'AVPA', 'ABF', 'ATCS', 'ACAHA', 'AEDT'];
+  const academy_array = ['AAST', 'AMST', 'AVPA', 'ABF', 'ATCS', 'ACAHA', 'AEDT', 'APT', 'ABCT', 'ACA', 'AVAGC','GLE'];
 
   let YearFilterHandler = (newElement) => {
     var current_array = [...YearFilter, newElement];
