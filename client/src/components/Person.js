@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import personImage2 from '../images/person2.png';
 import NonEditableProfilePicture from './NonEditableProfilePicture';
 import NonEditableUserInformation from './NonEditableUserInformation';
 import NonEditableDescription from './NonEditableDescription';
@@ -19,6 +18,9 @@ function Person(props) {
             </div>
             <div className='col-span-3'>
                 <ClickableSocials alumniID={props.alumniID}/>
+            </div>
+            <div className="col-span-3">
+                <button className="btn bg-sky-400 hover:bg-gradient-to-r hover:from-sky-300 hover:to-sky-400 hover:border-sky-300 border-sky-100 float-left normal-case text-xl">Message</button>
             </div>
         </div>
     )

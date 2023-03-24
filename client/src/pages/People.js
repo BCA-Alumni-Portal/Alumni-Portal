@@ -2,6 +2,8 @@ import * as React from 'react';
 import ReactDOM from 'react-dom/client'
 // import { TextInput } from 'flowbite-react/lib/cjs/components/TextInput';
 import List from "../components/SearchBar";
+import YearFilterComponent from "../components/YearFilter"
+import AcademyFilterComponent from "../components/AcademyFilter"
 import YearFilterToast from "../components/YearFilterToast";
 import AcademyFilterToast from "../components/AcademyFilterToast";
 import PeopleGeneratorComponent from "../components/PeopleGenerator";
@@ -90,15 +92,15 @@ function People() {
     setAcademyFilter(uniqueArray); //[...AcademyFilter, "\"" + newElement + "\""]);
   };
 
-  //check if year is valid 
-  function Year_filter() {
-    inputYear = document.getElementById("year").value;
-    console.log(document.getElementById("year").value);
-    if (isNaN(inputYear) == false) {
-      inputYear = Number(inputYear);
-      YearFilterHandler(inputYear);
-    }
-  };
+  // //check if year is valid 
+  // function Year_filter() {
+  //   inputYear = document.getElementById("year").value;
+  //   console.log(document.getElementById("year").value);
+  //   if (isNaN(inputYear) == false) {
+  //     inputYear = Number(inputYear);
+  //     YearFilterHandler(inputYear);
+  //   }
+  // };
 
   //Pushing Academy Values, checking if checkbox checked
   function Academy_filter() {
@@ -198,130 +200,11 @@ function People() {
             </div>
             <br className="space-y-8"></br>
 
-            <div className="px-10 flex grid grid-cols-3 gap-1 place-content-center">
-              <div>
-                <ul className="block menu menu-horizontal bg-base-100 border border border-1 border-amber-300">
-                  <li tabIndex="0">
-                    <span className="text-sm">Graduation Year</span>
-                    <ul>
-                      <div className="bg-base-100 border border-1 border-amber-300">
-                        <div className="px-2 py-3">
-                          <input type="text" placeholder="2023" id="year" className="text-xs input input-bordered input-warning w-full max-w-xs focus:border-amber-400 focus:ring-0"></input>
-                          <div>
-                            <br></br>
-                            <button onClick={Year_filter} className="drop-shadow-md border-2 text-xs bg-amber-200 border border-amber-300 rounded hover:bg-amber-300 py-2 px-10">
-                              Add
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-              <br className="space-x-4"></br>
-              <div>
-                {/*  */}
-                {/* <div className="dropdown"> */}
-                  <ul className="block menu menu-horizontal bg-base-100 w-30 align-self-left">
-                    <li tabIndex="0">
-                      <span className="text-sm border border-1 border-red-300">Academy</span>
-                      <ul className="people-list menu bg-base-100 w-30 border border-1 border-red-300">
-                        <li className="hover:bg-stone-200 focus:none">
-                          <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                            <label className="flex" >
-                              <input id="AAST" type="checkbox" className="place-content-start AAST focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
-                              <br className="space-x-2"></br>
-                              <p className="text-xs place-content-right">AAST</p>
-                            </label>
-                          </div>
-                        </li>
-                        <li className="hover:bg-stone-200 focus:none">
-                          <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                            <label className="flex " >
-
-                              <input id="AMST" type="checkbox" className="place-content-start  AMST focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
-                              <br className="space-x-2"></br>
-                              <p className="text-xs place-content-right">AMST</p>
-                            </label>
-                          </div>
-                        </li>
-                        <li className="hover:bg-stone-200 focus:none">
-                          <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                            <label className="flex  ">
-
-                              <input id="AVPA" type="checkbox" className="place-content-start  AVPA focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
-                              <br className="space-x-2"></br>
-                              <p className="text-xs place-content-right">AVPA</p>
-                            </label>
-                          </div>
-                        </li>
-                        <li className="hover:bg-stone-200 focus:none">
-                          <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                            <label className="flex ">
-
-                              <input id="ABF" type="checkbox" className="place-content-start  ABF focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
-                              <br className="space-x-2"></br>
-                              <p className="place-content-right text-xs">ABF</p>
-                            </label>
-                          </div>
-                        </li>
-                        <li className="hover:bg-stone-200 focus:none">
-                          <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                            <label className="flex ">
-
-                              <input id="ATCS" type="checkbox" className="place-content-start  ATCS focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
-                              <br className="space-x-2"></br>
-                              <p className="text-xs place-content-right">ATCS</p>
-                            </label>
-                          </div>
-                        </li>
-                        <li className="hover:bg-stone-200 focus:none">
-                          <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                            <label className="flex">
-
-                              <input id="ACAHA" type="checkbox" className="place-content-start  ACAHA focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
-                              <br className="space-x-2"></br>
-                              <p className="text-xs place-content-right">ACAHA</p>
-                            </label>
-                          </div>
-                        </li>
-                        <li className="hover:bg-stone-200 focus:none">
-                          <div className="hover:bg-stone-200 text-black hover:border-stone-100">
-                            <label className="flex">
-                              <input id="AEDT" type="checkbox" className="place-content-start  AEDT focus:ring-0 focus:ring-offset-0 checkbox checkbox-sm checkbox-error"></input>
-                              <br className="space-x"></br>
-                              <p className="text-xs place-content-right">AEDT</p>
-                            </label>
-                          </div>
-                        </li>
-                        <button onClick={Academy_filter} className="drop-shadow-lg border-2 text-xs border  py-2 px-2 bg-red-300 hover:bg-red-400 border-red-300 hover:text-white hover:border-red-400">Add</button>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-              {/* </div> */}
-            </div>
+           <YearFilterComponent input={YearFilterHandler}></YearFilterComponent> 
+           <AcademyFilterComponent Academies={academy_array} RegisterFilters={Academy_filter}></AcademyFilterComponent>
             <YearFilterToast input={YearFilter}></YearFilterToast>
             <AcademyFilterToast input={AcademyFilter}></AcademyFilterToast>
-            {/* <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br> */}
+            
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
             <PeopleGeneratorComponent people={people} switchFunctionGenerator={switchFunctionGenerator} createConversationFunctionGenerator={createConversationFunctionGenerator} />
