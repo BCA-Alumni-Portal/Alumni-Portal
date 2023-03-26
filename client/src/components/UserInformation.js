@@ -41,23 +41,6 @@ function UserInformation(props) {
     setName(data.first_name + " " + data.last_name);
   }
 
-  // const getInfo = () => {
-  //   if(auth){
-  //     let data = packGetData();
-  //     let result = axios.get("/api/readProfileDataRequest", { params: data }).then(res => {
-  //       let data = res.data;
-  //       console.log(data);
-  //       if (data != null) {
-  //         setCompany(data.company || "");
-  //         setGraduationYear(data.graduation_year);
-  //         setPronouns(data.pronouns || "");
-  //         setAcademy(data.academy);
-  //         setName(data.first_name + " " + data.last_name);
-  //       }
-  //     });
-  //   }
-  // }
-
   const packSendData = () => {
     return {
       email_address: auth.email,
@@ -67,12 +50,6 @@ function UserInformation(props) {
       academy: academy,
       first_name: name.split(" ")[0],
       last_name: name.split(" ").length > 1 ? name.split(" ").slice(1, name.split(" ").length).join(" ") : ""
-    }
-  }
-
-  const packGetData = () => {
-    return {
-      email_address: auth.email
     }
   }
 
@@ -112,16 +89,7 @@ function UserInformation(props) {
     setEditing(false);
 
     // push to database
-
     let data = packSendData();
-    // let result = axios.get("/api/updateProfileDataRequest", { params: data }).then(res => {
-    //   let data = res.data;
-    //   console.log(data);
-    //   if (data != null) {
-
-    //   }
-    // });
-
     CommunicationHandler.writeProfileData(data);
   }
 

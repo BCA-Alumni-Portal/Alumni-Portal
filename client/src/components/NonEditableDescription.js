@@ -10,7 +10,6 @@ export default function NonEditableDescription(props) {
     useEffect(() => {
         // pull from database and setDescription
         CommunicationHandler.getDescriptionByID(onDescriptionReceived, props.alumniID);
-        // getInfo();
     }, [props]);
 
     const packGetData = () => {
@@ -26,23 +25,6 @@ export default function NonEditableDescription(props) {
             setDescription(data.description);
         }
     }
-
-    // const getInfo = () => {
-    //     let data = packGetData();
-    //     let result = axios.get("/api/readDescriptionRequestByID", { params: data }).then(res => {
-    //         let data = res.data;
-    //         console.log(res);
-    //         console.log(data);
-    //         if (data != null) {
-    //             if (data.description == "" || data.description == null) {
-    //                 setDescription("This person likes to stay secretive...")
-    //             }
-    //             else {
-    //                 setDescription(data.description);
-    //             }
-    //         }
-    //     });
-    // }
 
     return (
         <div className='mt-4'>

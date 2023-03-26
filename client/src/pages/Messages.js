@@ -70,34 +70,12 @@ export default function Messages() {
   }
 
   const getName = () => {
-    // let data = {
-    //   email_address: auth.email
-    // };
-    // let result = axios.get("/api/readProfileDataRequest", { params: data }).then(res => {
-    //   let data = res.data;
-    //   // console.log(data);
-    //   if (data != null) {
-    //     setClientName(data.first_name + " " + data.last_name);
-    //   }
-    // });
     CommunicationHandler.getProfileDataByID(setConversationInfo);
   }
 
   async function requestClientID() {
-    // console.log("called requestClientID");
-    // let email = auth.email;
-    // let result = axios.get("/api/getClientID", { params: { email: email } }).then(res => {
-    //   let data = res.data.clientID;
-    //   // console.log("HERE!2");
-    //   // console.log(res.data);
-    //   setClientID(data);
-    //   getName();
-    //   // setClientName(user.first_name + " " + user.last_name);
-    // });
-    console.log(clientID);
     setClientID(await CommunicationHandler.getClientID());
     getName();
-    console.log(clientID);
   }
 
   const packSendData = () => {
@@ -116,27 +94,10 @@ export default function Messages() {
 
   const submitGetMessageRequest = () => {
     CommunicationHandler.getMessages(setMessages, conversationID);
-    // const data = packGetData();
-    // // console.log(data)
-    // let result = axios.get("/api/getMessageRequest", { params: data }).then(res => {
-    //   let data = res.data;
-    //   // console.log(data);
-    //   if (data != null) {
-    //     setMessages(data);
-    //   }
-    // });
   }
 
   const submitSendMessageRequest = () => {
-    // const data = packSendData();
-    // console.log(data)
     CommunicationHandler.writeMessage(conversationID, messageBody);
-    // axios.get("/api/sendMessageRequest", { params: data }).then(res => console.log(res)).catch((err) => {
-    //   if (err.response) {
-    //     console.log(err.response)
-    //   }
-    // }
-    // );
 
     if (input != null) {
       input.value = "";
@@ -144,37 +105,19 @@ export default function Messages() {
   };
 
   const submitGetConversationsRequest = () => {
-    // const data = packSendData();
-    // console.log(data)
-    // let email = auth.email;
-    // // console.log("submitGetConversationsRequest");
-    // axios.get("/api/getConversationsRequest", { params: { email: email } }).then(res => {
-    //   let data = res.data;
-    //   // console.log(data);
-    //   if (data != null) {
-    //     setConversations(data);
-    //   }
-    // });
     CommunicationHandler.getConversations(setConversations);
-
-    // if (input != null) {
-    //   input.value = "";
-    // }
   };
+
   //= React.MouseEvent
   const handleClick = (e) => {
-    // console.log("Clicked!");
     submitSendMessageRequest();
     submitGetMessageRequest();
     setMessageBody("")
   };
 
   const switchConversation = (conversation) => {
-    // console.log("Switching:");
-    // console.log(conversation);
     setConversationID(conversation.conversation_id);
     setCurrentName(conversation.first_name + " " + conversation.last_name);
-    // submitGetMessageRequest();
   }
 
   // Client pings
@@ -199,21 +142,15 @@ export default function Messages() {
   }, []);
 
   const conversationSelectionFunctionGenerator = (conversation) => {
-    // console.log("Make a function for:");
-    // process.stdout.write("Make a function for: ");
-    // console.log(conversation);
     return () => {
-      // console.log("Called!");
-      // console.log(th);
-      // console.log(conversation);
       switchConversation(conversation);
     }
   };
 
   useEffect(() => {
-    // console.log("Called useEffect!");
     submitGetMessageRequest();
   }, [conversationID]);
+  
   if (auth) {
     return (
       <div className="container-fluid">

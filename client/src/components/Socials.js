@@ -27,49 +27,14 @@ export default function Socials(props) {
         setLinkedIn(data.linkedin);
     }
 
-    // const packGetData = () => {
-    //     return {
-    //         email_address: auth.email
-    //     }
-    // }
-
-    // const packSendData = () => {
-    //     return {
-    //         email_address: auth.email,
-    //         linkedin: linkedIn
-    //     }
-    // }
-
-    // const getInfo = () => {
-    //     let data = packGetData();
-    //     let result = axios.get("/api/readSocialsRequest", { params: data }).then(res => {
-    //         let data = res.data;
-    //         console.log("SOCIALS");
-    //         console.log(data);
-    //         if (data != null) {
-    //             setLinkedIn(data.linkedin);
-    //         }
-    //     });
-    // }
-
     const saveChanges = () => {
         document.getElementById('linkedin-modal').checked = false;
 
         // push linkedin to database
-
         let data = {
             linkedin: linkedIn
         }
         CommunicationHandler.writeSocialsInfo(data);
-
-        // let data = packSendData();
-        // let result = axios.get("/api/updateSocialsRequest", { params: data }).then(res => {
-        //     let data = res.data;
-        //     console.log(data);
-        //     if (data != null) {
-
-        //     }
-        // });
     }
 
     return (

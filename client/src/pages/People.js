@@ -127,50 +127,16 @@ function People() {
   }
 
   const submitGetPeopleRequest = () => {
-    // console.log("Get people!");
 
     let data = getPackedData();
-    // console.log(data);
-    // data.test_array = [];
-    // let result = axios.get("/api/getPeopleList", { params: data }).then(res => {
-    //   let data = res.data;
-    //   console.log(data);
-    //   if (data != null) {
-    //     // setClientName(data.first_name + " " + data.last_name);
-    //     setPeople(data);
-    //   }
-    // });
     CommunicationHandler.getPeopleList(setPeople, data);
   }
 
   const requestClientID = () => {
-    // console.log("called requestClientID");
-    // let email = auth.email;
-    // let result = axios.get("/api/getClientID", { params: { email: email } }).then(res => {
-    //   let data = res.data.clientID;
-    //   // console.log("HERE!2");
-    //   // console.log(res.data);
-    //   setClientID(data);
-    //   // getName();
-    //   // setClientName(user.first_name + " " + user.last_name);
-    // });
     setClientID(CommunicationHandler.getClientID());
   }
 
   const createConversation = (alumni_id) => {
-    // let data = {
-    //   clientID: clientID,
-    //   targetID: alumni_id
-    // }
-    // console.log(data);
-    // let result = axios.get("/api/createConversation", { params: data }).then(res => {
-    //   let data = res.data;
-    //   // console.log(data);
-    //   if (data != null) {
-    //     // setClientName(data.first_name + " " + data.last_name);
-    //     // setPeople(data);
-    //   }
-    // });
     CommunicationHandler.writeConversation(alumni_id);
   }
 
@@ -187,7 +153,6 @@ function People() {
   }
 
   useInterval(() => {
-    // console.log("interval called");
     submitGetPeopleRequest();
     requestClientID();
   }, 5000);

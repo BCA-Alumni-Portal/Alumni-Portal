@@ -9,34 +9,12 @@ export default function ClickableSocials(props) {
 
     useEffect(() => {
         // pull from database and setLinkedIn
-        // getInfo();
-        console.log(props.alumniID);
         CommunicationHandler.getSocialsInfoByID(setLinkedInData, props.alumniID);
-        // console.log(linkedIn);
-        // setLinkedInLink("https://linkedin.com/in/" + linkedIn + "/");
     }, [props]);
 
     const setLinkedInData = (data) => {
         setLinkedIn(data.linkedin);
         setLinkedInLink("https://linkedin.com/in/" + data.linkedin + "/");
-    }
-
-    const packGetData = () => {
-        return {
-            alumni_id: props.alumniID
-        }
-    }
-
-
-    const getInfo = () => {
-        // let data = packGetData();
-        // let result = axios.get("/api/readSocialsRequestByID", { params: data }).then(res => {
-        //     let data = res.data;
-        //     console.log(data);
-        //     if (data != null) {
-        //         setLinkedIn(data.linkedin);
-        //     }
-        // });
     }
 
     return (

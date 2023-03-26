@@ -12,7 +12,6 @@ export default function Description(props) {
     useEffect(() => {
         // pull from database and setDescription
         CommunicationHandler.getDescriptionByID(setDescriptionData);
-        // getInfo();
     }, []);
 
     const setDescriptionData = (data) => {
@@ -27,45 +26,10 @@ export default function Description(props) {
         setEditing(true);
     }
 
-    const packGetData = () => {
-        return {
-            email_address: auth.email
-        }
-    }
-
-    const packSendData = () => {
-        return {
-            email_address: auth.email,
-            description: description
-        }
-    }
-
-    // const getInfo = () => {
-        // let data = packGetData();
-        // let result = axios.get("/api/readDescriptionRequest", { params: data }).then(res => {
-        //     let data = res.data;
-        //     console.log(res);
-        //     console.log(data);
-        //     if (data != null) {
-        //         setDescription(data.description);
-        //     }
-        // });
-    // }
-
     const saveChanges = () => {
         setEditing(false);
         // push description to database
-
         CommunicationHandler.writeDescription(description);
-
-        // let data = packSendData();
-        // let result = axios.get("/api/updateDescriptionRequest", { params: data }).then(res => {
-        //     let data = res.data;
-        //     console.log(data);
-        //     if (data != null) {
-
-        //     }
-        // });
     }
 
     return (
