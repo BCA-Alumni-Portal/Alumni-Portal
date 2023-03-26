@@ -1,6 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import CommunicationHandler from './CommunicationHandler';
 
 export default function NonEditableDescription(props) {
 
@@ -8,7 +9,8 @@ export default function NonEditableDescription(props) {
 
     useEffect(() => {
         // pull from database and setDescription
-        getInfo();
+        CommunicationHandler.getDescriptionByID(onDescriptionReceived, props.alumniID);
+        // getInfo();
     }, [props]);
 
     const packGetData = () => {
@@ -17,22 +19,31 @@ export default function NonEditableDescription(props) {
         }
     }
 
-    const getInfo = () => {
-        let data = packGetData();
-        let result = axios.get("/api/readDescriptionRequestByID", { params: data }).then(res => {
-            let data = res.data;
-            console.log(res);
-            console.log(data);
-            if (data != null) {
-                if(data.description=="" || data.description==null){
-                    setDescription("This person likes to stay secretive...")
-                }
-                else{
-                    setDescription(data.description);
-                }
-            }
-        });
+    const onDescriptionReceived = (data) => {
+        if (data.description == "" || data.description == null) {
+            setDescription("This person likes to stay secretive...")
+        } else {
+            setDescription(data.description);
+        }
     }
+
+    // const getInfo = () => {
+    //     let data = packGetData();
+    //     let result = axios.get("/api/readDescriptionRequestByID", { params: data }).then(res => {
+    //         let data = res.data;
+    //         console.log(res);
+    //         console.log(data);
+    //         if (data != null) {
+    //             if (data.description == "" || data.description == null) {
+    //                 setDescription("This person likes to stay secretive...")
+    //             }
+    //             else {
+    //                 setDescription(data.description);
+    //             }
+    //         }
+    //     });
+    // }
+
     return (
         <div className='mt-4'>
             <p class="text-xl w-11/12 font-semibold text-stone-600 dark:text-white inline-block align-middle float-left text-left">{description}</p>

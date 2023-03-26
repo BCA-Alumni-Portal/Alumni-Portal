@@ -1,11 +1,12 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import CommunicationHandler from './CommunicationHandler';
 
 function UserInformation(props) {
   const [editing, setEditing] = useState(false);
   const [auth, setAuth] = useState(props.auth);
-  
+
   // user information
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
@@ -19,7 +20,7 @@ function UserInformation(props) {
 
   useEffect(() => {
     let _years = []
-    for(let year = 1992; year<=currentYear; year++){
+    for (let year = 1992; year <= currentYear; year++) {
       _years.push(year);
     }
     setYears(_years)
@@ -28,26 +29,34 @@ function UserInformation(props) {
     // graduationYear, academy = required
     // pronouns, company = optional
     // SQL -> client
-    getInfo();
+    // getInfo();
+    CommunicationHandler.getProfileDataByID(setProfileData);
   }, []);
 
-  const getInfo = () => {
-    if(auth){
-      let data = packGetData();
-      let result = axios.get("/api/readProfileDataRequest", { params: data }).then(res => {
-        let data = res.data;
-        console.log(data);
-        if (data != null) {
-          setCompany(data.company || "");
-          setGraduationYear(data.graduation_year);
-          setPronouns(data.pronouns || "");
-          setAcademy(data.academy);
-          setName(data.first_name + " " + data.last_name);
-        }
-      });
-    }
-    
+  const setProfileData = (data) => {
+    setCompany(data.company || "");
+    setGraduationYear(data.graduation_year);
+    setPronouns(data.pronouns || "");
+    setAcademy(data.academy);
+    setName(data.first_name + " " + data.last_name);
   }
+
+  // const getInfo = () => {
+  //   if(auth){
+  //     let data = packGetData();
+  //     let result = axios.get("/api/readProfileDataRequest", { params: data }).then(res => {
+  //       let data = res.data;
+  //       console.log(data);
+  //       if (data != null) {
+  //         setCompany(data.company || "");
+  //         setGraduationYear(data.graduation_year);
+  //         setPronouns(data.pronouns || "");
+  //         setAcademy(data.academy);
+  //         setName(data.first_name + " " + data.last_name);
+  //       }
+  //     });
+  //   }
+  // }
 
   const packSendData = () => {
     return {
@@ -57,7 +66,7 @@ function UserInformation(props) {
       pronouns: pronouns,
       academy: academy,
       first_name: name.split(" ")[0],
-      last_name: name.split(" ").length>1 ? name.split(" ").slice(1, name.split(" ").length).join(" ") : ""
+      last_name: name.split(" ").length > 1 ? name.split(" ").slice(1, name.split(" ").length).join(" ") : ""
     }
   }
 
@@ -101,17 +110,19 @@ function UserInformation(props) {
 
   const saveChanges = () => {
     setEditing(false);
-    
+
     // push to database
 
     let data = packSendData();
-    let result = axios.get("/api/updateProfileDataRequest", { params: data }).then(res => {
-      let data = res.data;
-      console.log(data);
-      if (data != null) {
-        
-      }
-    });
+    // let result = axios.get("/api/updateProfileDataRequest", { params: data }).then(res => {
+    //   let data = res.data;
+    //   console.log(data);
+    //   if (data != null) {
+
+    //   }
+    // });
+
+    CommunicationHandler.writeProfileData(data);
   }
 
 
@@ -119,9 +130,9 @@ function UserInformation(props) {
     <div className="text-left ml-8">
       <div className='mb-5'>
         {editing ?
-        <input type="text" placeholder="Your name" value={name} className="input input-bordered input-info input-lg text-4xl focus:border-sky-400 focus:ring-0 w-full max-w-xs mr-8 inline-block align-middle" onChange={(e) => changeName(e)} />:
-        <h1 className="text-5xl font-bold text-stone-600 mr-6 inline-block align-middle">{name}</h1>
-      }
+          <input type="text" placeholder="Your name" value={name} className="input input-bordered input-info input-lg text-4xl focus:border-sky-400 focus:ring-0 w-full max-w-xs mr-8 inline-block align-middle" onChange={(e) => changeName(e)} /> :
+          <h1 className="text-5xl font-bold text-stone-600 mr-6 inline-block align-middle">{name}</h1>
+        }
         {editing ?
           (<button className="btn btn-circle bg-green-400 hover:bg-gradient-to-r hover:from-green-300 hover:to-green-400 hover:border-green-300 border-green-100 inline-block align-middle" onClick={() => saveChanges()}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 inline-block align-middle">

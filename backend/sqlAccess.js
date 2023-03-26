@@ -411,8 +411,8 @@ async function readAlumniDataWithFilter(nameFilter, yearFilters, academyFilters)
         query += " WHERE ";
     } 
     if (nameFilter.length > 0) {
-        nameFilter = mysql.escape(nameFilter);
-        query += ` (Alumni.first_name LIKE ${nameFilter}` + `% OR Alumni.last_name LIKE ${nameFilter}` + `%)`;
+        nameFilter = mysql.escape(nameFilter + "%");
+        query += ` (Alumni.first_name LIKE ${nameFilter}` + ` OR Alumni.last_name LIKE ${nameFilter}` + `)`;
     }
     if (yearFilters.length > 0) {
         if (nameFilter.length > 0) {

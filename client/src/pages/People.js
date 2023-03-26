@@ -13,6 +13,7 @@ import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './styles/People.css'
 import Home from './Home';
+import CommunicationHandler from '../components/CommunicationHandler';
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -107,9 +108,11 @@ function People() {
     let checked_array = []
     for (let i = 0; i < 7; i++) {
       var current = academy_array[i]
-      var checkedValue = document.querySelector('.' + current).checked;
+      console.log(current);
+      console.log(document.querySelector("#" + current));
+      var checkedValue = document.querySelector("#" + current).checked;
       if (checkedValue == true) {
-        checked_array.push("\"" + academy_array[i] + "\"");
+        checked_array.push(academy_array[i]);
       }
     }
     AcademyFilterHandler(checked_array);
@@ -127,45 +130,48 @@ function People() {
     // console.log("Get people!");
 
     let data = getPackedData();
-    console.log(data);
-    data.test_array = [];
-    let result = axios.get("/api/getPeopleList", { params: data }).then(res => {
-      let data = res.data;
-      console.log(data);
-      if (data != null) {
-        // setClientName(data.first_name + " " + data.last_name);
-        setPeople(data);
-      }
-    });
+    // console.log(data);
+    // data.test_array = [];
+    // let result = axios.get("/api/getPeopleList", { params: data }).then(res => {
+    //   let data = res.data;
+    //   console.log(data);
+    //   if (data != null) {
+    //     // setClientName(data.first_name + " " + data.last_name);
+    //     setPeople(data);
+    //   }
+    // });
+    CommunicationHandler.getPeopleList(setPeople, data);
   }
 
   const requestClientID = () => {
     // console.log("called requestClientID");
-    let email = auth.email;
-    let result = axios.get("/api/getClientID", { params: { email: email } }).then(res => {
-      let data = res.data.clientID;
-      // console.log("HERE!2");
-      // console.log(res.data);
-      setClientID(data);
-      // getName();
-      // setClientName(user.first_name + " " + user.last_name);
-    });
+    // let email = auth.email;
+    // let result = axios.get("/api/getClientID", { params: { email: email } }).then(res => {
+    //   let data = res.data.clientID;
+    //   // console.log("HERE!2");
+    //   // console.log(res.data);
+    //   setClientID(data);
+    //   // getName();
+    //   // setClientName(user.first_name + " " + user.last_name);
+    // });
+    setClientID(CommunicationHandler.getClientID());
   }
 
   const createConversation = (alumni_id) => {
-    let data = {
-      clientID: clientID,
-      targetID: alumni_id
-    }
-    console.log(data);
-    let result = axios.get("/api/createConversation", { params: data }).then(res => {
-      let data = res.data;
-      // console.log(data);
-      if (data != null) {
-        // setClientName(data.first_name + " " + data.last_name);
-        // setPeople(data);
-      }
-    });
+    // let data = {
+    //   clientID: clientID,
+    //   targetID: alumni_id
+    // }
+    // console.log(data);
+    // let result = axios.get("/api/createConversation", { params: data }).then(res => {
+    //   let data = res.data;
+    //   // console.log(data);
+    //   if (data != null) {
+    //     // setClientName(data.first_name + " " + data.last_name);
+    //     // setPeople(data);
+    //   }
+    // });
+    CommunicationHandler.writeConversation(alumni_id);
   }
 
   const switchFunctionGenerator = (alumni_id) => {

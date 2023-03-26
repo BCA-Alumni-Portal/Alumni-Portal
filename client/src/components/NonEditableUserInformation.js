@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRef } from 'react';
 import axios from 'axios';
+import CommunicationHandler from './CommunicationHandler';
 
 
 function NonEditableUserInformation(props) {
@@ -17,33 +18,41 @@ function NonEditableUserInformation(props) {
     // graduationYear, academy = required
     // pronouns, company = optional
     // SQL -> client
-    getInfo();
+    // getInfo();
+    CommunicationHandler.getProfileDataByID(setProfileData, props.alumniID);
     // console.log("UPDATING USER INFO");
   }, [props]);
   
-
-  const getInfo = () => {
-      let data = packGetData();
-      // console.log(props.info);
-      // console.log(props.alumniID);
-      let result = axios.get("/api/readProfileDataRequestByID", { params: data }).then(res => {
-        let data = res.data;
-        // console.log(data);
-        if (data != null) {
-          setCompany(data.company || "");
-          setGraduationYear(data.graduation_year);
-          setPronouns(data.pronouns || "");
-          setAcademy(data.academy);
-          setName(data.first_name + " " + data.last_name);
-        }
-      });
+  const setProfileData = (data) => {
+    setCompany(data.company || "");
+    setGraduationYear(data.graduation_year);
+    setPronouns(data.pronouns || "");
+    setAcademy(data.academy);
+    setName(data.first_name + " " + data.last_name);
   }
 
-  const packGetData = () => {
-    return {
-      alumni_id: props.alumniID
-    }
-  }
+  // const getInfo = () => {
+  //     let data = packGetData();
+  //     // console.log(props.info);
+  //     // console.log(props.alumniID);
+  //     let result = axios.get("/api/readProfileDataRequestByID", { params: data }).then(res => {
+  //       let data = res.data;
+  //       // console.log(data);
+  //       if (data != null) {
+  //         setCompany(data.company || "");
+  //         setGraduationYear(data.graduation_year);
+  //         setPronouns(data.pronouns || "");
+  //         setAcademy(data.academy);
+  //         setName(data.first_name + " " + data.last_name);
+  //       }
+  //     });
+  // }
+
+  // const packGetData = () => {
+  //   return {
+  //     alumni_id: props.alumniID
+  //   }
+  // }
 
   const checkCompany = () => {
     return company != "";

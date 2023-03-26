@@ -10,11 +10,16 @@ export default function ClickableSocials(props) {
     useEffect(() => {
         // pull from database and setLinkedIn
         // getInfo();
-        CommunicationHandler.getSocialsInfo(setLinkedIn, props.alumniID);
+        console.log(props.alumniID);
+        CommunicationHandler.getSocialsInfoByID(setLinkedInData, props.alumniID);
         // console.log(linkedIn);
-        setLinkedInLink("https://linkedin.com/in/" + linkedIn + "/");
+        // setLinkedInLink("https://linkedin.com/in/" + linkedIn + "/");
     }, [props]);
 
+    const setLinkedInData = (data) => {
+        setLinkedIn(data.linkedin);
+        setLinkedInLink("https://linkedin.com/in/" + data.linkedin + "/");
+    }
 
     const packGetData = () => {
         return {
@@ -24,14 +29,14 @@ export default function ClickableSocials(props) {
 
 
     const getInfo = () => {
-        let data = packGetData();
-        let result = axios.get("/api/readSocialsRequestByID", { params: data }).then(res => {
-            let data = res.data;
-            console.log(data);
-            if (data != null) {
-                setLinkedIn(data.linkedin);
-            }
-        });
+        // let data = packGetData();
+        // let result = axios.get("/api/readSocialsRequestByID", { params: data }).then(res => {
+        //     let data = res.data;
+        //     console.log(data);
+        //     if (data != null) {
+        //         setLinkedIn(data.linkedin);
+        //     }
+        // });
     }
 
     return (

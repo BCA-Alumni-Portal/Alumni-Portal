@@ -9,7 +9,7 @@ function AcademyFilter(props) {
             <ul className="component-list block menu menu-horizontal bg-base-100 w-30 align-self-left">
                 <li tabIndex="0">
                     <span className="text-sm border border-1 border-red-300">Academy</span>
-                    <ul className="people-list menu bg-base-100 w-30 border border-1 border-red-300">
+                    <ul className="component-list menu bg-base-100 w-30 border border-1 border-red-300">
                         {academies.map((item) => {
                             return (<li className="hover:bg-stone-200 focus:none">
                                 <div className="hover:bg-stone-200 text-black hover:border-stone-100">

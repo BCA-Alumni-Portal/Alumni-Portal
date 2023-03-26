@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import CommunicationHandler from './CommunicationHandler';
 
 export default function Description(props) {
 
@@ -10,8 +11,13 @@ export default function Description(props) {
 
     useEffect(() => {
         // pull from database and setDescription
-        getInfo();
+        CommunicationHandler.getDescriptionByID(setDescriptionData);
+        // getInfo();
     }, []);
+
+    const setDescriptionData = (data) => {
+        setDescription(data.description);
+    }
 
     const changeDescription = (e) => {
         setDescription(e.target.value);
@@ -34,30 +40,32 @@ export default function Description(props) {
         }
     }
 
-    const getInfo = () => {
-        let data = packGetData();
-        let result = axios.get("/api/readDescriptionRequest", { params: data }).then(res => {
-            let data = res.data;
-            console.log(res);
-            console.log(data);
-            if (data != null) {
-                setDescription(data.description);
-            }
-        });
-    }
+    // const getInfo = () => {
+        // let data = packGetData();
+        // let result = axios.get("/api/readDescriptionRequest", { params: data }).then(res => {
+        //     let data = res.data;
+        //     console.log(res);
+        //     console.log(data);
+        //     if (data != null) {
+        //         setDescription(data.description);
+        //     }
+        // });
+    // }
 
     const saveChanges = () => {
         setEditing(false);
         // push description to database
 
-        let data = packSendData();
-        let result = axios.get("/api/updateDescriptionRequest", { params: data }).then(res => {
-            let data = res.data;
-            console.log(data);
-            if (data != null) {
+        CommunicationHandler.writeDescription(description);
 
-            }
-        });
+        // let data = packSendData();
+        // let result = axios.get("/api/updateDescriptionRequest", { params: data }).then(res => {
+        //     let data = res.data;
+        //     console.log(data);
+        //     if (data != null) {
+
+        //     }
+        // });
     }
 
     return (
