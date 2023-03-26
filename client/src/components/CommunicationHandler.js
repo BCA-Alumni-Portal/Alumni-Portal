@@ -30,10 +30,11 @@ function getBaseInfo() {
     }
 }
 
-function getSocialsInfo(setLinkedIn) {
-    let data = getClientID();
-    let result = axios.get(LINK_HEADER + "readSocialsRequestByID", { params: { data } }).then(res => {
+function getSocialsInfo(setLinkedIn, id) {
+    let data = { alumni_id: id };
+    let result = axios.get(LINK_HEADER + "readSocialsRequestByID", { params: data }).then(res => {
         let data = res.data;
+        console.log(data);
         if (data != null) {
             setLinkedIn(data.linkedin);
         }

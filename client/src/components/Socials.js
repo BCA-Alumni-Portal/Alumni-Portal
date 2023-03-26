@@ -35,9 +35,11 @@ export default function Socials(props) {
     }
 
     const getInfo = () => {
+        console.log("getInfo called ------------------------------------");
         let data = packGetData();
         let result = axios.get("/api/readSocialsRequest", { params: data }).then(res => {
             let data = res.data;
+            console.log("SOCIALS");
             console.log(data);
             if (data != null) {
                 setLinkedIn(data.linkedin);

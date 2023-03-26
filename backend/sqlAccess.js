@@ -196,9 +196,9 @@ async function writeMessageToSQL(senderID, conversationID, body) {
     let values = [
         [
             null,
-            mysql.escape(conversationID),
-            mysql.escape(senderID),
-            mysql.escape(body),
+            conversationID,
+            senderID,
+            body,
             new Date().toISOString().slice(0, 19).replace('T', ' ') // Have the database log the current date
         ]
     ]
@@ -324,6 +324,9 @@ async function writeSocialsToSQL(alumniID, socials) {
 }
 
 async function readSocialsFromSQL(alumniID) {
+    // console.log("almID:");
+    // console.log(mysql.escape(alumniID));
+    // console.log(parseInt(mysql.escape(alumniID)));
     let query = "SELECT * FROM " + TABLE_SOCIAL + " WHERE " +
         "(alumni_id = " + alumniID + ")"
     let data = await sqlModule.makeQuery({ query: query });

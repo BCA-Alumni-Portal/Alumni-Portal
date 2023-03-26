@@ -266,12 +266,16 @@ router.get('/readSocialsRequestByID', async (req, res) => {
 
     let query = req.query;
 
-    let clientID = query.alumni_id;
+    let clientID = query.alumni_id || 0;
     let result = await sqlAccess.readSocialsFromSQL(clientID);
+    // console.log("rSRBID_1");
+    // console.log(req);
+    // console.log(query);
+    // console.log(clientID);
+    // console.log(result);
     if (result == undefined) {
         return res.send(undefined);
     }
-    // console.log(result);
     return res.send(result[0]);
 })
 

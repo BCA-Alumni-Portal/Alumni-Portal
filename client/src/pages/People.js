@@ -211,7 +211,7 @@ function People() {
           </div>
         </div>
         <div>
-          <Person alumniID={currentAlumniID} />
+          <Person alumniID={currentAlumniID} createConversationFunctionGenerator={createConversationFunctionGenerator} />
         </div>
       </div>
 

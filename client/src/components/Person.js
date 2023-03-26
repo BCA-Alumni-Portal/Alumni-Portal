@@ -5,6 +5,8 @@ import NonEditableDescription from './NonEditableDescription';
 import ClickableSocials from './ClickableSocials';
 
 function Person(props) {
+    let createConversationFunc = props.createConversationFunctionGenerator(props.alumniID)
+
     return (
         <div className='w-full grid grid-cols-3 gap-8 mt-4 ml-10'>
             <div>
@@ -20,7 +22,7 @@ function Person(props) {
                 <ClickableSocials alumniID={props.alumniID}/>
             </div>
             <div className="col-span-3">
-                <button className="btn bg-sky-400 hover:bg-gradient-to-r hover:from-sky-300 hover:to-sky-400 hover:border-sky-300 border-sky-100 float-left normal-case text-xl">Message</button>
+                <button className="btn bg-sky-400 hover:bg-gradient-to-r hover:from-sky-300 hover:to-sky-400 hover:border-sky-300 border-sky-100 float-left normal-case text-xl" onClick={createConversationFunc}>Message</button>
             </div>
         </div>
     )
