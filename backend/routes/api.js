@@ -189,7 +189,9 @@ router.get('/getMessageRequest', async (req, res) => {
 
 router.get('/getClientID', async (req, res) => {
     // console.log("getClientID");
+    // console.log(req.query.email);
     let result = await sqlAccess.readClientID(req.query.email);
+    // console.log("Client ID: " + result);
     return res.send({ clientID: result });
 })
 
@@ -248,6 +250,9 @@ router.get('/readSocialsRequest', async (req, res) => {
 
     let email = query.email_address;
     let clientID = await sqlAccess.readClientID(email);
+    if (clientID == undefined) {
+        console.log("Undefined client ID for email <" + email + ">");
+    }
     let result = await sqlAccess.readSocialsFromSQL(clientID);
     if (result == undefined) {
         return res.send(undefined);

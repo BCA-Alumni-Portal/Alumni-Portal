@@ -179,10 +179,11 @@ export default function Messages() {
     if (auth == null) {
       return;
     }
+    console.log("useEffect called");
     requestClientID();
     submitGetMessageRequest();
     submitGetConversationsRequest();
-  })
+  }, []);
 
   const conversationSelectionFunctionGenerator = (conversation) => {
     // console.log("Make a function for:");

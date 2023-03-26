@@ -1,6 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import CommunicationHandler from './CommunicationHandler';
 
 export default function ClickableSocials(props) {
     const [linkedIn, setLinkedIn] = useState("");
@@ -8,8 +9,9 @@ export default function ClickableSocials(props) {
 
     useEffect(() => {
         // pull from database and setLinkedIn
-        getInfo();
-        console.log(linkedIn)
+        // getInfo();
+        CommunicationHandler.getSocialsInfo(setLinkedIn);
+        // console.log(linkedIn);
         setLinkedInLink("https://linkedin.com/in/" + linkedIn + "/");
     }, [props]);
 
