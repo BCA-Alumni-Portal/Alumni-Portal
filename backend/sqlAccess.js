@@ -235,11 +235,20 @@ async function readClientID(email) {
 }
 
 async function writeProfilePictureToSQL(alumni_id, picture) {
-
+    // let query = "INSERT INTO " + TABLE_ALUMNI + " "
+    let columns = [ "profile_picture" ];
+    let values = [
+        picture
+    ];
+    let query = constructSQLUpdateQuery("alumni_id", alumni_id, columns, values, TABLE_ALUMNI);
+    let queryResult = await sqlModule.makeQuery({ query: query });
+    return queryResult;
 }
 
 async function readProfilePictureFromSQL(alumni_id) {
-
+    let query = "SELECT profile_picture FROM " + TABLE_ALUMNI + " WHERE alumni_id=" + mysql.escape(alumni_id);
+    let queryResult = await sqlModule.makeQuery({ query: query });
+    return queryResult;
 }
 
 async function getAcademyIDFromString(academy_name) {
@@ -291,12 +300,12 @@ async function readProfileInfoFromSQL(alumniID) {
 }
 
 async function readSocialsFromSQL(alumniID) {
-    console.log("readSocialsFromSQL");
-    console.log("AID: " + alumniID);
-    console.log("EAID: " + mysql.escape(alumniID));
+    // console.log("readSocialsFromSQL");
+    // console.log("AID: " + alumniID);
+    // console.log("EAID: " + mysql.escape(alumniID));
     let query = "SELECT * FROM " + TABLE_SOCIALS + " WHERE " +
         "(alumni_id = " + mysql.escape(alumniID) + ")"
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    // console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     if (data == undefined) {

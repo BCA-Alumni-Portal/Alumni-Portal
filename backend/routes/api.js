@@ -409,4 +409,21 @@ router.get('/createConversation', async (req, res) => {
     return res.send(result);
 })
 
+router.get('/getProfilePicture', async (req, res) => {
+    let query = req.query;
+    let alumniID = query.alumni_id;
+
+    let result = await sqlAccess.readProfilePictureFromSQL(alumniID);
+    return res.send(result);
+})
+
+router.get('/writeProfilePicture', async (req, res) => {
+    let query = req.query;
+    let alumniID = query.alumni_id;
+    let image = query.image;
+
+    let result = await sqlAccess.writeProfilePictureFromSQL(alumniID, image);
+    return res.send(result);
+})
+
 module.exports = router;

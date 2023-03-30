@@ -47,6 +47,7 @@ app.listen(port, () => {
 // }
 
 console.log("Automatically running here!");
+
 // databaseSync.sync({sheetID: sourceSheetsID});
 // databaseSync.exportSqlToSheets(exportSheetsID);
 // databaseSync.writeNewEntriesToSQL(sourceSheetsID);
