@@ -115,11 +115,55 @@ async function getMessages(dataFunction, conversationID) {
     // }
 }
 
-async function writeMessage(conversationID, messageBody) {
-    let data = { conversationID: conversationID, messageBody: messageBody };
+async function writeMessage_old(conversationID, messageBody) {
+    let id = await getClientID();
+    let data = { senderID: id, conversationID: conversationID, messageBody: messageBody };
     axios.get(LINK_HEADER + "sendMessageRequest", { params: data }).then(res => console.log(res)).catch((err) => {
 
     });
+}
+
+async function writeMessage(chatSocket, messageBody) {
+    let id = await getClientID();
+    let data = { senderID: id, messageBody: messageBody }
+    chatSocket.send(JSON.stringify(data));
+}
+
+async function createConversationConnection(conversationID, onOpenFunction, onMessageFunction) {
+    let id = await getClientID();
+    let onOpenData = { senderID: id, conversationID: conversationID };
+    // let socket = new WebSocket("ws://localhost:8080");
+    let socket = new WebSocket('ws://' + window.location.hostname + ':8080');
+
+    socket.onopen = function (e) {
+        // alert("[open] Connection established");
+        // alert("Sending to server");
+        // socket.send(onOpenData.toString());
+        socket.send(JSON.stringify(onOpenData));
+        onOpenFunction(socket);
+    };
+
+    // socket.onmessage = function (event) {
+    //     alert(`[message] Data received from server: ${event.data}`);
+    // };
+    socket.onmessage = onMessageFunction
+
+    // socket.onclose = function (event) {
+    //     if (event.wasClean) {
+    //         alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+    //     } else {
+    //         // e.g. server process killed or network down
+    //         // event.code is usually 1006 in this case
+    //         alert('[close] Connection died');
+    //     }
+    // };
+
+    socket.onerror = function (error) {
+        // alert(`[error]`);
+        console.log(error);
+    };
+
+    return socket;
 }
 
 async function getConversations(dataFunction) {
@@ -188,6 +232,7 @@ export default {
 
     getMessages,
     writeMessage,
+    createConversationConnection,
 
     getConversations,
     writeConversation,

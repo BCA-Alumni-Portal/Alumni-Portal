@@ -22,6 +22,7 @@
     "compression": "^1.7.4",
     "concurrently": "^7.6.0",
     "react-images-uploading": "^3.1.7",
+    "ws": "^8.13.0",
     "yarn": "^1.22.19"
   }
 }
