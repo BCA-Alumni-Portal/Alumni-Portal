@@ -115,7 +115,7 @@ async function getMessages(dataFunction, conversationID) {
     // }
 }
 
-async function writeMessage_old(conversationID, messageBody) {
+async function writeMessage(conversationID, messageBody) {
     let id = await getClientID();
     let data = { senderID: id, conversationID: conversationID, messageBody: messageBody };
     axios.get(LINK_HEADER + "sendMessageRequest", { params: data }).then(res => console.log(res)).catch((err) => {
@@ -123,11 +123,11 @@ async function writeMessage_old(conversationID, messageBody) {
     });
 }
 
-async function writeMessage(chatSocket, messageBody) {
-    let id = await getClientID();
-    let data = { senderID: id, messageBody: messageBody }
-    chatSocket.send(JSON.stringify(data));
-}
+// async function writeMessage(chatSocket, messageBody) {
+//     let id = await getClientID();
+//     let data = { senderID: id, messageBody: messageBody }
+//     chatSocket.send(JSON.stringify(data));
+// }
 
 async function createConversationConnection(conversationID, onOpenFunction, onMessageFunction) {
     let id = await getClientID();
