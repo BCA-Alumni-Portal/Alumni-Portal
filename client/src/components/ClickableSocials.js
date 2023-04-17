@@ -1,6 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import CommunicationHandler from './CommunicationHandler';
 
 export default function ClickableSocials(props) {
     const [linkedIn, setLinkedIn] = useState("");
@@ -8,28 +9,12 @@ export default function ClickableSocials(props) {
 
     useEffect(() => {
         // pull from database and setLinkedIn
-        getInfo();
-        console.log(linkedIn)
-        setLinkedInLink("https://linkedin.com/in/" + linkedIn + "/");
+        CommunicationHandler.getSocialsInfoByID(setLinkedInData, props.alumniID);
     }, [props]);
 
-
-    const packGetData = () => {
-        return {
-            alumni_id: props.alumniID
-        }
-    }
-
-
-    const getInfo = () => {
-        let data = packGetData();
-        let result = axios.get("/api/readSocialsRequestByID", { params: data }).then(res => {
-            let data = res.data;
-            console.log(data);
-            if (data != null) {
-                setLinkedIn(data.linkedin);
-            }
-        });
+    const setLinkedInData = (data) => {
+        setLinkedIn(data.linkedin);
+        setLinkedInLink("https://linkedin.com/in/" + data.linkedin + "/");
     }
 
     return (

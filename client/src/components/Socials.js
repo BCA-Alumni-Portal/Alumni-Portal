@@ -1,6 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import CommunicationHandler from './CommunicationHandler';
 
 export default function Socials(props) {
     const [auth, setAuth] = useState(props.auth);
@@ -10,7 +11,8 @@ export default function Socials(props) {
 
     useEffect(() => {
         // pull from database and setLinkedIn
-        getInfo();
+        CommunicationHandler.getSocialsInfoByID(setSocialsData);
+        // getInfo();
     }, []);
 
     const toggleLinkedInModal = () => {
@@ -21,43 +23,18 @@ export default function Socials(props) {
         setLinkedIn(e.target.value);
     }
 
-    const packGetData = () => {
-        return {
-            email_address: auth.email
-        }
-    }
-
-    const packSendData = () => {
-        return {
-            email_address: auth.email,
-            linkedin: linkedIn
-        }
-    }
-
-    const getInfo = () => {
-        let data = packGetData();
-        let result = axios.get("/api/readSocialsRequest", { params: data }).then(res => {
-            let data = res.data;
-            console.log(data);
-            if (data != null) {
-                setLinkedIn(data.linkedin);
-            }
-        });
+    const setSocialsData = (data) => {
+        setLinkedIn(data.linkedin);
     }
 
     const saveChanges = () => {
         document.getElementById('linkedin-modal').checked = false;
 
         // push linkedin to database
-
-        let data = packSendData();
-        let result = axios.get("/api/updateSocialsRequest", { params: data }).then(res => {
-            let data = res.data;
-            console.log(data);
-            if (data != null) {
-
-            }
-        });
+        let data = {
+            linkedin: linkedIn
+        }
+        CommunicationHandler.writeSocialsInfo(data);
     }
 
     return (

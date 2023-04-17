@@ -36,12 +36,9 @@ async function createConnection() {
 
 async function getConnection() {
     if (connection == null) {
-        let c = await createConnection();
-        connection = c;
-        return c;
-    } else {
-        return connection;
+        connection = await createConnection();
     }
+    return connection;
 }
 
 
@@ -54,6 +51,7 @@ async function makeQuery({ query: query }) {
     const resultPromise = new Promise((resolve, reject) => {
         con.query(query, function (err, result, fields) {
             if (err) {
+                console.log(query);
                 return console.error("Failed to make query to the MySQL server.\n\tError: " + err.message);
             }
             // console.log("Actual Result");

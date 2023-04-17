@@ -13,7 +13,6 @@ const rateLimit = require('express-rate-limit') //https://www.npmjs.com/package/
 const passport = require('./middleware/passport');
 const fs = require('fs');
 
-
 const app = express();
 const port = 5000;
 
@@ -47,6 +46,7 @@ app.listen(port, () => {
 // }
 
 console.log("Automatically running here!");
+
 // databaseSync.sync({sheetID: sourceSheetsID});
 // databaseSync.exportSqlToSheets(exportSheetsID);
 // databaseSync.writeNewEntriesToSQL(sourceSheetsID);
@@ -72,3 +72,42 @@ console.log("Automatically running here!");
 // sqlAccess.writeConversation(0, 2);
 // sqlAccess.writeConversation(1, 2);
 // sqlAccess.readConversation(0);
+
+const http = require('http');
+const ws = require('ws');
+
+const wss = new ws.Server({noServer: true});
+
+// function accept(req, res) {
+//   // all incoming requests must be websockets
+//   if (!req.headers.upgrade || req.headers.upgrade.toLowerCase() != 'websocket') {
+//     res.end();
+//     return;
+//   }
+
+//   // can be Connection: keep-alive, Upgrade
+//   if (!req.headers.connection.match(/\bupgrade\b/i)) {
+//     res.end();
+//     return;
+//   }
+
+//   wss.handleUpgrade(req, req.socket, Buffer.alloc(0), onConnect);
+// }
+
+// function onConnect(ws) {
+//   ws.on('message', function (message) {
+//     message = message.toString();
+//     console.log(message.toString())
+//     // let name = message.match(/([\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]+)$/gu) || "Guest";
+//     ws.send(`Hello from server, <${message}>!`);
+    
+
+//     // setTimeout(() => ws.close(1000, "Bye!"), 5000);
+//   });
+// }
+
+const chatAccess = require('./chatAccess.js');
+
+chatAccess.setWSS(wss);
+
+http.createServer(chatAccess.accept).listen(8080);

@@ -189,7 +189,9 @@ router.get('/getMessageRequest', async (req, res) => {
 
 router.get('/getClientID', async (req, res) => {
     // console.log("getClientID");
+    // console.log(req.query.email);
     let result = await sqlAccess.readClientID(req.query.email);
+    // console.log("Client ID: " + result);
     return res.send({ clientID: result });
 })
 
@@ -198,8 +200,9 @@ router.get('/updateProfileDataRequest', async (req, res) => {
     // console.log(req);
     let query = req.query;
 
-    let email = query.email_address;
-    let clientID = await sqlAccess.readClientID(email);
+    // let email = query.email_address;
+    // let clientID = await sqlAccess.readClientID(email);
+    let clientID = query.alumni_id;
     let company = query.company;
     let graduationYear = query.graduationYear;
     let pronouns = query.pronouns;
@@ -217,8 +220,9 @@ router.get('/readProfileDataRequest', async (req, res) => {
     // console.log(req);
     let query = req.query;
 
-    let email = query.email_address;
-    let clientID = await sqlAccess.readClientID(email);
+    // let email = query.email_address;
+    // let clientID = await sqlAccess.readClientID(email);
+    let clientID = query.alumni_id;
     let result = await sqlAccess.readProfileInfoFromSQL(clientID);
 
     result[0].academy = await sqlAccess.getAcademyStringFromID(result[0].academy_id);
@@ -246,8 +250,12 @@ router.get('/readSocialsRequest', async (req, res) => {
 
     let query = req.query;
 
-    let email = query.email_address;
-    let clientID = await sqlAccess.readClientID(email);
+    // let email = query.email_address;
+    // let clientID = await sqlAccess.readClientID(email);
+    let clientID = query.alumni_id;
+    if (clientID == undefined) {
+        console.log("Undefined client ID for email <" + email + ">");
+    }
     let result = await sqlAccess.readSocialsFromSQL(clientID);
     if (result == undefined) {
         return res.send(undefined);
@@ -261,12 +269,16 @@ router.get('/readSocialsRequestByID', async (req, res) => {
 
     let query = req.query;
 
-    let clientID = query.alumni_id;
+    let clientID = query.alumni_id || 0;
     let result = await sqlAccess.readSocialsFromSQL(clientID);
+    // console.log("rSRBID_1");
+    // console.log(req);
+    // console.log(query);
+    // console.log(clientID);
+    // console.log(result);
     if (result == undefined) {
         return res.send(undefined);
     }
-    // console.log(result);
     return res.send(result[0]);
 })
 
@@ -275,9 +287,10 @@ router.get('/updateSocialsRequest', async (req, res) => {
 
     let query = req.query;
 
-    let email = query.email_address;
-    let clientID = await sqlAccess.readClientID(email);
+    // let email = query.email_address;
+    // let clientID = await sqlAccess.readClientID(email);
 
+    let clientID = query.alumni_id;
     let socials = [
         query.linkedin
     ];
@@ -299,8 +312,9 @@ router.get('/readDescriptionRequest', async (req, res) => {
 
     let query = req.query;
 
-    let email = query.email_address;
-    let clientID = await sqlAccess.readClientID(email);
+    // let email = query.email_address;
+    // let clientID = await sqlAccess.readClientID(email);
+    let clientID = query.alumni_id;
     let result = await sqlAccess.readDescriptionFromSQL(clientID);
     return res.send(result);
 })
@@ -321,8 +335,9 @@ router.get('/updateDescriptionRequest', async (req, res) => {
 
     let query = req.query;
 
-    let email = query.email_address;
-    let clientID = await sqlAccess.readClientID(email);
+    // let email = query.email_address;
+    // let clientID = await sqlAccess.readClientID(email);
+    let clientID = query.alumni_id;
 
     let description = [
         query.description
@@ -357,9 +372,10 @@ router.get('/getConversationsRequest', async (req, res) => {
 
     let query = req.query;
 
-    let email = query.email;
-    // console.log(email);
-    let clientID = await sqlAccess.readClientID(email);
+    // let email = query.email;
+    // // console.log(email);
+    // let clientID = await sqlAccess.readClientID(email);
+    let clientID = query.alumni_id;
     // console.log(clientID);
     let result = await sqlAccess.readAvailableConversations(clientID);
     // console.log(result);
@@ -390,6 +406,23 @@ router.get('/createConversation', async (req, res) => {
     let targetID = query.targetID;
 
     let result = await sqlAccess.writeConversation(clientID, targetID);
+    return res.send(result);
+})
+
+router.get('/getProfilePicture', async (req, res) => {
+    let query = req.query;
+    let alumniID = query.alumni_id;
+
+    let result = await sqlAccess.readProfilePictureFromSQL(alumniID);
+    return res.send(result);
+})
+
+router.get('/writeProfilePicture', async (req, res) => {
+    let query = req.query;
+    let alumniID = query.alumni_id;
+    let image = query.image;
+
+    let result = await sqlAccess.writeProfilePictureFromSQL(alumniID, image);
     return res.send(result);
 })
 

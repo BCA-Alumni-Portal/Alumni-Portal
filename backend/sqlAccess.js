@@ -1,3 +1,4 @@
+var mysql = require('mysql');
 const sqlModule = require("./sqlModule");
 
 const readAlumniColumns = [
@@ -89,7 +90,7 @@ function constructSQLWriteQuery(sqlColumns, values, tableName = TABLE_ALUMNI) {
             } else {
                 query += ", ";
             }
-            query += '"' + val + '"';
+            query += mysql.escape(val);
         }
         query += ")";
     }
@@ -109,9 +110,9 @@ function constructSQLUpdateQuery(pkName, pkVal, sqlColumns, values, tableName = 
         } else {
             query += ", ";
         }
-        query += sqlColumns[i] + " = \"" + values[i] + "\""
+        query += sqlColumns[i] + " = " + mysql.escape(values[i]);
     }
-    query += " WHERE " + pkName + " = \"" + pkVal + "\"";
+    query += " WHERE " + pkName + " = " + mysql.escape(pkVal);
 
     return query;
 }
@@ -122,7 +123,7 @@ function constructSQLOrSequence(variable, possibleValues) {
         if (i != 0) {
             query += " OR ";
         }
-        query += variable + "=" + possibleValues[i];
+        query += variable + "=" + mysql.escape(possibleValues[i]);
     }
     query += ")";
     return query;
@@ -138,7 +139,7 @@ function constructSQLWhereSequence(whereColumns, whereValues) {
         if (i != 0) {
             query += "AND ";
         }
-        query += whereColumns[i] + "=" + whereValues[i];
+        query += whereColumns[i] + "=" + mysql.escape(whereValues[i]);
     }
     return query;
 }
@@ -160,6 +161,8 @@ function constructSQLReadQuery(readColumns, tableName = TABLE_ALUMNI) {
 // Pull data from the SQL database and write to the Google Sheets
 async function readAlumniDataFromSQL(startID = 0, endID = readLastEffectiveSqlAlumniID(), columns = readAlumniColumns) {
     endID = await endID;
+    startID = mysql.escape(startID);
+    endID = mysql.escape(endID);
     // Sync things from SQL to Sheets
     // Query the rows that the Sheets doesn't have
     let query = "SELECT * FROM Alumni WHERE alumni_id >= " + startID + " AND alumni_id <= " + endID;
@@ -170,7 +173,8 @@ async function readAlumniDataFromSQL(startID = 0, endID = readLastEffectiveSqlAl
 }
 
 async function readMessageFromSqlByConversation(conversationID) {
-    let query = `SELECT * FROM Messages WHERE conversation_id=${conversationID}`;
+    conversationID = mysql.escape(conversationID)
+    let query = `SELECT * FROM Messages WHERE conversation_id=` + conversationID;
     let data = await sqlModule.makeQuery({ query: query });
     return data;
 }
@@ -215,29 +219,41 @@ async function readLastSqlAlumniID() {
 }
 
 async function readClientID(email) {
+    email = mysql.escape(email);
+
     let query = "SELECT alumni_id FROM Alumni WHERE " +
-        "(email_address = \"" + email + "\")"
+        "(email_address = " + email + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     // console.log(query);
     // console.log(data);
     if (data[0] == undefined) {
+        console.log("Attempted to read client ID, email: <" + email + ">");
         return undefined;
     }
     return data[0].alumni_id;
 }
 
 async function writeProfilePictureToSQL(alumni_id, picture) {
-
+    // let query = "INSERT INTO " + TABLE_ALUMNI + " "
+    let columns = [ "profile_picture" ];
+    let values = [
+        picture
+    ];
+    let query = constructSQLUpdateQuery("alumni_id", alumni_id, columns, values, TABLE_ALUMNI);
+    let queryResult = await sqlModule.makeQuery({ query: query });
+    return queryResult;
 }
 
 async function readProfilePictureFromSQL(alumni_id) {
-
+    let query = "SELECT profile_picture FROM " + TABLE_ALUMNI + " WHERE alumni_id=" + mysql.escape(alumni_id);
+    let queryResult = await sqlModule.makeQuery({ query: query });
+    return queryResult;
 }
 
 async function getAcademyIDFromString(academy_name) {
     let query = "SELECT academy_id FROM Academy WHERE " +
-        "(academy_name = \"" + academy_name + "\")"
+        "(academy_name = " + mysql.escape(academy_name) + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     if (data == undefined) {
@@ -248,7 +264,7 @@ async function getAcademyIDFromString(academy_name) {
 
 async function getAcademyStringFromID(academy_id) {
     let query = "SELECT academy_name FROM Academy WHERE " +
-        "(academy_id = \"" + academy_id + "\")"
+        "(academy_id = " + mysql.escape(academy_id) + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     if (data == undefined) {
@@ -277,15 +293,19 @@ async function updateProfileInfoToSQL(alumniID, company = "", graduationYear, pr
 
 async function readProfileInfoFromSQL(alumniID) {
     let query = "SELECT * FROM " + TABLE_ALUMNI + " WHERE " +
-        "(alumni_id = \"" + alumniID + "\")"
+        "(alumni_id = " + mysql.escape(alumniID) + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     return data;
 }
 
 async function readSocialsFromSQL(alumniID) {
+    // console.log("readSocialsFromSQL");
+    // console.log("AID: " + alumniID);
+    // console.log("EAID: " + mysql.escape(alumniID));
     let query = "SELECT * FROM " + TABLE_SOCIALS + " WHERE " +
-        "(alumni_id = \"" + alumniID + "\")"
+        "(alumni_id = " + mysql.escape(alumniID) + ")"
+    // console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     if (data == undefined) {
@@ -313,8 +333,11 @@ async function writeSocialsToSQL(alumniID, socials) {
 }
 
 async function readSocialsFromSQL(alumniID) {
+    // console.log("almID:");
+    // console.log(mysql.escape(alumniID));
+    // console.log(parseInt(mysql.escape(alumniID)));
     let query = "SELECT * FROM " + TABLE_SOCIAL + " WHERE " +
-        "(alumni_id = \"" + alumniID + "\")"
+        "(alumni_id = " + alumniID + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     if (data == undefined) {
@@ -349,7 +372,7 @@ async function writeSocialsToSQL(alumniID, socials) {
 
 async function readDescriptionFromSQL(alumniID) {
     let query = "SELECT * FROM " + TABLE_DESCRIPTION + " WHERE " +
-        "(alumni_id = \"" + alumniID + "\")"
+        "(alumni_id = " + mysql.escape(alumniID) + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     // console.log(data);
@@ -397,7 +420,8 @@ async function readAlumniDataWithFilter(nameFilter, yearFilters, academyFilters)
         query += " WHERE ";
     } 
     if (nameFilter.length > 0) {
-        query += ` (Alumni.first_name LIKE \"${nameFilter}` + `%\" OR Alumni.last_name LIKE \"${nameFilter}` + `%\")`;
+        nameFilter = mysql.escape(nameFilter + "%");
+        query += ` (Alumni.first_name LIKE ${nameFilter}` + ` OR Alumni.last_name LIKE ${nameFilter}` + `)`;
     }
     if (yearFilters.length > 0) {
         if (nameFilter.length > 0) {
@@ -414,28 +438,31 @@ async function readAlumniDataWithFilter(nameFilter, yearFilters, academyFilters)
         query += "(Alumni.academy_id=Academy.academy_id AND " + academyOr + ")"
     }
     // "WHERE " + yearOr + " AND " + "(Alumni.academy_id=Academy.academy_id AND " + academyOr + ")";
-    console.log("final query: " + query);
+    // console.log("final query: " + query);
     let result = await sqlModule.makeQuery({ query: query });
     return result;
 }
 
 async function writeConversation(alumniID, targetID) {
+    alumniID = mysql.escape(alumniID);
+    targetID = mysql.escape(targetID);
     let checkQuery = "SELECT * FROM " + TABLE_CONVERSATION + 
         " WHERE ((first_id=" + alumniID + " AND second_id=" + targetID + ") OR (first_id=" + targetID + " AND second_id=" + alumniID + "))";
 
-    console.log(checkQuery);
+    // console.log(checkQuery);
     let checkResult = await sqlModule.makeQuery({ query: checkQuery });
     if (checkResult.length != 0) {
         return;
     }
 
     let query = "INSERT INTO " + TABLE_CONVERSATION + "(conversation_id, first_id, second_id) VALUES (null, " + alumniID + ", " + targetID + ")";
-    console.log(query);
+    // console.log(query);
     let result = await sqlModule.makeQuery({ query: query });
     return result;
 }
 
 async function readAvailableConversations(alumniID) {
+    alumniID = mysql.escape(alumniID);
     let query = `SELECT Conversation.conversation_id, Alumni.first_name, Alumni.last_name
     FROM Conversation
     INNER JOIN Alumni ON (
@@ -452,6 +479,8 @@ async function readAvailableConversations(alumniID) {
 }
 
 async function readSpecificConversation(alumniID, targetID) {
+    alumniID = mysql.escape(alumniID);
+    targetID = mysql.escape(targetID);
     let query = "SELECT * FROM " + TABLE_CONVERSATION + " WHERE " +
         "(first_id=" + alumniID + " AND second_id=" + targetID + ") OR (second_id=" + targetID + " AND first_id=" + alumniID + ")";
     // console.log(query);
