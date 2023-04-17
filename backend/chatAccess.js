@@ -42,9 +42,9 @@ function onConnect(ws) {
 
             ws.onclose = function(event) {
                 // Clear out the entry in socketContainer
-                socketContainer[conversationID].delete(senderID);
+                delete socketContainer[conversationID][senderID];
                 if (Object.keys(socketContainer[conversationID]) == null) {
-                    socketContainer.delete(conversationID);
+                    delete socketContainer[conversationID];
                 }
             };
 
