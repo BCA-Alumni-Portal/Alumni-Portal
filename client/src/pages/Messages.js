@@ -98,8 +98,8 @@ export default function Messages() {
   }
 
   const submitSendMessageRequest = () => {
-    // CommunicationHandler.writeMessage(conversationID, messageBody);
-    CommunicationHandler.writeMessage(chatSocket, messageBody);
+    CommunicationHandler.writeMessage(conversationID, messageBody);
+    // CommunicationHandler.writeMessage(chatSocket, messageBody);
 
     if (input != null) {
       input.value = "";
@@ -121,38 +121,38 @@ export default function Messages() {
     console.log("C.CID: " + conversation.conversation_id);
     setConversationID(conversation.conversation_id);
 
-    let onOpenFunction = (chatSocket) => {
-      setCurrentName(conversation.first_name + " " + conversation.last_name);
-    }
+    // let onOpenFunction = (chatSocket) => {
+    //   setCurrentName(conversation.first_name + " " + conversation.last_name);
+    // }
 
-    let onMessageFunction = (event) => {
-      let message = event.data;
-      console.log(message);
-      console.log(conversationID);
-      submitGetMessageRequest();
-    }
+    // let onMessageFunction = (event) => {
+    //   let message = event.data;
+    //   console.log(message);
+    //   console.log(conversationID);
+    //   submitGetMessageRequest();
+    // }
 
-    if (chatSocket != null) {
-      console.log(chatSocket);
-      chatSocket.close();
-      setChatSocket(null);
-    }
-    CommunicationHandler.createConversationConnection(conversation.conversation_id, onOpenFunction, onMessageFunction).then((socket) => {
-      setChatSocket(socket);
-    });
+    // if (chatSocket != null) {
+    //   console.log(chatSocket);
+    //   chatSocket.close();
+    //   setChatSocket(null);
+    // }
+    // CommunicationHandler.createConversationConnection(conversation.conversation_id, onOpenFunction, onMessageFunction).then((socket) => {
+    //   setChatSocket(socket);
+    // });
     
     submitGetMessageRequest();
   }
 
   // Client pings
-  // useInterval(() => {
-  //   if (auth == null) {
-  //     return;
-  //   }
-  //   requestClientID();
-  //   submitGetMessageRequest();
-  //   submitGetConversationsRequest();
-  // }, 5000);
+  useInterval(() => {
+    if (auth == null) {
+      return;
+    }
+    requestClientID();
+    submitGetMessageRequest();
+    submitGetConversationsRequest();
+  }, 5000);
 
   // Initial update
   useEffect(() => {
