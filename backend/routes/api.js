@@ -426,4 +426,16 @@ router.get('/writeProfilePicture', async (req, res) => {
     return res.send(result);
 })
 
+var Tokens = require('csrf');
+let tokens = new Tokens();
+
+router.get('/getCSRF', async (req, res) => {
+    var secret = tokens.secretSync();
+    var token = tokens.create(secret);
+    let result = {
+        csrf_token: token
+    };
+    return res.send(result);
+})
+
 module.exports = router;
