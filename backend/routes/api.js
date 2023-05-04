@@ -188,6 +188,8 @@ router.get('/getMessageRequest', async (req, res) => {
 })
 
 router.get('/getClientID', async (req, res) => {
+    console.log("getClientID Session:");
+    console.log(req.session);
     // console.log("getClientID");
     // console.log(req.query.email);
     let result = await sqlAccess.readClientID(req.query.email);
@@ -435,7 +437,31 @@ router.get('/getCSRF', async (req, res) => {
     let result = {
         csrf_token: token
     };
+    console.log("Token:");
+    console.log(token);
+    console.log(res.locals);
+    res.cookie('XSRF-TOKEN', token);
+    res.locals.csrf = token;
+    console.log(res.locals);
+    console.log(result);
     return res.send(result);
 })
+
+const csrf = require("csurf");
+const session = require('express-session')
+router.use(session({
+    name: "test",
+    secret: "test",
+    cookie: { maxAge: 3 * 60 * 60 * 1000 },
+    resave: false,
+    saveUninitialized: false
+}))
+// mark1: change it to false
+const csrfProtection = csrf({
+  cookie: false,
+});
+
+router.use(csrfProtection);
+// app.use('/api', routes);
 
 module.exports = router;
