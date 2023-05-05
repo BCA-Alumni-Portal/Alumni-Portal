@@ -8,6 +8,7 @@ import Me from "./pages/Me"
 import Register from "./pages/Register"
 import Test from "./pages/Test"
 import Admin from "./pages/Admin"
+import Invalid from './pages/Invalid'
 
 import { Route, Routes } from "react-router-dom"
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/test" element={<Test />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/invalid" element={<Invalid />}/>
         </Routes>
       </div>
     </div>

@@ -2,6 +2,8 @@ const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const jwtRequired = passport.authenticate('jwt', { session: false });
+var mysql = require('mysql');
+const sqlAccess = require("../sqlAccess");
 
 const router = express.Router();
 
@@ -24,7 +26,7 @@ router.get('/logout', (req, res) => {
 
 
 router.get('/callback', (req, res, next) => {
-    passport.authenticate('auth0', (err, user) => {
+    passport.authenticate('auth0', async (err, user) => {
         if (err) {
             return next(err);
         }
@@ -35,6 +37,10 @@ router.get('/callback', (req, res, next) => {
         const userReturnObject = {
             email: user._json.email,
         };
+        let isAlum = await sqlAccess.verifyAlumEmail(userReturnObject.email);
+        if(!isAlum){
+            return res.redirect('/invalid');
+        }
         req.session.jwt = jwt.sign(userReturnObject, process.env.JWT_SECRET_KEY);
         return res.redirect('/');
     })(req, res, next);

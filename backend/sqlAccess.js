@@ -236,7 +236,7 @@ async function readClientID(email) {
 
 async function writeProfilePictureToSQL(alumni_id, picture) {
     // let query = "INSERT INTO " + TABLE_ALUMNI + " "
-    let columns = [ "profile_picture" ];
+    let columns = ["profile_picture"];
     let values = [
         picture
     ];
@@ -415,10 +415,10 @@ async function readAlumniDataWithFilter(nameFilter, yearFilters, academyFilters)
     // console.log("query: " + query);
     // console.log("year or: " + yearOr);
     // console.log("academy or: " + academyOr);
-    query += " INNER JOIN Academy" 
+    query += " INNER JOIN Academy"
     if ((yearFilters.length + academyFilters.length + nameFilter.length) > 0) {
         query += " WHERE ";
-    } 
+    }
     if (nameFilter.length > 0) {
         nameFilter = mysql.escape(nameFilter + "%");
         query += ` (Alumni.first_name LIKE ${nameFilter}` + ` OR Alumni.last_name LIKE ${nameFilter}` + `)`;
@@ -446,7 +446,7 @@ async function readAlumniDataWithFilter(nameFilter, yearFilters, academyFilters)
 async function writeConversation(alumniID, targetID) {
     alumniID = mysql.escape(alumniID);
     targetID = mysql.escape(targetID);
-    let checkQuery = "SELECT * FROM " + TABLE_CONVERSATION + 
+    let checkQuery = "SELECT * FROM " + TABLE_CONVERSATION +
         " WHERE ((first_id=" + alumniID + " AND second_id=" + targetID + ") OR (first_id=" + targetID + " AND second_id=" + alumniID + "))";
 
     // console.log(checkQuery);
@@ -496,6 +496,17 @@ async function writeDataToSQL(columns, values, tableName) {
     return queryResult;
 }
 
+async function verifyAlumEmail(alumniEmail) {
+    let query = "SELECT email_address FROM Alumni";
+    let data = await sqlModule.makeQuery({ query: query });
+    let set = new Set(data.map(element => element.email_address));
+    console.log(set);
+    console.log(set.has(alumniEmail));
+
+    return set.has(alumniEmail);
+}
+
+
 module.exports = {
     readAlumniDataFromSQL,
     writeDataToSQL,
@@ -529,5 +540,7 @@ module.exports = {
     readAvailableConversations,
     readSpecificConversation,
 
-    readMessageFromSqlByConversation
+    readMessageFromSqlByConversation,
+
+    verifyAlumEmail
 }
