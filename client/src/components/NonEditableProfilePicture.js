@@ -1,5 +1,6 @@
 import personImage2 from '../images/person2.png';
 import React, { useEffect, useState } from 'react';
+import CommunicationHandler from './CommunicationHandler';
 
 function NonEditableProfilePicture(props) {
     const [profilePictureFile, setProfilePictureFile] = useState(null);
@@ -10,6 +11,7 @@ function NonEditableProfilePicture(props) {
         // if null: setProfilePictureFile(personImage2);
         // else: setProfilePictureFile(string)
         setProfilePictureFile(personImage2);
+        CommunicationHandler.getProfilePicture(setProfilePictureFile, props.alumniID);
     }, []);
 
 

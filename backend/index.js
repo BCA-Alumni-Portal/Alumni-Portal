@@ -13,7 +13,6 @@ const rateLimit = require('express-rate-limit') //https://www.npmjs.com/package/
 const passport = require('./middleware/passport');
 const fs = require('fs');
 
-
 const app = express();
 const port = 5000;
 
@@ -31,8 +30,17 @@ app.use(
         expires: new Date(Date.now() + 72 * 60 * 60 * 1000)
     })
 )
-app.use(csurf());
 app.use(passport.initialize());
+
+var cookieParser = require('cookie-parser')
+const csrf = require("csurf");
+const csrfProtection = csrf({
+    cookie: true,
+});
+
+app.use(cookieParser())
+
+app.use(csrfProtection);
 
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
@@ -47,6 +55,16 @@ app.listen(port, () => {
 // }
 
 console.log("Automatically running here!");
+
+// const session = require('express-session')
+// router.use(session({
+//     name: "test",
+//     secret: "test",
+//     cookie: { maxAge: 3 * 60 * 60 * 1000 },
+//     resave: false,
+//     saveUninitialized: false
+// }))
+
 // databaseSync.sync({sheetID: sourceSheetsID});
 // databaseSync.exportSqlToSheets(exportSheetsID);
 // databaseSync.writeNewEntriesToSQL(sourceSheetsID);
@@ -72,3 +90,14 @@ console.log("Automatically running here!");
 // sqlAccess.writeConversation(0, 2);
 // sqlAccess.writeConversation(1, 2);
 // sqlAccess.readConversation(0);
+
+const http = require('http');
+const ws = require('ws');
+
+const wss = new ws.Server({noServer: true});
+
+const chatAccess = require('./chatAccess.js');
+
+chatAccess.setWSS(wss);
+
+http.createServer(chatAccess.accept).listen(8080);

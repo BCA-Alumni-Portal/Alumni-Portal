@@ -19,10 +19,12 @@
   },
   "homepage": "https://github.com/RemingtonKim/AcademiesAlumni#readme",
   "dependencies": {
+    "axios-cookiejar-support": "^4.0.6",
     "compression": "^1.7.4",
     "concurrently": "^7.6.0",
     "react-images-uploading": "^3.1.7",
-    "util": "^0.12.5",
+    "tough-cookie": "^4.1.2",
+    "ws": "^8.13.0",
     "yarn": "^1.22.19"
   }
 }
