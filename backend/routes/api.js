@@ -5,6 +5,8 @@ const databaseSync = require('../databaseSync');
 // Remove this after testing messages
 const sqlAccess = require('../sqlAccess');
 
+const sharp = require('sharp');
+
 const express = require('express');
 const router = express.Router();
 
@@ -50,7 +52,7 @@ router.get('/createSQLData', async (req, res) => {
     // console.log(req)
     // console.log("createSQLData");
     let additionalSpecifiers = {
-        alumni_id: req.query.alumniID, 
+        alumni_id: req.query.alumniID,
         first_name: req.query.firstName,
         last_name: req.query.lastName,
         graduation_year: req.query.graduationYear,
@@ -408,5 +410,30 @@ router.get('/createConversation', async (req, res) => {
     let result = await sqlAccess.writeConversation(clientID, targetID);
     return res.send(result);
 })
+
+
+router.post('/getResized', async (req, res) => {
+    let image = req.body.image;
+
+    console.log(image)
+    let parts = image.split(';');
+    let mimType = parts[0].split(':')[1];
+    let imageData = parts[1].split(',')[1];
+
+    let img = new Buffer(imageData, 'base64');
+    sharp(img)
+        .resize(150, 150)
+        .toBuffer()
+        .then(resizedImageBuffer => {
+            let resizedImageData = resizedImageBuffer.toString('base64');
+            let resizedBase64 = `data:${mimType};base64,${resizedImageData}`;
+            res.send({resized: resizedBase64})
+        })
+        .catch(error => {
+            // error handling
+        })
+
+})
+
 
 module.exports = router;

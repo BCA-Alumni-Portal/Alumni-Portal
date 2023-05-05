@@ -4,6 +4,10 @@ import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import React, { useEffect, useState } from 'react';
 import './styles/ProfilePicture.css';
+import axios from 'axios';
+
+// import sharp from 'sharp';
+// const sharp = require('sharp');
 
 export default function ProfilePicture(props) {
     const [profilePictureFile, setProfilePictureFile] = useState(null);
@@ -37,17 +41,42 @@ export default function ProfilePicture(props) {
         document.getElementById('pfp-upload-modal').checked = false;
         setProfilePictureUploaded(false)
     }
+    // Takes a data URI and returns the Data URI corresponding to the resized image at the wanted size.
+    const resizedataURL = (datas, wantedWidth, wantedHeight) => {
+        // We create an image to receive the Data URI
+        let img = document.createElement('img');
 
-    const finishCrop = () => {
+        // When the event "onload" is triggered we can resize the image.
+        img.onload = function () {
+            // We create a canvas and get its context.
+            let canvas = document.createElement('canvas');
+            let ctx = canvas.getContext('2d');
+
+            // We set the dimensions at the wanted size.
+            canvas.width = wantedWidth;
+            canvas.height = wantedHeight;
+
+            // We resize the image with the canvas method drawImage();
+            ctx.drawImage(this, 0, 0, wantedWidth, wantedHeight);
+
+            let dataURI = canvas.toDataURL();
+            return dataURI;
+        };
+    }
+
+    const finishCrop = async () => {
         if (typeof cropper !== "undefined") {
+            // let data = { image: cropper.getCroppedCanvas().toDataURL() }
+            // Use it like that : resizedataURL('yourDataURIHere', 50, 50);
             setProfilePictureFile(cropper.getCroppedCanvas().toDataURL());
+            // setProfilePictureFile(resizedataURL(cropper.getCroppedCanvas().toDataURL() , 150, 150));
             setProfilePictureUncropped(null);
         }
         document.getElementById('pfp-upload-modal').checked = false;
         setProfilePictureUploaded(false)
 
         //push profilePictureFile to database
-        
+
     }
 
     return (

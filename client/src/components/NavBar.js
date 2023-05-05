@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import "./styles/NavBar.css";
 import logo from "../images/logo.png";
-import personImage2 from '../images/leonardo.png';
+import personImage2 from '../images/person2.png';
 
 
 export default function NavBar() {
