@@ -42,20 +42,32 @@ async function getCSRF() {
 		withCredentials: true
 		// httpsAgent: new https.Agent({ rejectUnauthorized: false, requestCert: true, keepAlive: true})
 	});
-	let res = await instance.get(LINK_HEADER + "getCSRF");
-	// console.log(res.locals.csrf);
-    console.log(res);
-    let token = res.data.csrf_token;
+	// let res = await instance.get(LINK_HEADER + "getCSRF");
+	// // console.log(res.locals.csrf);
+    // console.log(res);
+    // let token = res.data.csrf_token;
 
-    axios.defaults.headers.common = {
-        'X-Requested-With': 'XMLHttpRequest',
-        'X-CSRF-TOKEN' : token,
-        // 'CSRF-TOKEN' : token,
-        // 'xsrfCookieName' : token
+    // const csrfToken = document.querySelector("meta[name=csrf-token]").content
+    // console.log("csrfToken: " + csrfToken);
+
+    const getCSRFToken = async () => {
+        const response = await axios.get(LINK_HEADER + 'getCSRFToken');
+        let token = response.data.CSRFToken;
+        instance.defaults.headers.post['X-CSRF-Token'] = token;
+        // console.log(token);
     };
 
+    await getCSRFToken();
+
+    // instance.defaults.headers.common = {
+    //     'X-Requested-With': 'XMLHttpRequest',
+    //     'X-CSRF-TOKEN' : token,
+    //     // 'CSRF-TOKEN' : token,
+    //     // 'xsrfCookieName' : token
+    // };
+
 	// instance.defaults.headers['x-csrf-token'] = token;
-    console.log(instance.defaults.headers);
+    // console.log(axios.defaults.headers);
 
 	// res = await instance.post('https://172.16.220.133/login',{username:name,password:pass});
     return instance;
@@ -63,8 +75,8 @@ async function getCSRF() {
 
 async function makeRequest(url, params, func) {
     let instance = await getCSRF();
-    console.log(instance);
-    let result = instance.get(LINK_HEADER + url, { params: params }).then(res => {
+    // console.log(instance);
+    let result = instance.post(LINK_HEADER + url, { params: params }).then(res => {
         let data = res.data;
         if (data != null) {
             func(data);

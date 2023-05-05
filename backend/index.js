@@ -30,8 +30,17 @@ app.use(
         expires: new Date(Date.now() + 72 * 60 * 60 * 1000)
     })
 )
-app.use(csurf());
 app.use(passport.initialize());
+
+var cookieParser = require('cookie-parser')
+const csrf = require("csurf");
+const csrfProtection = csrf({
+    cookie: true,
+});
+
+app.use(cookieParser())
+
+app.use(csrfProtection);
 
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
@@ -46,6 +55,15 @@ app.listen(port, () => {
 // }
 
 console.log("Automatically running here!");
+
+// const session = require('express-session')
+// router.use(session({
+//     name: "test",
+//     secret: "test",
+//     cookie: { maxAge: 3 * 60 * 60 * 1000 },
+//     resave: false,
+//     saveUninitialized: false
+// }))
 
 // databaseSync.sync({sheetID: sourceSheetsID});
 // databaseSync.exportSqlToSheets(exportSheetsID);
