@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Home from './Home';
 import React, { useEffect, useState } from 'react';
-
+import CommunicationHandler from '../components/CommunicationHandler';
 
 export default function Admin() {
     const [auth, setAuth] = useState(null);
@@ -19,25 +19,28 @@ export default function Admin() {
     const syncMissingData = () => {
         const data = packGetData();
 
-        let result = axios.get("/api/syncMissingData", { params: data }).then(res => {
-            let data = res.data;
-            console.log(data);
-            if (data != null) {
-                // setMessages(data);
-            }
-        });
+        CommunicationHandler.syncMissingData();
+        // let result = axios.get("/api/syncMissingData", { params: data }).then(res => {
+        //     let data = res.data;
+        //     console.log(data);
+        //     if (data != null) {
+        //         // setMessages(data);
+        //     }
+        // });
     }
 
     const exportData = () => {
         const data = packGetData();
 
-        let result = axios.get("/api/exportData", { params: data }).then(res => {
-            let data = res.data;
-            console.log(data);
-            if (data != null) {
-                // setMessages(data);
-            }
-        });
+        CommunicationHandler.exportData();
+
+        // let result = axios.get("/api/exportData", { params: data }).then(res => {
+        //     let data = res.data;
+        //     console.log(data);
+        //     if (data != null) {
+        //         // setMessages(data);
+        //     }
+        // });
     }
     if (auth) {
         return (

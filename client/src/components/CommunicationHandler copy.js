@@ -143,8 +143,8 @@ async function writeMessage(conversationID, messageBody) {
 async function createConversationConnection(conversationID, onOpenFunction, onMessageFunction) {
     let id = await getClientID();
     let onOpenData = { senderID: id, conversationID: conversationID };
-    // let socket = new WebSocket("ws://localhost:8080");
-    let socket = new WebSocket('ws://' + window.location.hostname + ':8080');
+    // let socket = new WebSocket("ws://localhost:5001");
+    let socket = new WebSocket('ws://' + window.location.hostname + ':5001');
 
     socket.onopen = function (e) {
         // alert("[open] Connection established");

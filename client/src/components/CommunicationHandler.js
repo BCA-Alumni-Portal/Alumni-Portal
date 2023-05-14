@@ -76,9 +76,13 @@ async function getCSRF() {
 async function makeRequest(url, params, func) {
     let instance = await getCSRF();
     // console.log(instance);
+    console.log(LINK_HEADER + url);
+    console.log(params);
     let result = instance.post(LINK_HEADER + url, { params: params }).then(res => {
         let data = res.data;
-        if (data != null) {
+        console.log(data);
+        console.log(func);
+        if ((func != null) && (data != null)) {
             func(data);
         }
         return data;
@@ -197,8 +201,8 @@ async function writeMessage(conversationID, messageBody) {
 async function createConversationConnection(conversationID, onOpenFunction, onMessageFunction) {
     let id = await getClientID();
     let onOpenData = { senderID: id, conversationID: conversationID };
-    // let socket = new WebSocket("ws://localhost:8080");
-    let socket = new WebSocket('ws://' + window.location.hostname + ':8080');
+    // let socket = new WebSocket("ws://localhost:5001");
+    let socket = new WebSocket('ws://' + window.location.hostname + ':5001');
 
     socket.onopen = function (e) {
         // alert("[open] Connection established");
@@ -288,6 +292,14 @@ async function writeProfilePicture(picture) {
     // });
 }
 
+async function syncMissingData() {
+    let result = makeRequest("syncMissingData");
+}
+
+async function exportData() {
+    let result = makeRequest("exportData");
+}
+
 export default {
     getClientID,
 
@@ -310,5 +322,8 @@ export default {
     getPeopleList,
 
     getProfilePicture,
-    writeProfilePicture
+    writeProfilePicture,
+
+    syncMissingData,
+    exportData
 }
