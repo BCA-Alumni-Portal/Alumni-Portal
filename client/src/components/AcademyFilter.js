@@ -2,11 +2,11 @@ import * as React from 'react';
 
 function AcademyFilter(props) {
     let academies = props.Academies;
-    console.log(academies);
+    // console.log(academies);
 
     return (
-        <div>
-            <ul className="component-list block menu menu-horizontal bg-base-100 w-30 align-self-left">
+        <div className="inline-block px-10 flex grid grid-cols-3 gap-1 place-content-center">
+            <ul className="block menu menu-horizontal bg-base-100 w-30 align-self-left">
                 <li tabIndex="0">
                     <span className="text-sm border border-1 border-red-300">Academy</span>
                     <ul className="component-list menu bg-base-100 w-30 border border-1 border-red-300">

@@ -23,8 +23,11 @@ async function writeNewEntriesToSQL(sheetID) {
 }
 
 async function sync(sheetID) {
-    let lastSqlID = await sqlAccess.readLastEffectiveSqlAlumniID();
-    let lastSheetsID = await sheetsAccess.readLastEffectiveSheetsAlumniID(sheetID);
+    let lastSqlID = (await sqlAccess.readLastEffectiveSqlAlumniID()) || 0;
+    let lastSheetsID = (await sheetsAccess.readLastEffectiveSheetsAlumniID(sheetID)) || 0;
+
+    // console.log(lastSqlID);
+    // console.log(lastSheetsID);
 
     // - Upon loading the application, read:
     //     - Last alumni_id from SQL
@@ -55,6 +58,8 @@ async function sync(sheetID) {
         //     (value_list_n);
 
         let result = await sqlAccess.writeDataToSQL(writeAlumniColumns, values);
+        // console.log(values);
+        // console.log(result);
         return result;
     } else if (lastSheetsID < lastSqlID) { // Sync things from SQL to Sheets
         // // Query the rows that the Sheets doesn't have

@@ -7,7 +7,7 @@ function delete_function(){
 
 
 function AcademyFilterToast(props) {
-    console.log(props.input)
+    // console.log(props.input);
     
     return (
         <div class="list-group">

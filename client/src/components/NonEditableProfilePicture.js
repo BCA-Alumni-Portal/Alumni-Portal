@@ -10,9 +10,9 @@ function NonEditableProfilePicture(props) {
         // pull profilepicture from database
         // if null: setProfilePictureFile(personImage2);
         // else: setProfilePictureFile(string)
-        setProfilePictureFile(personImage2);
+        // setProfilePictureFile(personImage2);
         CommunicationHandler.getProfilePicture(setProfilePictureFile, props.alumniID);
-    }, []);
+    }, [props]);
 
 
     return (

@@ -38,7 +38,7 @@ export default function Messages() {
 
   useEffect(() => {
     axios.get('/auth/current-session').then(({ data }) => {
-      console.log("got auth");
+      // console.log("got auth");
       setAuth(data);
     })
   }, []);
@@ -50,6 +50,7 @@ export default function Messages() {
   const [targetID, setTargetID] = React.useState(0);
   const [conversationID, setConversationID] = React.useState(0);
   const [conversations, setConversations] = React.useState([]);
+  const [conversation, setConversation] = React.useState({});
   const [currentName, setCurrentName] = React.useState("Select a conversation");
   const [clientName, setClientName] = React.useState("Johnathan Dough");
   // let clientID = 0;
@@ -93,8 +94,17 @@ export default function Messages() {
     }
   }
 
+  const onGetMessages = (data) => {
+    setMessages(data);
+    if (conversation.first_name == undefined) {
+      setCurrentName("Select a conversation");
+    } else {
+      setCurrentName(conversation.first_name + " " + conversation.last_name);
+    }
+  }
+
   const submitGetMessageRequest = () => {
-    CommunicationHandler.getMessages(setMessages, conversationID);
+    CommunicationHandler.getMessages(onGetMessages, conversationID);
   }
 
   const submitSendMessageRequest = () => {
@@ -120,6 +130,7 @@ export default function Messages() {
   const switchConversation = (conversation) => {
     console.log("C.CID: " + conversation.conversation_id);
     setConversationID(conversation.conversation_id);
+    setConversation(conversation);
 
     // let onOpenFunction = (chatSocket) => {
     //   setCurrentName(conversation.first_name + " " + conversation.last_name);
@@ -156,7 +167,7 @@ export default function Messages() {
 
   // Initial update
   useEffect(() => {
-    console.log("useEffect called");
+    // console.log("useEffect called");
     requestClientID();
     submitGetMessageRequest();
     submitGetConversationsRequest();

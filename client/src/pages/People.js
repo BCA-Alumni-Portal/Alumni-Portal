@@ -43,14 +43,14 @@ function People() {
       setAuth(data);
     })
   }, []);
-  
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   // const handleClick = (e = React.MouseEvent) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const [currentAlumniID, setCurrentAlumniID] = React.useState(0);
   const [people, setPeople] = React.useState([]);
-  const [clientID, setClientID] = React.useState(0);
+  const [lastFilterGroup, setLastFilterGroup] = React.useState("");
 
   //search bar filtering 
   const [inputText, setInputText] = React.useState("");
@@ -65,7 +65,7 @@ function People() {
   const [AcademyFilter, setAcademyFilter] = React.useState([]);
 
   let inputYear = "";
-  const academy_array = ['AAST', 'AMST', 'AVPA', 'ABF', 'ATCS', 'ACAHA', 'AEDT', 'APT', 'ABCT', 'ACA', 'AVAGC','GLE'];
+  const academy_array = ['AAST', 'AMST', 'AVPA', 'ABF', 'ATCS', 'ACAHA', 'AEDT', 'APT', 'ABCT', 'ACA', 'AVAGC', 'GLE'];
 
   let YearFilterHandler = (newElement) => {
     var current_array = [...YearFilter, newElement];
@@ -88,7 +88,7 @@ function People() {
       return mergedArray.indexOf(e) === index;
     });
 
-    console.log(uniqueArray);
+    // console.log(uniqueArray);
 
     setAcademyFilter(uniqueArray); //[...AcademyFilter, "\"" + newElement + "\""]);
   };
@@ -127,13 +127,14 @@ function People() {
   }
 
   const submitGetPeopleRequest = () => {
-
     let data = getPackedData();
+    let stringData = JSON.stringify(data)
+    if (lastFilterGroup == stringData) {
+      return;
+    }
+    console.log("Made request");
+    setLastFilterGroup(stringData);
     CommunicationHandler.getPeopleList(setPeople, data);
-  }
-
-  const requestClientID = () => {
-    setClientID(CommunicationHandler.getClientID());
   }
 
   const createConversation = (alumni_id) => {
@@ -154,8 +155,11 @@ function People() {
 
   useInterval(() => {
     submitGetPeopleRequest();
-    requestClientID();
-  }, 5000);
+  }, 100);
+
+  useEffect(() => {
+    submitGetPeopleRequest();
+  }, [])
 
   if (auth) {
     return (
@@ -171,11 +175,12 @@ function People() {
             </div>
             <br className="space-y-8"></br>
 
-           <YearFilterComponent input={YearFilterHandler}></YearFilterComponent> 
-           <AcademyFilterComponent Academies={academy_array} RegisterFilters={Academy_filter}></AcademyFilterComponent>
+            <YearFilterComponent input={YearFilterHandler}></YearFilterComponent>
+            <AcademyFilterComponent Academies={academy_array} RegisterFilters={Academy_filter}></AcademyFilterComponent>
+            
             <YearFilterToast input={YearFilter}></YearFilterToast>
             <AcademyFilterToast input={AcademyFilter}></AcademyFilterToast>
-            
+
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
             <PeopleGeneratorComponent people={people} switchFunctionGenerator={switchFunctionGenerator} createConversationFunctionGenerator={createConversationFunctionGenerator} />

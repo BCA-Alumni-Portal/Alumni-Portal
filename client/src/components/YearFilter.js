@@ -4,7 +4,7 @@ import * as React from 'react';
 function YearFilter(props) {
     let func = () => {
         let inputYear = document.getElementById("year").value;
-        console.log(document.getElementById("year").value);
+        // console.log(document.getElementById("year").value);
         if (isNaN(inputYear) == false) {
             inputYear = Number(inputYear);
             props.input(inputYear);
@@ -12,7 +12,7 @@ function YearFilter(props) {
     };
 
     return (
-        <div className="component-list px-10 flex grid grid-cols-3 gap-1 place-content-center">
+        <div className="px-10 flex grid grid-cols-3 gap-1 place-content-center">
             <div>
                 <ul className="component-list block menu menu-horizontal bg-base-100 border border border-1 border-amber-300">
                     <li tabIndex="0">

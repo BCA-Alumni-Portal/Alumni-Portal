@@ -73,15 +73,22 @@ async function getCSRF() {
     return instance;
 }
 
-async function makeRequest(url, params, func) {
+async function makeRequest(url, params={}, func) {
+    let id = await getClientID();
+    if (id == undefined) {
+        console.log("Undefined client ID, will not send request");
+        return;
+    }
+    params.alumni_id = id;
     let instance = await getCSRF();
     // console.log(instance);
-    console.log(LINK_HEADER + url);
-    console.log(params);
-    let result = instance.post(LINK_HEADER + url, { params: params }).then(res => {
+    // console.log(LINK_HEADER + url);
+    // console.log(params);
+    let result = instance.post(LINK_HEADER + url, params).then(res => {
         let data = res.data;
+        console.log(url);
         console.log(data);
-        console.log(func);
+        // console.log(func);
         if ((func != null) && (data != null)) {
             func(data);
         }
@@ -91,10 +98,7 @@ async function makeRequest(url, params, func) {
 }
 
 async function getSocialsInfoByID(dataFunction, id) {
-    if (id == undefined) {
-        id = await getClientID();
-    }
-    let data = { alumni_id: id };
+    let data = {};
     let result = makeRequest("readSocialsRequestByID", data, dataFunction);
     // let result = axios.get(LINK_HEADER + "readSocialsRequestByID", { params: data }).then(res => {
     //     let data = res.data;
@@ -107,10 +111,7 @@ async function getSocialsInfoByID(dataFunction, id) {
 }
 
 async function getDescriptionByID(dataFunction, id) {
-    if (id == undefined) {
-        id = await getClientID();
-    }
-    let data = { alumni_id: id };
+    let data = {};
     let result = makeRequest("readDescriptionRequest", data, dataFunction);
     // let result = axios.get(LINK_HEADER + "readDescriptionRequest", { params: data }).then(res => {
     //     let data = res.data;
@@ -123,8 +124,7 @@ async function getDescriptionByID(dataFunction, id) {
 }
 
 async function writeDescription(description) {
-    let id = await getClientID();
-    let data = { alumni_id: id, description: description };
+    let data = { description: description };
     let result = makeRequest("updateDescriptionRequest", data);
     // let result = axios.get(LINK_HEADER + "updateDescriptionRequest", { params: data }).then(res => {
 
@@ -132,10 +132,7 @@ async function writeDescription(description) {
 }
 
 async function getProfileDataByID(dataFunction, id) {
-    if (id == undefined) {
-        id = await getClientID();
-    }
-    let data = { alumni_id: id };
+    let data = { target_id: id || await getClientID() };
 
     let result = makeRequest("readProfileDataRequestByID", data, dataFunction);
     // let result = axios.get(LINK_HEADER + "readProfileDataRequestByID", { params: data }).then(res => {
@@ -147,8 +144,6 @@ async function getProfileDataByID(dataFunction, id) {
 }
 
 async function writeProfileData(data) {
-    data.alumni_id = await getClientID();
-
     let result = makeRequest("updateProfileDataRequest", data);
     // let result = axios.get(LINK_HEADER + "updateProfileDataRequest", { params: data }).then(res => {
     //     let data = res.data;
@@ -160,8 +155,6 @@ async function writeProfileData(data) {
 }
 
 async function writeSocialsInfo(data) {
-    data.alumni_id = await getClientID();
-
     let result = makeRequest("updateSocialsRequest", data);
     // let result = axios.get(LINK_HEADER + "updateSocialsRequest", { params: data }).then(res => {
 
@@ -184,8 +177,7 @@ async function getMessages(dataFunction, conversationID) {
 }
 
 async function writeMessage(conversationID, messageBody) {
-    let id = await getClientID();
-    let data = { senderID: id, conversationID: conversationID, messageBody: messageBody };
+    let data = { conversationID: conversationID, messageBody: messageBody };
     let result = makeRequest("sendMessageRequest", data);
     // axios.get(LINK_HEADER + "sendMessageRequest", { params: data }).then(res => console.log(res)).catch((err) => {
 
@@ -199,8 +191,7 @@ async function writeMessage(conversationID, messageBody) {
 // }
 
 async function createConversationConnection(conversationID, onOpenFunction, onMessageFunction) {
-    let id = await getClientID();
-    let onOpenData = { senderID: id, conversationID: conversationID };
+    let onOpenData = { conversationID: conversationID };
     // let socket = new WebSocket("ws://localhost:5001");
     let socket = new WebSocket('ws://' + window.location.hostname + ':5001');
 
@@ -236,9 +227,7 @@ async function createConversationConnection(conversationID, onOpenFunction, onMe
 }
 
 async function getConversations(dataFunction) {
-    let id = await getClientID();
-    let data = { alumni_id: id };
-    let result = makeRequest("getConversationsRequest", data, dataFunction);
+    let result = makeRequest("getConversationsRequest", {}, dataFunction);
     // axios.get(LINK_HEADER + "getConversationsRequest", { params: data }).then(res => {
     //     let data = res.data;
     //     // console.log(data);
@@ -250,7 +239,6 @@ async function getConversations(dataFunction) {
 
 async function writeConversation(otherID) {
     let data = {
-        clientID: await getClientID(),
         targetID: otherID
     }
     let result = makeRequest("createConversation", data);
@@ -270,7 +258,7 @@ async function getPeopleList(dataFunction, data) {
 }
 
 async function getProfilePicture(dataFunction, id) {
-    let data = { alumni_id: id };
+    let data = { target_id: id }
     let result = makeRequest("getProfilePicture", data, dataFunction);
     // axios.get(LINK_HEADER + "getProfilePicture", { params: data }).then(res => {
     //     let data = res.data;
@@ -283,7 +271,6 @@ async function getProfilePicture(dataFunction, id) {
 
 async function writeProfilePicture(picture) {
     let data = {
-        clientID: await getClientID(),
         image: picture
     }
     let result = makeRequest("writeProfilePicture", data);
@@ -293,7 +280,7 @@ async function writeProfilePicture(picture) {
 }
 
 async function syncMissingData() {
-    let result = makeRequest("syncMissingData");
+    let result = makeRequest("syncData");
 }
 
 async function exportData() {

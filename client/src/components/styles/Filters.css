@@ -1,3 +1,7 @@
 .component-list {
     z-index: 10;
 }
+
+.inline-block {
+    display: inline-block;
+}

@@ -10,6 +10,7 @@ function ConversationGenerator(props) {
             {
                 conversations.map((convo) => {
                     let func = props.functionGenerator(convo);
+                    // console.log(convo);
                     return (
                         <div>
                             <div className="grid card h-25 hover:bg-stone-200  focus:bg-stone-200 rounded-box" onClick={func}>
