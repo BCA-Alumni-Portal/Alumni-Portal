@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 const sqlModule = require("./sqlModule");
 
-const readAlumniColumns = [
+const readAccountsColumns = [
     "account_id",
     "first_name",
     "last_name",
@@ -10,9 +10,9 @@ const readAlumniColumns = [
     "academy_id"
 ];
 // When adding alumni, <account_id> is autoincremented
-const writeAlumniColumns = readAlumniColumns.slice(1);
-const writeSheetsAlumniColumns = readAlumniColumns;
-const readPublicAlumniColumns = [
+const writeAccountsColumns = readAccountsColumns.slice(1);
+const writeSheetsAccountsColumns = readAccountsColumns;
+const readPublicAccountsColumns = [
     "account_id",
     "first_name",
     "last_name",
@@ -159,7 +159,7 @@ function constructSQLReadQuery(readColumns, tableName = TABLE_ACCOUNTS) {
 }
 
 // Pull data from the SQL database and write to the Google Sheets
-async function readAlumniDataFromSQL(startID = 0, endID = readLastEffectiveSqlAlumniID(), columns = readAlumniColumns) {
+async function readAccountsDataFromSQL(startID = 0, endID = readLastEffectiveSqlAccountsID(), columns = readAccountsColumns) {
     endID = await endID;
     startID = mysql.escape(startID);
     endID = mysql.escape(endID);
@@ -181,7 +181,7 @@ async function readMessageFromSqlByConversation(conversationID) {
 
 async function writeMessageToSQL(senderID, conversationID, body) {
     // Check that the IDs are valid
-    let lastID = readLastEffectiveSqlAlumniID();
+    let lastID = readLastEffectiveSqlAccountsID();
     if ((senderID > lastID)) {
         console.log("Invalid senderID (sqlAccess:writeMessageToSQL");
         return -1;
@@ -206,14 +206,14 @@ async function writeMessageToSQL(senderID, conversationID, body) {
     return result;
 }
 
-async function readLastEffectiveSqlAlumniID() {
-    let lastSqlID = await readLastSqlAlumniID();
+async function readLastEffectiveSqlAccountsID() {
+    let lastSqlID = await readLastSqlAccountsID();
     // We add 1 because it starts with 0, and max() returns the largest value
     return parseInt(lastSqlID[0]['max(account_id)'], 10) + 1;
 }
 
 // Get the last account_id from the SQL database
-async function readLastSqlAlumniID() {
+async function readLastSqlAccountsID() {
     let query = "SELECT max(account_id) FROM " + TABLE_ACCOUNTS;
     return await sqlModule.makeQuery({ query: query });
 }
@@ -410,8 +410,8 @@ async function writeDescriptionToSQL(alumniID, description) {
     return result;
 }
 
-async function readAlumniDataWithFilter(nameFilter, yearFilters, academyFilters) {
-    let query = constructSQLReadQuery(readPublicAlumniColumns);
+async function readAccountsDataWithFilter(nameFilter, yearFilters, academyFilters) {
+    let query = constructSQLReadQuery(readPublicAccountsColumns);
     // console.log("query: " + query);
     // console.log("year or: " + yearOr);
     // console.log("academy or: " + academyOr);
@@ -421,13 +421,13 @@ async function readAlumniDataWithFilter(nameFilter, yearFilters, academyFilters)
     }
     if (nameFilter.length > 0) {
         nameFilter = mysql.escape(nameFilter + "%");
-        query += ` (Alumni.first_name LIKE ${nameFilter}` + ` OR Alumni.last_name LIKE ${nameFilter}` + `)`;
+        query += ` (Accounts.first_name LIKE ${nameFilter}` + ` OR ` + TABLE_ACCOUNTS + `.last_name LIKE ${nameFilter}` + `)`;
     }
     if (yearFilters.length > 0) {
         if (nameFilter.length > 0) {
             query += " AND ";
         }
-        let yearOr = constructSQLOrSequence("Alumni.graduation_year", yearFilters);
+        let yearOr = constructSQLOrSequence(TABLE_ACCOUNTS + ".graduation_year", yearFilters);
         query += yearOr;
     }
     if (academyFilters.length > 0) {
@@ -435,9 +435,9 @@ async function readAlumniDataWithFilter(nameFilter, yearFilters, academyFilters)
             query += " AND ";
         }
         let academyOr = constructSQLOrSequence("Academy.academy_name", academyFilters);
-        query += "(Alumni.academy_id=Academy.academy_id AND " + academyOr + ")"
+        query += "(Accounts.academy_id=Academy.academy_id AND " + academyOr + ")"
     }
-    // "WHERE " + yearOr + " AND " + "(Alumni.academy_id=Academy.academy_id AND " + academyOr + ")";
+    // "WHERE " + yearOr + " AND " + "(Accounts.academy_id=Academy.academy_id AND " + academyOr + ")";
     // console.log("final query: " + query);
     let result = await sqlModule.makeQuery({ query: query });
     return result;
@@ -463,12 +463,12 @@ async function writeConversation(alumniID, targetID) {
 
 async function readAvailableConversations(alumniID) {
     alumniID = mysql.escape(alumniID);
-    let query = `SELECT Conversation.conversation_id, Alumni.first_name, Alumni.last_name
+    let query = `SELECT Conversation.conversation_id, Accounts.first_name, Accounts.last_name
     FROM Conversation
-    INNER JOIN Alumni ON (
-    (Conversation.first_id=Alumni.account_id AND Conversation.first_id!=${alumniID})
+    INNER JOIN Accounts ON (
+    (Conversation.first_id=Accounts.account_id AND Conversation.first_id!=${alumniID})
     OR 
-    (Conversation.second_id=Alumni.account_id AND Conversation.second_id!=${alumniID})
+    (Conversation.second_id=Accounts.account_id AND Conversation.second_id!=${alumniID})
     )
     WHERE (Conversation.first_id=${alumniID} OR Conversation.second_id=${alumniID})`
 
@@ -497,7 +497,7 @@ async function writeDataToSQL(columns, values, tableName) {
 }
 
 async function verifyAlumEmail(alumniEmail) {
-    let query = "SELECT email_address FROM Alumni";
+    let query = "SELECT email_address FROM Accounts";
     let data = await sqlModule.makeQuery({ query: query });
     let set = new Set(data.map(element => element.email_address));
     console.log(set);
@@ -508,14 +508,14 @@ async function verifyAlumEmail(alumniEmail) {
 
 
 module.exports = {
-    readAlumniDataFromSQL,
+    readAccountsDataFromSQL,
     writeDataToSQL,
     writeMessageToSQL,
-    readLastEffectiveSqlAlumniID,
-    readLastSqlAlumniID,
-    writeAlumniColumns,
-    writeSheetsAlumniColumns,
-    readPublicAlumniColumns,
+    readLastEffectiveSqlAccountsID,
+    readLastSqlAccountsID,
+    writeAccountsColumns,
+    writeSheetsAccountsColumns,
+    readPublicAccountsColumns,
     readClientID,
 
     writeProfilePictureToSQL,
@@ -535,7 +535,7 @@ module.exports = {
     updateDescriptionToSQL,
     writeDescriptionToSQL,
 
-    readAlumniDataWithFilter,
+    readAccountsDataWithFilter,
     writeConversation,
     readAvailableConversations,
     readSpecificConversation,

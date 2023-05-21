@@ -28,7 +28,7 @@ router.post('/getSQLData', async (req, res) => {
         academy_id: req.academyID
     }
 
-    let query = "SELECT * FROM Alumni ";
+    let query = "SELECT * FROM " + TABLE_ACCOUNTS;
 
     let first = true;
 
