@@ -8,6 +8,8 @@ const tough = require('tough-cookie');
 const LINK_HEADER = "/api/";
 
 let clientID = -1;
+let accessToken;
+let axiosInstance;
 
 async function getClientID() {
     if (clientID != -1) {
@@ -18,7 +20,10 @@ async function getClientID() {
 
     await axios.get('/auth/current-session').then(({ data }) => {
         // console.log("got email: <" + data.email + ">");
+        console.log("auth data:")
+        console.log(data);
         email = data.email;
+        accessToken = data.access_token;
     })
     // console.log("getClientID - email: " + email);
     let result = axios.get(LINK_HEADER + "getClientID", { params: { email: email } }).then(res => {
@@ -35,6 +40,10 @@ async function getClientID() {
 }
 
 async function getCSRF() {
+    if (axiosInstance != undefined) {
+        return axiosInstance;
+    }
+
 	let cookieJar = new tough.CookieJar();
 
 	let instance = await axios.create({
@@ -70,6 +79,7 @@ async function getCSRF() {
     // console.log(axios.defaults.headers);
 
 	// res = await instance.post('https://172.16.220.133/login',{username:name,password:pass});
+    axiosInstance = instance;
     return instance;
 }
 
@@ -82,9 +92,26 @@ async function makeRequest(url, params={}, func) {
     params.alumni_id = id;
     let instance = await getCSRF();
     // console.log(instance);
-    // console.log(LINK_HEADER + url);
-    // console.log(params);
-    let result = instance.post(LINK_HEADER + url, params).then(res => {
+    console.log(LINK_HEADER + url);
+    console.log(params);
+
+    // accessToken = auth0.getAccessTokenSilently();
+    // console.log(accessToken);
+
+    var options = {
+        method: 'POST',
+        url: LINK_HEADER + url,
+        headers: {'content-type': 'application/json', authorization: 'Bearer ' + accessToken}
+    };
+    params.access_token = accessToken;
+    
+    // axios.request(options).then(function (response) {
+    //     console.log(response.data);
+    // }).catch(function (error) {
+    //     console.error(error);
+    // });
+
+    let result = instance.post(LINK_HEADER + url, params, options).then(res => {
         let data = res.data;
         console.log(url);
         console.log(data);

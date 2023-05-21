@@ -256,7 +256,7 @@ async function getAcademyIDFromString(academy_name) {
         "(academy_name = " + mysql.escape(academy_name) + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
-    if (data == undefined) {
+    if ((data == undefined) || (data[0] == undefined)) {
         return undefined;
     }
     return data[0].academy_id;

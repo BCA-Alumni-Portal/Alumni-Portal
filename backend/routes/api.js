@@ -9,6 +9,7 @@ const sharp = require('sharp');
 
 const express = require('express');
 const router = express.Router();
+const axios = require('axios');
 
 const sourceSheetsID = "1oOohmDEw3R2AU8aHwt9-KWGpFCQSYz08HsGgcXQEDLQ";
 const exportSheetsID = "1nCnY_3uG0xUZSx9uSaS9ROFUF9hur70jBrUxFSEnZMY";
@@ -245,6 +246,7 @@ router.post('/readProfileDataRequestByID', async (req, res) => {
     // console.log("readProfileDataRequestByID");
     // console.log(req);
     let query = req.body;
+    // console.log(query);
 
     let targetID = query.target_id;
     let result = await sqlAccess.readProfileInfoFromSQL(targetID);
@@ -346,7 +348,34 @@ router.post('/readDescriptionRequestByID', async (req, res) => {
     return res.send(result);
 })
 
-router.post('/updateDescriptionRequest', async (req, res) => {
+
+
+// const express = require('express');
+// const app = express();
+const { auth, requiredScopes } = require('express-oauth2-jwt-bearer');
+
+// const checkJwt = (data) => {
+//     console.log(data);
+//     auth({
+//         audience: 'dev-f59msytf.us.auth0.com',
+//         issuerBaseURL: `https://dev-f59msytf.us.auth0.com/`,
+//     })(data);
+// };
+
+const checkJwt = auth({
+    audience: 'https://academies-alumni-server-api',
+    issuerBaseURL: `https://dev-f59msytf.us.auth0.com/`,
+});
+
+// This route needs authentication
+// app.get('/api/private', checkJwt, function (req, res) {
+//     res.json({
+//         message: 'Hello from a private endpoint! You need to be authenticated to see this.'
+//     });
+// });
+
+
+router.post('/updateDescriptionRequest', checkJwt, async (req, res) => {
     // console.log("updateDescriptionRequest");
 
     let query = req.body;
@@ -354,6 +383,35 @@ router.post('/updateDescriptionRequest', async (req, res) => {
     // let email = query.email_address;
     // let clientID = await sqlAccess.readClientID(email);
     let clientID = query.alumni_id;
+    let accessToken = query.access_token;
+
+    // var webAuth = new auth0.WebAuth({
+    //     domain:       'dev-f59msytf.us.auth0.com',
+    //     clientID:     '26xeGjN92uf2j0WDsB4GSV3S01Q39Keh'
+    // });
+    var options = {
+        method: 'GET',
+        url: "https://dev-f59msytf.us.auth0.com/userinfo",
+        headers: {'content-type': 'application/json', authorization: 'Bearer ' + accessToken},
+        clientID: process.env.AUTH0_CLIENT_ID
+    };
+
+    // let check = axios.get("https://dev-f59msytf.us.auth0.com/userinfo", options).then(res => {
+    //     let data = res.data;
+    //     console.log(url);
+    //     console.log(data);
+    //     // console.log(func);
+    //     // if ((func != null) && (data != null)) {
+    //     //     func(data);
+    //     // }
+    //     return data;
+    // }).catch(err => {
+    //     console.log("Error has occurred when trying to get user data:");
+    //     console.log(err);
+    // });
+    
+    // let data = await check;
+    // console.log("done");
 
     let description = [
         query.description
