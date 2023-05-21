@@ -507,7 +507,9 @@ async function verifyAlumEmail(accountsEmail) {
 }
 
 async function readIsAdminFromSQL(accountID) {
-
+    let query = "SELECT is_admin FROM " + TABLE_ACCOUNTS + " WHERE account_id=" + mysql.escape(accountID);
+    let data = await sqlModule.makeQuery({ query: query });
+    return data;
 }
 
 
@@ -546,5 +548,7 @@ module.exports = {
 
     readMessageFromSqlByConversation,
 
-    verifyAlumEmail
+    verifyAlumEmail,
+
+    readIsAdminFromSQL
 }
