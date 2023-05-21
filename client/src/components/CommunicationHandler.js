@@ -316,7 +316,7 @@ async function exportData() {
 
 async function isAdmin() {
     let result = await makeRequest("isAdmin");
-    return result.is_admin;
+    return result.is_admin == 1;
 }
 
 export default {
