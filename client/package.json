@@ -7,6 +7,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@headlessui/react": "^1.7.14",
+    "@material-tailwind/react": "^2.0.1",
     "@mui/material": "^5.11.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -35,6 +36,7 @@
     "sharp": "^0.32.0",
     "stream": "^0.0.2",
     "styled-components": "^5.3.6",
+    "tailwindcss-ripple": "^0.7.1",
     "util": "^0.12.5",
     "web-vitals": "^2.1.4",
     "yarn": "^1.22.19"
