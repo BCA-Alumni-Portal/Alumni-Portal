@@ -505,7 +505,11 @@ router.post('/isAdmin', async (req, res) => {
     let accountsID = query.account_id;
     
     let result = await sqlAccess.readIsAdminFromSQL(accountsID);
-    return res.send(result);
+    if (result == undefined) {
+        console.log("Unable to determine if admin")
+        return;
+    }
+    return res.send(result[0]);
 })
 
 // var Tokens = require('csrf');

@@ -4,18 +4,24 @@ import React, { useEffect, useState } from 'react';
 import "./styles/NavBar.css";
 import logo from "../images/logo.png";
 import personImage2 from '../images/person2.png';
+import CommunicationHandler from './CommunicationHandler';
 
 
 export default function NavBar() {
   const [auth, setAuth] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     axios.get('/auth/current-session').then(({ data }) => {
       setAuth(data);
     })
+    CommunicationHandler.isAdmin().then((result) => {
+      if (result != null) {
+        setIsAdmin(result);
+      }
+    });
   }, [])
 
-  let showResults = CommunicationHandler.isAdmin();
 
   return (
     !auth ? (
@@ -33,7 +39,7 @@ export default function NavBar() {
             <p className="nav-item text-2xl font-semibold border rounded py-2 px-2 hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500  border border-amber-50 rounded py-2 px-2  hover:border-amber-400 hover:text-white">Messages</p>
           </CustomLink>
           {
-            showResults ?
+            isAdmin ?
               <CustomLink to="/admin">
                 <p className="nav-item text-2xl font-semibold border rounded py-2 px-2 hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500  border border-amber-50 rounded py-2 px-2  hover:border-amber-400 hover:text-white">Admin</p>
               </CustomLink>
