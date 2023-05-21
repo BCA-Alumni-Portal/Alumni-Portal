@@ -7,7 +7,9 @@ const readAccountsColumns = [
     "last_name",
     "graduation_year",
     "email_address",
-    "academy_id"
+    "academy_id",
+    "is_visible",
+    "is_admin"
 ];
 // When adding accounts, <account_id> is autoincremented
 const writeAccountsColumns = readAccountsColumns.slice(1);
@@ -410,14 +412,39 @@ async function writeDescriptionToSQL(accountsID, description) {
     return result;
 }
 
+async function updateVisibilityToSQL(accountsID, is_visible) {
+    let columns = updateDescriptionColumns;
+    let values = [
+        is_visible
+    ];
+    let query = constructSQLUpdateQuery("account_id", accountsID, columns, values, TABLE_ACCOUNTS);
+    // console.log("query: \n" + query);
+    let queryResult = await sqlModule.makeQuery({ query: query });
+    return queryResult;
+}
+
+async function updateAdminToSQL(accountsID, is_admin) {
+    let columns = updateDescriptionColumns;
+    let values = [
+        is_admin
+    ];
+    let query = constructSQLUpdateQuery("account_id", accountsID, columns, values, TABLE_ACCOUNTS);
+    // console.log("query: \n" + query);
+    let queryResult = await sqlModule.makeQuery({ query: query });
+    return queryResult;
+}
+
+
+
+
 async function readAccountsDataWithFilter(nameFilter, yearFilters, academyFilters) {
     let query = constructSQLReadQuery(readPublicAccountsColumns);
     // console.log("query: " + query);
     // console.log("year or: " + yearOr);
     // console.log("academy or: " + academyOr);
-    query += " INNER JOIN Academy"
+    query += " INNER JOIN Academy WHERE Accounts.is_visible=1"
     if ((yearFilters.length + academyFilters.length + nameFilter.length) > 0) {
-        query += " WHERE ";
+        query += " AND ";
     }
     if (nameFilter.length > 0) {
         nameFilter = mysql.escape(nameFilter + "%");
@@ -438,7 +465,7 @@ async function readAccountsDataWithFilter(nameFilter, yearFilters, academyFilter
         query += "(Accounts.academy_id=Academy.academy_id AND " + academyOr + ")"
     }
     // "WHERE " + yearOr + " AND " + "(Accounts.academy_id=Academy.academy_id AND " + academyOr + ")";
-    // console.log("final query: " + query);
+    console.log("final query: " + query);
     let result = await sqlModule.makeQuery({ query: query });
     return result;
 }
@@ -550,5 +577,8 @@ module.exports = {
 
     verifyAlumEmail,
 
-    readIsAdminFromSQL
+    readIsAdminFromSQL,
+
+    updateVisibilityToSQL,
+    updateAdminToSQL
 }

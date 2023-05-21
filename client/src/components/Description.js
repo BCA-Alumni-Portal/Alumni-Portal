@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import CommunicationHandler from './CommunicationHandler';
+import { Circles, Grid } from 'react-loader-spinner'
 
 export default function Description(props) {
 
@@ -34,9 +35,19 @@ export default function Description(props) {
 
     return (
         <div>
+            <Grid
+                height="40"
+                width="40"
+                color="#38bdf7"
+                ariaLabel="grid-loading"
+                radius="12.5"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+            />
             {editing ?
                 <div className='mt-4'>
-                    <textarea className="textarea textarea-info text-xl w-11/12 focus:border-sky-400 focus:ring-0 inline-block align-middle float-left" placeholder="Tell us about yourself..." rows="4" value={description} onChange={(e) => changeDescription(e)}></textarea>
+                    <textarea className="textarea textarea-info text-xl w-11/12 focus:border-sky-400 focus:ring-0 inline-block align-middle float-left" placeholder="Tell us about yourself..." rows="4" value={description} maxLength={500} onChange={(e) => changeDescription(e)}></textarea>
                     <button className="btn btn-circle bg-green-400 hover:bg-gradient-to-r hover:from-green-300 hover:to-green-400 hover:border-green-300 border-green-100 inline-block align-bottom float-right" onClick={() => saveChanges()}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 inline-block align-middle">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />

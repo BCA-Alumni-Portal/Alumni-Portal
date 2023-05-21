@@ -182,6 +182,16 @@ async function writeProfileData(data) {
     // });
 }
 
+async function writeVisibility(data){
+    let result = makeRequest('updateVisibilityRequest', data);
+}
+
+async function writeAdmin(data){
+    let result = makeRequest('updateAdminRequest', data);
+}
+
+
+
 async function writeSocialsInfo(data) {
     let result = makeRequest("updateSocialsRequest", data);
     // let result = axios.get(LINK_HEADER + "updateSocialsRequest", { params: data }).then(res => {

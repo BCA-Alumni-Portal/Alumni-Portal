@@ -222,6 +222,31 @@ router.post('/updateProfileDataRequest', async (req, res) => {
     return res.send("Finished sending");
 })
 
+
+router.post('/updateVisibilityRequest', async(req, res) => {
+    let query = req.body;
+
+    let clientID = query.account_id;
+    let visibility = query.is_visible;
+
+    let result = await sqlAccess.updateVisibilityToSQL(clientID, visibility);
+
+    return res.send('Finished sending');
+})
+
+router.post('/updateAdminRequest', async(req, res) => {
+    let query = req.body;
+
+    let clientID = query.account_id;
+    let admin = query.is_admin;
+
+    let result = await sqlAccess.updateAdminToSQL(clientID, admin);
+
+    return res.send('Finished sending');
+})
+
+
+
 router.post('/readProfileDataRequest', async (req, res) => {
     // console.log("readProfileDataRequest");
     // console.log(req);
