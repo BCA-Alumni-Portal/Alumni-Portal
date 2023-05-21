@@ -6,14 +6,14 @@ function PeopleGenerator(props) {
     let people = props.people;
     // console.log(people);
     return (
-        <div class="list-group max-h-screen overflow-y-scroll">
+        <div class="list-group max-h-screen overflow-y-scroll divide-y">
             {
                 people.map((person) => {
                     let switchFunc = props.switchFunctionGenerator(person.alumni_id);
                     let createConversationFunc = props.createConversationFunctionGenerator(person.alumni_id);
                     return (
                         <div>
-                            <div className="group/item hover:bg-slate-100 grid card h-25 hover:bg-stone-200  focus:bg-stone-200 box py-2" onClick={switchFunc}>
+                            <div className="group/item hover:bg-slate-100 grid card h-25 hover:bg-sky-200 focus:bg-sky-300 box py-2" onClick={switchFunc}>
                                 <div className="text-sm row flex gap-3 px-2">
 
                                     {/* <button
