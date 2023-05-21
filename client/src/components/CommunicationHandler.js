@@ -10,6 +10,7 @@ const LINK_HEADER = "/api/";
 let clientID = -1;
 let accessToken;
 let axiosInstance;
+let adminStatus;
 
 async function getClientID() {
     if (clientID != -1) {
@@ -314,6 +315,15 @@ async function exportData() {
     let result = makeRequest("exportData");
 }
 
+async function isAdmin() {
+    if (adminStatus != undefined) {
+        return adminStatus;
+    }
+    let result = await makeRequest("isAdmin");
+    adminStatus = result.is_admin == 1;
+    return adminStatus;
+}
+
 export default {
     getClientID,
 
@@ -339,5 +349,7 @@ export default {
     writeProfilePicture,
 
     syncMissingData,
-    exportData
+    exportData,
+
+    isAdmin
 }

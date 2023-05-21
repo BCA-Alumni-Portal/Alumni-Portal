@@ -5,11 +5,17 @@ import CommunicationHandler from '../components/CommunicationHandler';
 
 export default function Admin() {
     const [auth, setAuth] = useState(null);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         axios.get('/auth/current-session').then(({ data }) => {
             setAuth(data);
         })
+        CommunicationHandler.isAdmin().then((result) => {
+            if (result != null) {
+                setIsAdmin(result);
+            }
+        });
     }, [])
 
     const packGetData = () => {
@@ -42,7 +48,7 @@ export default function Admin() {
         //     }
         // });
     }
-    if (auth) {
+    if (auth && isAdmin) {
         return (
 
             <div className="container-fluid mt-10">
@@ -64,6 +70,9 @@ export default function Admin() {
     else if (auth === null) {
         // loading
         return <div></div>
+    }
+    else if (!isAdmin) {
+        return <Home />;
     }
     else {
         return <Home />;

@@ -20,7 +20,7 @@ router.post('/getSQLData', async (req, res) => {
     // console.log("getSQLData");
 
     let additionalSpecifiers = {
-        account_id: req.alumniID,
+        account_id: req.accountsID,
         first_name: req.firstName,
         last_name: req.lastName,
         graduation_year: req.graduationYear,
@@ -53,7 +53,7 @@ router.post('/createSQLData', async (req, res) => {
     // console.log(req)
     // console.log("createSQLData");
     let additionalSpecifiers = {
-        account_id: req.body.alumniID,
+        account_id: req.body.accountsID,
         first_name: req.body.firstName,
         last_name: req.body.lastName,
         graduation_year: req.body.graduationYear,
@@ -61,7 +61,7 @@ router.post('/createSQLData', async (req, res) => {
         academy_id: req.body.academyID
     }
 
-    let query = "INSERT INTO Alumni (";
+    let query = "INSERT INTO Accounts (";
 
     let first = true;
     for (key in additionalSpecifiers) {
@@ -117,7 +117,7 @@ router.post('/updateSQLData', async (req, res) => {
     // }
     // console.log(additionalSpecifiers);
 
-    let query = "UPDATE Alumni ";
+    let query = "UPDATE Accounts ";
 
     let first = true;
 
@@ -134,7 +134,7 @@ router.post('/updateSQLData', async (req, res) => {
         }
     }
 
-    query += " WHERE account_id=" + req.body.alumniID;
+    query += " WHERE account_id=" + req.body.accountsID;
 
     let result = await sqlModule.makeQuery({ query: query });
     res.send(result);
@@ -468,7 +468,7 @@ router.post('/getPeopleList', async (req, res) => {
     // console.log(yearFilters);
     // console.log(academyFilters);
 
-    let result = await sqlAccess.readAlumniDataWithFilter(nameFilter, yearFilters, academyFilters);
+    let result = await sqlAccess.readAccountsDataWithFilter(nameFilter, yearFilters, academyFilters);
 
     // console.log(result)
     return res.send(result);
@@ -485,19 +485,31 @@ router.post('/createConversation', async (req, res) => {
 
 router.post('/getProfilePicture', async (req, res) => {
     let query = req.body;
-    let alumniID = query.account_id;
+    let accountsID = query.account_id;
 
-    let result = await sqlAccess.readProfilePictureFromSQL(alumniID);
+    let result = await sqlAccess.readProfilePictureFromSQL(accountsID);
     return res.send(result);
 })
 
 router.post('/writeProfilePicture', async (req, res) => {
     let query = req.body;
-    let alumniID = query.account_id;
+    let accountsID = query.account_id;
     let image = query.image;
 
-    let result = await sqlAccess.writeProfilePictureFromSQL(alumniID, image);
+    let result = await sqlAccess.writeProfilePictureFromSQL(accountsID, image);
     return res.send(result);
+})
+
+router.post('/isAdmin', async (req, res) => {
+    let query = req.body;
+    let accountsID = query.account_id;
+    
+    let result = await sqlAccess.readIsAdminFromSQL(accountsID);
+    if (result == undefined) {
+        console.log("Unable to determine if admin")
+        return;
+    }
+    return res.send(result[0]);
 })
 
 // var Tokens = require('csrf');
