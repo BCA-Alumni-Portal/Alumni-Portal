@@ -363,7 +363,7 @@ const { auth, requiredScopes } = require('express-oauth2-jwt-bearer');
 // };
 
 const checkJwt = auth({
-    audience: 'https://academies-accounts-server-api',
+    audience: 'https://academies-alumni-server-api',
     issuerBaseURL: `https://dev-f59msytf.us.auth0.com/`,
 });
 
