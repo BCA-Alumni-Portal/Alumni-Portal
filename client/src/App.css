@@ -29,6 +29,10 @@ body {
   -webkit-text-fill-color: white
 }
 
+body, html {
+  font-family: 'Montserrat', sans-serif;
+}
+
 /* .nav {
   padding: 10px;
   background-color: #f8fafc;
