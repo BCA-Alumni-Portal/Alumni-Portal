@@ -11,7 +11,7 @@ export default function Home() {
   useEffect(() => {
     axios.get('/auth/current-session').then(({ data }) => {
       setAuth(data);
-      console.log(data)
+      console.log(data);
     })
   }, [])
   if (auth) {

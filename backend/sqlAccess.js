@@ -9,7 +9,7 @@ const readAccountsColumns = [
     "email_address",
     "academy_id"
 ];
-// When adding alumni, <account_id> is autoincremented
+// When adding accounts, <account_id> is autoincremented
 const writeAccountsColumns = readAccountsColumns.slice(1);
 const writeSheetsAccountsColumns = readAccountsColumns;
 const readPublicAccountsColumns = [
@@ -273,7 +273,7 @@ async function getAcademyStringFromID(academy_id) {
     return data[0].academy_name;
 }
 
-async function updateProfileInfoToSQL(alumniID, company = "", graduationYear, pronouns = "", academy, first_name, last_name) {
+async function updateProfileInfoToSQL(accountsID, company = "", graduationYear, pronouns = "", academy, first_name, last_name) {
     let academyID = await getAcademyIDFromString(academy);
 
     let columns = profileInfoColumns;
@@ -285,26 +285,26 @@ async function updateProfileInfoToSQL(alumniID, company = "", graduationYear, pr
         first_name,
         last_name
     ];
-    let query = constructSQLUpdateQuery("account_id", alumniID, columns, values, TABLE_ACCOUNTS);
+    let query = constructSQLUpdateQuery("account_id", accountsID, columns, values, TABLE_ACCOUNTS);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
 
-async function readProfileInfoFromSQL(alumniID) {
+async function readProfileInfoFromSQL(accountsID) {
     let query = "SELECT * FROM " + TABLE_ACCOUNTS + " WHERE " +
-        "(account_id = " + mysql.escape(alumniID) + ")"
+        "(account_id = " + mysql.escape(accountsID) + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     return data;
 }
 
-async function readSocialsFromSQL(alumniID) {
+async function readSocialsFromSQL(accountsID) {
     // console.log("readSocialsFromSQL");
-    // console.log("AID: " + alumniID);
-    // console.log("EAID: " + mysql.escape(alumniID));
+    // console.log("AID: " + accountsID);
+    // console.log("EAID: " + mysql.escape(accountsID));
     let query = "SELECT * FROM " + TABLE_SOCIALS + " WHERE " +
-        "(account_id = " + mysql.escape(alumniID) + ")"
+        "(account_id = " + mysql.escape(accountsID) + ")"
     // console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
@@ -314,17 +314,17 @@ async function readSocialsFromSQL(alumniID) {
     return data[0];
 }
 
-async function updateSocialsToSQL(alumniID, socials) {
+async function updateSocialsToSQL(accountsID, socials) {
     let columns = updateSocialColumns;
-    let query = constructSQLUpdateQuery("account_id", alumniID, columns, socials, TABLE_SOCIAL);
+    let query = constructSQLUpdateQuery("account_id", accountsID, columns, socials, TABLE_SOCIAL);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
 
-async function writeSocialsToSQL(alumniID, socials) {
+async function writeSocialsToSQL(accountsID, socials) {
     let columns = writeSocialColumns;
-    socials.account_id = alumniID;
+    socials.account_id = accountsID;
 
     let result = writeDataToSQL(columns, socials, TABLE_SOCIAL);
     console.log("query: \n" + query);
@@ -332,12 +332,12 @@ async function writeSocialsToSQL(alumniID, socials) {
     return queryResult;
 }
 
-async function readSocialsFromSQL(alumniID) {
+async function readSocialsFromSQL(accountsID) {
     // console.log("almID:");
-    // console.log(mysql.escape(alumniID));
-    // console.log(parseInt(mysql.escape(alumniID)));
+    // console.log(mysql.escape(accountsID));
+    // console.log(parseInt(mysql.escape(accountsID)));
     let query = "SELECT * FROM " + TABLE_SOCIAL + " WHERE " +
-        "(account_id = " + alumniID + ")"
+        "(account_id = " + accountsID + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     if (data == undefined) {
@@ -346,19 +346,19 @@ async function readSocialsFromSQL(alumniID) {
     return data;
 }
 
-async function updateSocialsToSQL(alumniID, socials) {
+async function updateSocialsToSQL(accountsID, socials) {
     let columns = updateSocialColumns;
-    let query = constructSQLUpdateQuery("account_id", alumniID, columns, socials, TABLE_SOCIAL);
+    let query = constructSQLUpdateQuery("account_id", accountsID, columns, socials, TABLE_SOCIAL);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
 
-async function writeSocialsToSQL(alumniID, socials) {
+async function writeSocialsToSQL(accountsID, socials) {
     let columns = writeSocialColumns;
     let values = [
         [
-            alumniID,
+            accountsID,
             socials[0]
         ]
     ]
@@ -370,9 +370,9 @@ async function writeSocialsToSQL(alumniID, socials) {
     return result;
 }
 
-async function readDescriptionFromSQL(alumniID) {
+async function readDescriptionFromSQL(accountsID) {
     let query = "SELECT * FROM " + TABLE_DESCRIPTION + " WHERE " +
-        "(account_id = " + mysql.escape(alumniID) + ")"
+        "(account_id = " + mysql.escape(accountsID) + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     // console.log(data);
@@ -382,23 +382,23 @@ async function readDescriptionFromSQL(alumniID) {
     return data[0];
 }
 
-async function updateDescriptionToSQL(alumniID, description) {
+async function updateDescriptionToSQL(accountsID, description) {
     let columns = updateDescriptionColumns;
     let values = [
         description
     ];
-    let query = constructSQLUpdateQuery("account_id", alumniID, columns, values, TABLE_DESCRIPTION);
+    let query = constructSQLUpdateQuery("account_id", accountsID, columns, values, TABLE_DESCRIPTION);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
 
-async function writeDescriptionToSQL(alumniID, description) {
+async function writeDescriptionToSQL(accountsID, description) {
     let columns = allDescriptionColumns;
     let values = [
         [
             null,
-            alumniID,
+            accountsID,
             description
         ]
     ]
@@ -443,11 +443,11 @@ async function readAccountsDataWithFilter(nameFilter, yearFilters, academyFilter
     return result;
 }
 
-async function writeConversation(alumniID, targetID) {
-    alumniID = mysql.escape(alumniID);
+async function writeConversation(accountsID, targetID) {
+    accountsID = mysql.escape(accountsID);
     targetID = mysql.escape(targetID);
     let checkQuery = "SELECT * FROM " + TABLE_CONVERSATION +
-        " WHERE ((first_id=" + alumniID + " AND second_id=" + targetID + ") OR (first_id=" + targetID + " AND second_id=" + alumniID + "))";
+        " WHERE ((first_id=" + accountsID + " AND second_id=" + targetID + ") OR (first_id=" + targetID + " AND second_id=" + accountsID + "))";
 
     // console.log(checkQuery);
     let checkResult = await sqlModule.makeQuery({ query: checkQuery });
@@ -455,22 +455,22 @@ async function writeConversation(alumniID, targetID) {
         return;
     }
 
-    let query = "INSERT INTO " + TABLE_CONVERSATION + "(conversation_id, first_id, second_id) VALUES (null, " + alumniID + ", " + targetID + ")";
+    let query = "INSERT INTO " + TABLE_CONVERSATION + "(conversation_id, first_id, second_id) VALUES (null, " + accountsID + ", " + targetID + ")";
     // console.log(query);
     let result = await sqlModule.makeQuery({ query: query });
     return result;
 }
 
-async function readAvailableConversations(alumniID) {
-    alumniID = mysql.escape(alumniID);
+async function readAvailableConversations(accountsID) {
+    accountsID = mysql.escape(accountsID);
     let query = `SELECT Conversation.conversation_id, Accounts.first_name, Accounts.last_name
     FROM Conversation
     INNER JOIN Accounts ON (
-    (Conversation.first_id=Accounts.account_id AND Conversation.first_id!=${alumniID})
+    (Conversation.first_id=Accounts.account_id AND Conversation.first_id!=${accountsID})
     OR 
-    (Conversation.second_id=Accounts.account_id AND Conversation.second_id!=${alumniID})
+    (Conversation.second_id=Accounts.account_id AND Conversation.second_id!=${accountsID})
     )
-    WHERE (Conversation.first_id=${alumniID} OR Conversation.second_id=${alumniID})`
+    WHERE (Conversation.first_id=${accountsID} OR Conversation.second_id=${accountsID})`
 
     // console.log(query);
     let result = await sqlModule.makeQuery({ query: query });
@@ -478,11 +478,11 @@ async function readAvailableConversations(alumniID) {
     return result;
 }
 
-async function readSpecificConversation(alumniID, targetID) {
-    alumniID = mysql.escape(alumniID);
+async function readSpecificConversation(accountsID, targetID) {
+    accountsID = mysql.escape(accountsID);
     targetID = mysql.escape(targetID);
     let query = "SELECT * FROM " + TABLE_CONVERSATION + " WHERE " +
-        "(first_id=" + alumniID + " AND second_id=" + targetID + ") OR (second_id=" + targetID + " AND first_id=" + alumniID + ")";
+        "(first_id=" + accountsID + " AND second_id=" + targetID + ") OR (second_id=" + targetID + " AND first_id=" + accountsID + ")";
     // console.log(query);
     let result = await sqlModule.makeQuery({ query: query });
     // console.log(result);
@@ -496,14 +496,18 @@ async function writeDataToSQL(columns, values, tableName) {
     return queryResult;
 }
 
-async function verifyAlumEmail(alumniEmail) {
-    let query = "SELECT email_address FROM Accounts";
+async function verifyAlumEmail(accountsEmail) {
+    let query = "SELECT email_address FROM " + TABLE_ACCOUNTS;
     let data = await sqlModule.makeQuery({ query: query });
     let set = new Set(data.map(element => element.email_address));
     console.log(set);
-    console.log(set.has(alumniEmail));
+    console.log(set.has(accountsEmail));
 
-    return set.has(alumniEmail);
+    return set.has(accountsEmail);
+}
+
+async function readIsAdminFromSQL(accountID) {
+
 }
 
 

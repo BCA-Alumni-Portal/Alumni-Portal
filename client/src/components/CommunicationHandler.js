@@ -314,6 +314,10 @@ async function exportData() {
     let result = makeRequest("exportData");
 }
 
+async function isAdmin() {
+    let result = makeRequest("isAdmin");
+}
+
 export default {
     getClientID,
 
@@ -339,5 +343,7 @@ export default {
     writeProfilePicture,
 
     syncMissingData,
-    exportData
+    exportData,
+
+    isAdmin
 }

@@ -10,16 +10,18 @@ export default function NavBar() {
   const [auth, setAuth] = useState(null);
 
   useEffect(() => {
-    axios.get('/auth/current-session').then(({data}) => {
+    axios.get('/auth/current-session').then(({ data }) => {
       setAuth(data);
     })
   }, [])
 
+  let showResults = CommunicationHandler.isAdmin();
+
   return (
-      !auth ? (
-        <nav className="nav-empty"></nav>
-      ) : (
-        <nav className="nav">
+    !auth ? (
+      <nav className="nav-empty"></nav>
+    ) : (
+      <nav className="nav">
         <ul>
           <Link to="/">
             <img src={logo}></img>
@@ -30,9 +32,14 @@ export default function NavBar() {
           <CustomLink to="/messages">
             <p className="nav-item text-2xl font-semibold border rounded py-2 px-2 hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500  border border-amber-50 rounded py-2 px-2  hover:border-amber-400 hover:text-white">Messages</p>
           </CustomLink>
-          <CustomLink to="/admin">
-            <p className="nav-item text-2xl font-semibold border rounded py-2 px-2 hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500  border border-amber-50 rounded py-2 px-2  hover:border-amber-400 hover:text-white">Admin</p>
-          </CustomLink>
+          {
+            showResults ?
+              <CustomLink to="/admin">
+                <p className="nav-item text-2xl font-semibold border rounded py-2 px-2 hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500  border border-amber-50 rounded py-2 px-2  hover:border-amber-400 hover:text-white">Admin</p>
+              </CustomLink>
+              : null
+          }
+
         </ul>
         <div className="dropdown dropdown-hover dropdown-end">
           <Link to='/me'>
@@ -48,8 +55,8 @@ export default function NavBar() {
             </a>
           </ul>
         </div>
-        </nav>
-      )
+      </nav>
+    )
   )
 }
 
