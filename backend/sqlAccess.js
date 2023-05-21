@@ -55,14 +55,14 @@ const readDescriptionColumns = allDescriptionColumns[1];
 const updateDescriptionColumns = allDescriptionColumns.slice(2);
 const writeDescriptionColumns = allDescriptionColumns.slice(1);
 
-const TABLE_ALUMNI = "Alumni";
+const TABLE_ACCOUNTS = "Accounts";
 const TABLE_MESSAGES = "Messages";
 const TABLE_SOCIAL = "Social";
 const TABLE_DESCRIPTION = "ProfileDescription";
 const TABLE_CONVERSATION = "Conversation";
 
 // Construct a query which writes <values> to <sqlColumns> in the same order
-function constructSQLWriteQuery(sqlColumns, values, tableName = TABLE_ALUMNI) {
+function constructSQLWriteQuery(sqlColumns, values, tableName = TABLE_ACCOUNTS) {
     let query = "INSERT INTO " + tableName + " (";
     let firstCol = true;
     for (let col of sqlColumns) {
@@ -99,7 +99,7 @@ function constructSQLWriteQuery(sqlColumns, values, tableName = TABLE_ALUMNI) {
 }
 
 // Construct a query which updates <values> to <sqlColumns> in the same order
-function constructSQLUpdateQuery(pkName, pkVal, sqlColumns, values, tableName = TABLE_ALUMNI) {
+function constructSQLUpdateQuery(pkName, pkVal, sqlColumns, values, tableName = TABLE_ACCOUNTS) {
     console.log(sqlColumns);
     console.log(values);
 
@@ -145,7 +145,7 @@ function constructSQLWhereSequence(whereColumns, whereValues) {
 }
 
 // Construct a query which reads the values of <readColumns> from <tableName>, where <whereColumns> == <whereValues>
-function constructSQLReadQuery(readColumns, tableName = TABLE_ALUMNI) {
+function constructSQLReadQuery(readColumns, tableName = TABLE_ACCOUNTS) {
     let query = "SELECT DISTINCT ";
     for (let i = 0; i < readColumns.length; i++) {
         if (i != 0) {
@@ -165,7 +165,7 @@ async function readAlumniDataFromSQL(startID = 0, endID = readLastEffectiveSqlAl
     endID = mysql.escape(endID);
     // Sync things from SQL to Sheets
     // Query the rows that the Sheets doesn't have
-    let query = "SELECT * FROM Alumni WHERE alumni_id >= " + startID + " AND alumni_id <= " + endID;
+    let query = "SELECT * FROM " + TABLE_ACCOUNTS + " WHERE alumni_id >= " + startID + " AND alumni_id <= " + endID;
 
     let data = await sqlModule.makeQuery({ query: query });
 
@@ -214,14 +214,14 @@ async function readLastEffectiveSqlAlumniID() {
 
 // Get the last alumni_id from the SQL database
 async function readLastSqlAlumniID() {
-    let query = "SELECT max(alumni_id) FROM Alumni";
+    let query = "SELECT max(alumni_id) FROM " + TABLE_ACCOUNTS;
     return await sqlModule.makeQuery({ query: query });
 }
 
 async function readClientID(email) {
     email = mysql.escape(email);
 
-    let query = "SELECT alumni_id FROM Alumni WHERE " +
+    let query = "SELECT alumni_id FROM " + TABLE_ACCOUNTS + " WHERE " +
         "(email_address = " + email + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
@@ -235,18 +235,18 @@ async function readClientID(email) {
 }
 
 async function writeProfilePictureToSQL(alumni_id, picture) {
-    // let query = "INSERT INTO " + TABLE_ALUMNI + " "
+    // let query = "INSERT INTO " + TABLE_ACCOUNTS + " "
     let columns = ["profile_picture"];
     let values = [
         picture
     ];
-    let query = constructSQLUpdateQuery("alumni_id", alumni_id, columns, values, TABLE_ALUMNI);
+    let query = constructSQLUpdateQuery("alumni_id", alumni_id, columns, values, TABLE_ACCOUNTS);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
 
 async function readProfilePictureFromSQL(alumni_id) {
-    let query = "SELECT profile_picture FROM " + TABLE_ALUMNI + " WHERE alumni_id=" + mysql.escape(alumni_id);
+    let query = "SELECT profile_picture FROM " + TABLE_ACCOUNTS + " WHERE alumni_id=" + mysql.escape(alumni_id);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
@@ -285,14 +285,14 @@ async function updateProfileInfoToSQL(alumniID, company = "", graduationYear, pr
         first_name,
         last_name
     ];
-    let query = constructSQLUpdateQuery("alumni_id", alumniID, columns, values, TABLE_ALUMNI);
+    let query = constructSQLUpdateQuery("alumni_id", alumniID, columns, values, TABLE_ACCOUNTS);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
 
 async function readProfileInfoFromSQL(alumniID) {
-    let query = "SELECT * FROM " + TABLE_ALUMNI + " WHERE " +
+    let query = "SELECT * FROM " + TABLE_ACCOUNTS + " WHERE " +
         "(alumni_id = " + mysql.escape(alumniID) + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
