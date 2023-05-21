@@ -44,7 +44,7 @@ async function getSocialsInfoByID(dataFunction, id) {
     if (id == undefined) {
         id = await getClientID();
     }
-    let data = { alumni_id: id };
+    let data = { account_id: id };
     let result = axios.get(LINK_HEADER + "readSocialsRequestByID", { params: data }).then(res => {
         let data = res.data;
         // console.log(data);
@@ -59,7 +59,7 @@ async function getDescriptionByID(dataFunction, id) {
     if (id == undefined) {
         id = await getClientID();
     }
-    let data = { alumni_id: id };
+    let data = { account_id: id };
     let result = axios.get(LINK_HEADER + "readDescriptionRequest", { params: data }).then(res => {
         let data = res.data;
         // console.log(res);
@@ -72,7 +72,7 @@ async function getDescriptionByID(dataFunction, id) {
 
 async function writeDescription(description) {
     let id = await getClientID();
-    let data = { alumni_id: id, description: description };
+    let data = { account_id: id, description: description };
     let result = axios.get(LINK_HEADER + "updateDescriptionRequest", { params: data }).then(res => {
 
     });
@@ -82,7 +82,7 @@ async function getProfileDataByID(dataFunction, id) {
     if (id == undefined) {
         id = await getClientID();
     }
-    let data = { alumni_id: id };
+    let data = { account_id: id };
 
     let result = axios.get(LINK_HEADER + "readProfileDataRequestByID", { params: data }).then(res => {
         let data = res.data;
@@ -93,7 +93,7 @@ async function getProfileDataByID(dataFunction, id) {
 }
 
 async function writeProfileData(data) {
-    data.alumni_id = await getClientID();
+    data.account_id = await getClientID();
 
     let result = axios.get(LINK_HEADER + "updateProfileDataRequest", { params: data }).then(res => {
         let data = res.data;
@@ -105,7 +105,7 @@ async function writeProfileData(data) {
 }
 
 async function writeSocialsInfo(data) {
-    data.alumni_id = await getClientID();
+    data.account_id = await getClientID();
 
     let result = axios.get(LINK_HEADER + "updateSocialsRequest", { params: data }).then(res => {
 
@@ -179,7 +179,7 @@ async function createConversationConnection(conversationID, onOpenFunction, onMe
 
 async function getConversations(dataFunction) {
     let id = await getClientID();
-    let data = { alumni_id: id };
+    let data = { account_id: id };
     axios.get(LINK_HEADER + "getConversationsRequest", { params: data }).then(res => {
         let data = res.data;
         // console.log(data);
@@ -209,7 +209,7 @@ async function getPeopleList(dataFunction, data) {
 }
 
 async function getProfilePicture(dataFunction, id) {
-    let data = { alumni_id: id };
+    let data = { account_id: id };
     axios.get(LINK_HEADER + "getProfilePicture", { params: data }).then(res => {
         let data = res.data;
         // console.log(data);

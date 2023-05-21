@@ -2,18 +2,18 @@ var mysql = require('mysql');
 const sqlModule = require("./sqlModule");
 
 const readAlumniColumns = [
-    "alumni_id",
+    "account_id",
     "first_name",
     "last_name",
     "graduation_year",
     "email_address",
     "academy_id"
 ];
-// When adding alumni, <alumni_id> is autoincremented
+// When adding alumni, <account_id> is autoincremented
 const writeAlumniColumns = readAlumniColumns.slice(1);
 const writeSheetsAlumniColumns = readAlumniColumns;
 const readPublicAlumniColumns = [
-    "alumni_id",
+    "account_id",
     "first_name",
     "last_name",
     "graduation_year",
@@ -40,7 +40,7 @@ const profileInfoColumns = [
 
 const readSocialColumns = [
     "social_id",
-    "alumni_id",
+    "account_id",
     "linkedin"
 ];
 const updateSocialColumns = readSocialColumns.slice(2);
@@ -48,7 +48,7 @@ const writeSocialColumns = readSocialColumns.slice(1);
 
 const allDescriptionColumns = [
     "description_id",
-    "alumni_id",
+    "account_id",
     "description"
 ];
 const readDescriptionColumns = allDescriptionColumns[1];
@@ -165,7 +165,7 @@ async function readAlumniDataFromSQL(startID = 0, endID = readLastEffectiveSqlAl
     endID = mysql.escape(endID);
     // Sync things from SQL to Sheets
     // Query the rows that the Sheets doesn't have
-    let query = "SELECT * FROM " + TABLE_ACCOUNTS + " WHERE alumni_id >= " + startID + " AND alumni_id <= " + endID;
+    let query = "SELECT * FROM " + TABLE_ACCOUNTS + " WHERE account_id >= " + startID + " AND account_id <= " + endID;
 
     let data = await sqlModule.makeQuery({ query: query });
 
@@ -209,19 +209,19 @@ async function writeMessageToSQL(senderID, conversationID, body) {
 async function readLastEffectiveSqlAlumniID() {
     let lastSqlID = await readLastSqlAlumniID();
     // We add 1 because it starts with 0, and max() returns the largest value
-    return parseInt(lastSqlID[0]['max(alumni_id)'], 10) + 1;
+    return parseInt(lastSqlID[0]['max(account_id)'], 10) + 1;
 }
 
-// Get the last alumni_id from the SQL database
+// Get the last account_id from the SQL database
 async function readLastSqlAlumniID() {
-    let query = "SELECT max(alumni_id) FROM " + TABLE_ACCOUNTS;
+    let query = "SELECT max(account_id) FROM " + TABLE_ACCOUNTS;
     return await sqlModule.makeQuery({ query: query });
 }
 
 async function readClientID(email) {
     email = mysql.escape(email);
 
-    let query = "SELECT alumni_id FROM " + TABLE_ACCOUNTS + " WHERE " +
+    let query = "SELECT account_id FROM " + TABLE_ACCOUNTS + " WHERE " +
         "(email_address = " + email + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
@@ -231,22 +231,22 @@ async function readClientID(email) {
         console.log("Attempted to read client ID, email: <" + email + ">");
         return undefined;
     }
-    return data[0].alumni_id;
+    return data[0].account_id;
 }
 
-async function writeProfilePictureToSQL(alumni_id, picture) {
+async function writeProfilePictureToSQL(account_id, picture) {
     // let query = "INSERT INTO " + TABLE_ACCOUNTS + " "
     let columns = ["profile_picture"];
     let values = [
         picture
     ];
-    let query = constructSQLUpdateQuery("alumni_id", alumni_id, columns, values, TABLE_ACCOUNTS);
+    let query = constructSQLUpdateQuery("account_id", account_id, columns, values, TABLE_ACCOUNTS);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
 
-async function readProfilePictureFromSQL(alumni_id) {
-    let query = "SELECT profile_picture FROM " + TABLE_ACCOUNTS + " WHERE alumni_id=" + mysql.escape(alumni_id);
+async function readProfilePictureFromSQL(account_id) {
+    let query = "SELECT profile_picture FROM " + TABLE_ACCOUNTS + " WHERE account_id=" + mysql.escape(account_id);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
@@ -285,7 +285,7 @@ async function updateProfileInfoToSQL(alumniID, company = "", graduationYear, pr
         first_name,
         last_name
     ];
-    let query = constructSQLUpdateQuery("alumni_id", alumniID, columns, values, TABLE_ACCOUNTS);
+    let query = constructSQLUpdateQuery("account_id", alumniID, columns, values, TABLE_ACCOUNTS);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
@@ -293,7 +293,7 @@ async function updateProfileInfoToSQL(alumniID, company = "", graduationYear, pr
 
 async function readProfileInfoFromSQL(alumniID) {
     let query = "SELECT * FROM " + TABLE_ACCOUNTS + " WHERE " +
-        "(alumni_id = " + mysql.escape(alumniID) + ")"
+        "(account_id = " + mysql.escape(alumniID) + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     return data;
@@ -304,7 +304,7 @@ async function readSocialsFromSQL(alumniID) {
     // console.log("AID: " + alumniID);
     // console.log("EAID: " + mysql.escape(alumniID));
     let query = "SELECT * FROM " + TABLE_SOCIALS + " WHERE " +
-        "(alumni_id = " + mysql.escape(alumniID) + ")"
+        "(account_id = " + mysql.escape(alumniID) + ")"
     // console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
@@ -316,7 +316,7 @@ async function readSocialsFromSQL(alumniID) {
 
 async function updateSocialsToSQL(alumniID, socials) {
     let columns = updateSocialColumns;
-    let query = constructSQLUpdateQuery("alumni_id", alumniID, columns, socials, TABLE_SOCIAL);
+    let query = constructSQLUpdateQuery("account_id", alumniID, columns, socials, TABLE_SOCIAL);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
@@ -324,7 +324,7 @@ async function updateSocialsToSQL(alumniID, socials) {
 
 async function writeSocialsToSQL(alumniID, socials) {
     let columns = writeSocialColumns;
-    socials.alumni_id = alumniID;
+    socials.account_id = alumniID;
 
     let result = writeDataToSQL(columns, socials, TABLE_SOCIAL);
     console.log("query: \n" + query);
@@ -337,7 +337,7 @@ async function readSocialsFromSQL(alumniID) {
     // console.log(mysql.escape(alumniID));
     // console.log(parseInt(mysql.escape(alumniID)));
     let query = "SELECT * FROM " + TABLE_SOCIAL + " WHERE " +
-        "(alumni_id = " + alumniID + ")"
+        "(account_id = " + alumniID + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     if (data == undefined) {
@@ -348,7 +348,7 @@ async function readSocialsFromSQL(alumniID) {
 
 async function updateSocialsToSQL(alumniID, socials) {
     let columns = updateSocialColumns;
-    let query = constructSQLUpdateQuery("alumni_id", alumniID, columns, socials, TABLE_SOCIAL);
+    let query = constructSQLUpdateQuery("account_id", alumniID, columns, socials, TABLE_SOCIAL);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
@@ -372,7 +372,7 @@ async function writeSocialsToSQL(alumniID, socials) {
 
 async function readDescriptionFromSQL(alumniID) {
     let query = "SELECT * FROM " + TABLE_DESCRIPTION + " WHERE " +
-        "(alumni_id = " + mysql.escape(alumniID) + ")"
+        "(account_id = " + mysql.escape(alumniID) + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
     // console.log(data);
@@ -387,7 +387,7 @@ async function updateDescriptionToSQL(alumniID, description) {
     let values = [
         description
     ];
-    let query = constructSQLUpdateQuery("alumni_id", alumniID, columns, values, TABLE_DESCRIPTION);
+    let query = constructSQLUpdateQuery("account_id", alumniID, columns, values, TABLE_DESCRIPTION);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
@@ -466,9 +466,9 @@ async function readAvailableConversations(alumniID) {
     let query = `SELECT Conversation.conversation_id, Alumni.first_name, Alumni.last_name
     FROM Conversation
     INNER JOIN Alumni ON (
-    (Conversation.first_id=Alumni.alumni_id AND Conversation.first_id!=${alumniID})
+    (Conversation.first_id=Alumni.account_id AND Conversation.first_id!=${alumniID})
     OR 
-    (Conversation.second_id=Alumni.alumni_id AND Conversation.second_id!=${alumniID})
+    (Conversation.second_id=Alumni.account_id AND Conversation.second_id!=${alumniID})
     )
     WHERE (Conversation.first_id=${alumniID} OR Conversation.second_id=${alumniID})`
 

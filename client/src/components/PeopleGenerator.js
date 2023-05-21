@@ -9,8 +9,8 @@ function PeopleGenerator(props) {
         <div class="list-group max-h-screen overflow-y-scroll divide-y">
             {
                 people.map((person) => {
-                    let switchFunc = props.switchFunctionGenerator(person.alumni_id);
-                    let createConversationFunc = props.createConversationFunctionGenerator(person.alumni_id);
+                    let switchFunc = props.switchFunctionGenerator(person.account_id);
+                    let createConversationFunc = props.createConversationFunctionGenerator(person.account_id);
                     return (
                         <div>
                             <div className="group/item hover:bg-slate-100 grid card h-25 hover:bg-sky-200 focus:bg-sky-300 box py-2" onClick={switchFunc}>

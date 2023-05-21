@@ -14,7 +14,7 @@ export default function NonEditableDescription(props) {
 
     const packGetData = () => {
         return {
-            alumni_id: props.alumniID
+            account_id: props.alumniID
         }
     }
 

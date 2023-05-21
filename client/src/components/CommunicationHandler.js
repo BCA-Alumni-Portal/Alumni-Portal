@@ -89,7 +89,7 @@ async function makeRequest(url, params={}, func) {
         console.log("Undefined client ID, will not send request");
         return;
     }
-    params.alumni_id = id;
+    params.account_id = id;
     let instance = await getCSRF();
     // console.log(instance);
     console.log(LINK_HEADER + url);

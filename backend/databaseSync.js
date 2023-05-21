@@ -30,13 +30,13 @@ async function sync(sheetID) {
     // console.log(lastSheetsID);
 
     // - Upon loading the application, read:
-    //     - Last alumni_id from SQL
+    //     - Last account_id from SQL
     //     - Last Alumni ID from Sheets
     // - Compare the two ids
     //     - If they're equal, we're all good
     //     - If they aren't equal: {
 
-    // - If alumni_id (SQL) is lower, read all new rows from Sheets and upload them to SQL
+    // - If account_id (SQL) is lower, read all new rows from Sheets and upload them to SQL
     // - If Alumni ID (Sheets) is lower, read all new rows from SQL and upload them to Sheets (strip info if needed)
 
     // }

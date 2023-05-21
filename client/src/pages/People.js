@@ -137,19 +137,19 @@ function People() {
     CommunicationHandler.getPeopleList(setPeople, data);
   }
 
-  const createConversation = (alumni_id) => {
-    CommunicationHandler.writeConversation(alumni_id);
+  const createConversation = (account_id) => {
+    CommunicationHandler.writeConversation(account_id);
   }
 
-  const switchFunctionGenerator = (alumni_id) => {
+  const switchFunctionGenerator = (account_id) => {
     return () => {
-      setCurrentAlumniID(alumni_id);
+      setCurrentAlumniID(account_id);
     }
   };
 
-  const createConversationFunctionGenerator = (alumni_id) => {
+  const createConversationFunctionGenerator = (account_id) => {
     return () => {
-      createConversation(alumni_id);
+      createConversation(account_id);
     }
   }
 

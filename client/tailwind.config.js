@@ -7,10 +7,6 @@ module.exports = {
     'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'
   ],
   theme: {
-    ripple: theme => ({
-      colors: theme('colors'),
-      darken: 0.1
-    }),
     colors: {
       'black': '#0f172a',
       'white': '#ffffff',
