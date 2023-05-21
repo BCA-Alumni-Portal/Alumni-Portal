@@ -316,8 +316,7 @@ async function exportData() {
 
 async function isAdmin() {
     let result = await makeRequest("isAdmin");
-    console.log("is admin?");
-    console.log(result);
+    return result.is_admin;
 }
 
 export default {

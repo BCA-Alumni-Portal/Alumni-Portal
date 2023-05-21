@@ -72,7 +72,6 @@ export default function Admin() {
         return <div></div>
     }
     else if (!isAdmin) {
-        console.log(isAdmin);
         return <Home />;
     }
     else {
