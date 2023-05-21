@@ -31,6 +31,8 @@ export default function Me() {
                     </div>
                     <div className='col-span-3'>
                         <Socials auth={auth} />
+                        <input type="checkbox" checked="checked" className="checkbox" />
+
                     </div>
                 </div>
 

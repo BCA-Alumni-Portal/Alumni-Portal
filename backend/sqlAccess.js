@@ -413,7 +413,7 @@ async function writeDescriptionToSQL(accountsID, description) {
 }
 
 async function updateVisibilityToSQL(accountsID, is_visible) {
-    let columns = updateDescriptionColumns;
+    let columns = ["is_visible"]
     let values = [
         is_visible
     ];
@@ -424,7 +424,7 @@ async function updateVisibilityToSQL(accountsID, is_visible) {
 }
 
 async function updateAdminToSQL(accountsID, is_admin) {
-    let columns = updateDescriptionColumns;
+    let columns = ["is_admin"]
     let values = [
         is_admin
     ];
