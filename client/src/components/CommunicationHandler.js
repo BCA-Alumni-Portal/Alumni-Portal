@@ -334,6 +334,17 @@ async function isAdmin() {
     return adminStatus;
 }
 
+function getIsAdminStatus() {
+    return adminStatus;
+}
+
+async function archiveUser(targetID) {
+    let data = {
+        target_id: targetID
+    }
+    let result = await makeRequest("archiveUser", data);
+}
+
 export default {
     getClientID,
 
@@ -362,7 +373,10 @@ export default {
     exportData,
 
     isAdmin,
+    getIsAdminStatus,
     
     writeVisibility,
-    writeAdmin
+    writeAdmin,
+
+    archiveUser
 }

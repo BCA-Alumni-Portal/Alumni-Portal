@@ -538,6 +538,16 @@ router.post('/isAdmin', async (req, res) => {
     return res.send(result[0]);
 })
 
+router.post('/archiveUser', async (req, res) => {
+    let query = req.body;
+    let accountsID = query.account_id;
+    let targetID = query.target_id;
+
+    let result = await sqlAccess.archiveUserInSQL(targetID);
+    console.log("Archived user with ID: " + targetID);
+    return 
+})
+
 // var Tokens = require('csrf');
 // let tokens = new Tokens();
 

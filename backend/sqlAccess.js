@@ -539,6 +539,12 @@ async function readIsAdminFromSQL(accountID) {
     return data;
 }
 
+async function archiveUserInSQL(targetID) {
+    let query = "UPDATE " + TABLE_ACCOUNTS + " SET is_visible=0 WHERE account_id=" + mysql.escape(targetID);
+    
+    let data = await sqlModule.makeQuery({ query: query });
+    return data;
+}
 
 module.exports = {
     readAccountsDataFromSQL,
@@ -580,5 +586,7 @@ module.exports = {
     readIsAdminFromSQL,
 
     updateVisibilityToSQL,
-    updateAdminToSQL
+    updateAdminToSQL,
+
+    archiveUserInSQL
 }

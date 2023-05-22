@@ -141,6 +141,10 @@ function People() {
     CommunicationHandler.writeConversation(account_id);
   }
 
+  const archiveUser = (account_id) => {
+    CommunicationHandler.archiveUser(account_id);
+  }
+
   const switchFunctionGenerator = (account_id) => {
     return () => {
       setCurrentAlumniID(account_id);
@@ -150,6 +154,14 @@ function People() {
   const createConversationFunctionGenerator = (account_id) => {
     return () => {
       createConversation(account_id);
+    }
+  }
+
+  const createArchiveUserFunctionGenerator = (account_id) => {
+    return () => {
+      archiveUser(account_id);
+      let data = getPackedData();
+      CommunicationHandler.getPeopleList(setPeople, data);
     }
   }
 
@@ -183,7 +195,7 @@ function People() {
 
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
-            <PeopleGeneratorComponent people={people} switchFunctionGenerator={switchFunctionGenerator} createConversationFunctionGenerator={createConversationFunctionGenerator} />
+            <PeopleGeneratorComponent createArchiveUserFunctionGenerator={createArchiveUserFunctionGenerator} people={people} switchFunctionGenerator={switchFunctionGenerator} createConversationFunctionGenerator={createConversationFunctionGenerator} />
           </div>
         </div>
         <div>
