@@ -368,8 +368,8 @@ router.post('/readDescriptionRequestByID', async (req, res) => {
 
     let query = req.body;
 
-    let clientID = query.account_id;
-    let result = await sqlAccess.readDescriptionFromSQL(clientID);
+    let targetID = query.target_id;
+    let result = await sqlAccess.readDescriptionFromSQL(targetID);
     return res.send(result);
 })
 

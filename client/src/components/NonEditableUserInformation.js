@@ -18,7 +18,7 @@ function NonEditableUserInformation(props) {
     // graduationYear, academy = required
     // pronouns, company = optional
     // SQL -> client
-    CommunicationHandler.getProfileDataByID(setProfileData, props.alumniID);
+    CommunicationHandler.getProfileDataByID(setProfileData, props.accountsID);
   }, [props]);
   
   const setProfileData = (data) => {

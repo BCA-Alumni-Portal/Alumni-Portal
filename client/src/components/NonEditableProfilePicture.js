@@ -5,13 +5,13 @@ import CommunicationHandler from './CommunicationHandler';
 function NonEditableProfilePicture(props) {
     const [profilePictureFile, setProfilePictureFile] = useState(null);
 
-    // pull profile picture from database using props.alumniID
+    // pull profile picture from database using props.accountsID
     useEffect(() => {
         // pull profilepicture from database
         // if null: setProfilePictureFile(personImage2);
         // else: setProfilePictureFile(string)
         // setProfilePictureFile(personImage2);
-        CommunicationHandler.getProfilePicture(setProfilePictureFile, props.alumniID);
+        CommunicationHandler.getProfilePicture(setProfilePictureFile, props.accountsID);
     }, [props]);
 
 

@@ -48,7 +48,7 @@ function People() {
   const open = Boolean(anchorEl);
   // const handleClick = (e = React.MouseEvent) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
-  const [currentAlumniID, setCurrentAlumniID] = React.useState(0);
+  const [currentAccountsID, setCurrentAccountsID] = React.useState(0);
   const [people, setPeople] = React.useState([]);
   const [lastFilterGroup, setLastFilterGroup] = React.useState("");
 
@@ -147,7 +147,7 @@ function People() {
 
   const switchFunctionGenerator = (account_id) => {
     return () => {
-      setCurrentAlumniID(account_id);
+      setCurrentAccountsID(account_id);
     }
   };
 
@@ -199,7 +199,7 @@ function People() {
           </div>
         </div>
         <div>
-          <Person alumniID={currentAlumniID} createConversationFunctionGenerator={createConversationFunctionGenerator} />
+          <Person accountsID={currentAccountsID} createConversationFunctionGenerator={createConversationFunctionGenerator} />
         </div>
       </div>
 

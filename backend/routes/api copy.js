@@ -17,7 +17,7 @@ router.get('/getSQLData', async (req, res) => {
     // console.log("getSQLData");
 
     let additionalSpecifiers = {
-        account_id: req.alumniID,
+        account_id: req.accountsID,
         first_name: req.firstName,
         last_name: req.lastName,
         graduation_year: req.graduationYear,
@@ -50,7 +50,7 @@ router.get('/createSQLData', async (req, res) => {
     // console.log(req)
     // console.log("createSQLData");
     let additionalSpecifiers = {
-        account_id: req.query.alumniID,
+        account_id: req.query.accountsID,
         first_name: req.query.firstName,
         last_name: req.query.lastName,
         graduation_year: req.query.graduationYear,
@@ -131,7 +131,7 @@ router.get('/updateSQLData', async (req, res) => {
         }
     }
 
-    query += " WHERE account_id=" + req.query.alumniID;
+    query += " WHERE account_id=" + req.query.accountsID;
 
     let result = await sqlModule.makeQuery({ query: query });
     res.send(result);
@@ -413,18 +413,18 @@ router.get('/createConversation', async (req, res) => {
 
 router.get('/getProfilePicture', async (req, res) => {
     let query = req.query;
-    let alumniID = query.account_id;
+    let accountsID = query.account_id;
 
-    let result = await sqlAccess.readProfilePictureFromSQL(alumniID);
+    let result = await sqlAccess.readProfilePictureFromSQL(accountsID);
     return res.send(result);
 })
 
 router.get('/writeProfilePicture', async (req, res) => {
     let query = req.query;
-    let alumniID = query.account_id;
+    let accountsID = query.account_id;
     let image = query.image;
 
-    let result = await sqlAccess.writeProfilePictureFromSQL(alumniID, image);
+    let result = await sqlAccess.writeProfilePictureFromSQL(accountsID, image);
     return res.send(result);
 })
 

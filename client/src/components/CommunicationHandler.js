@@ -139,8 +139,8 @@ async function getSocialsInfoByID(dataFunction, id) {
 }
 
 async function getDescriptionByID(dataFunction, id) {
-    let data = {};
-    let result = makeRequest("readDescriptionRequest", data, dataFunction);
+    let data = { target_id: id };
+    let result = makeRequest("readDescriptionRequestByID", data, dataFunction);
     // let result = axios.get(LINK_HEADER + "readDescriptionRequest", { params: data }).then(res => {
     //     let data = res.data;
     //     // console.log(res);
