@@ -1,43 +1,43 @@
 const sheetsAccess = require("./sheetsAccess");
 const sqlAccess = require("./sqlAccess");
 
-const writeAlumniColumns = sqlAccess.writeSheetsAlumniColumns;
+const writeAccountsColumns = sqlAccess.writeSheetsAccountsColumns;
 
 // Pull data from the SQL database and write to the Google Sheets
 async function exportSqlToSheets(sheetID) {
-    let data = await sqlAccess.readAlumniDataFromSQL();
-    let result = await sheetsAccess.writeDataToSheets(writeAlumniColumns, data, sheetID, 0, await sqlAccess.readLastEffectiveSqlAlumniID());
+    let data = await sqlAccess.readAccountsDataFromSQL();
+    let result = await sheetsAccess.writeDataToSheets(writeAccountsColumns, data, sheetID, 0, await sqlAccess.readLastEffectiveSqlAccountsID());
     return result;
 }
 
 // Pull new data from the Google Sheets and write to the SQL Database
 async function writeNewEntriesToSQL(sheetID) {
-    let lastSqlID = await sqlAccess.readLastEffectiveSqlAlumniID();
-    let lastSheetsID = await sheetsAccess.readLastEffectiveSheetsAlumniID(sheetID);
+    let lastSqlID = await sqlAccess.readLastEffectiveSqlAccountsID();
+    let lastSheetsID = await sheetsAccess.readLastEffectiveSheetsAccountsID(sheetID);
 
     // Sync things from Sheets to SQL
     // Read the rows that the SQL database doesn't have
     let values = await sheetsAccess.readDataFromSheets(sheetID, lastSqlID, lastSheetsID);
-    let result = await sqlAccess.writeDataToSQL(writeAlumniColumns, values);
+    let result = await sqlAccess.writeDataToSQL(writeAccountsColumns, values);
     return result;
 }
 
 async function sync(sheetID) {
-    let lastSqlID = (await sqlAccess.readLastEffectiveSqlAlumniID()) || 0;
-    let lastSheetsID = (await sheetsAccess.readLastEffectiveSheetsAlumniID(sheetID)) || 0;
+    let lastSqlID = (await sqlAccess.readLastEffectiveSqlAccountsID()) || 0;
+    let lastSheetsID = (await sheetsAccess.readLastEffectiveSheetsAccountsID(sheetID)) || 0;
 
     // console.log(lastSqlID);
     // console.log(lastSheetsID);
 
     // - Upon loading the application, read:
     //     - Last account_id from SQL
-    //     - Last Alumni ID from Sheets
+    //     - Last Accounts ID from Sheets
     // - Compare the two ids
     //     - If they're equal, we're all good
     //     - If they aren't equal: {
 
     // - If account_id (SQL) is lower, read all new rows from Sheets and upload them to SQL
-    // - If Alumni ID (Sheets) is lower, read all new rows from SQL and upload them to Sheets (strip info if needed)
+    // - If Accounts ID (Sheets) is lower, read all new rows from SQL and upload them to Sheets (strip info if needed)
 
     // }
 
@@ -57,14 +57,14 @@ async function sync(sheetID) {
         //     ...
         //     (value_list_n);
 
-        let result = await sqlAccess.writeDataToSQL(writeAlumniColumns, values);
+        let result = await sqlAccess.writeDataToSQL(writeAccountsColumns, values);
         // console.log(values);
         // console.log(result);
         return result;
     } else if (lastSheetsID < lastSqlID) { // Sync things from SQL to Sheets
         // // Query the rows that the Sheets doesn't have
-        let data = await sqlAccess.readAlumniDataFromSQL(lastSheetsID, lastSqlID);
-        let result = await sheetsAccess.writeDataToSheets(writeAlumniColumns, data, sheetID, lastSheetsID, lastSqlID);
+        let data = await sqlAccess.readAccountsDataFromSQL(lastSheetsID, lastSqlID);
+        let result = await sheetsAccess.writeDataToSheets(writeAccountsColumns, data, sheetID, lastSheetsID, lastSqlID);
         return result;
     }
 }

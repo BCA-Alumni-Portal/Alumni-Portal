@@ -1,18 +1,18 @@
 const sheetsModule = require("./sheetsModule");
 
-async function readDataFromSheets(sheetID, startID=0, stopID=readLastEffectiveSheetsAlumniID(sheetID)) {
+async function readDataFromSheets(sheetID, startID=0, stopID=readLastEffectiveSheetsAccountsID(sheetID)) {
     let TOP_ROWS = 3;
     let TOP_ROWS_MINUS_ONE = TOP_ROWS-1;
 
     stopID = await stopID;
 
-    let range = "A" + (startID + TOP_ROWS) + ":F" + (stopID + TOP_ROWS_MINUS_ONE);
+    let range = "A" + (startID + TOP_ROWS) + ":H" + (stopID + TOP_ROWS_MINUS_ONE);
     let result = await sheetsModule.readSheets({ range: range, sheetID: sheetID });
     let values = result.data.values;
     return values;
 }
 
-async function writeDataToSheets(sql_columns, data, sheetID, startID=0, stopID=readLastEffectiveSheetsAlumniID(sheetID)) {
+async function writeDataToSheets(sql_columns, data, sheetID, startID=0, stopID=readLastEffectiveSheetsAccountsID(sheetID)) {
     let TOP_ROWS = 3;
 
     stopID = await stopID;
@@ -27,19 +27,19 @@ async function writeDataToSheets(sql_columns, data, sheetID, startID=0, stopID=r
         values.push(row);
     }
 
-    let range = "A" + (startID + TOP_ROWS) + ":F" + (stopID + TOP_ROWS);
+    let range = "A" + (startID + TOP_ROWS) + ":H" + (stopID + TOP_ROWS);
     sheetsModule.updateSheets({ values: values, range: range, sheetID: sheetID });
 }
 
-async function readLastEffectiveSheetsAlumniID(sheetID) {
-    let lastSheetsID = await readLastSheetsAlumniID(sheetID);
+async function readLastEffectiveSheetsAccountsID(sheetID) {
+    let lastSheetsID = await readLastSheetsAccountsID(sheetID);
     return parseInt(lastSheetsID.data.values[0][0], 10);
 }
 
-// Get the last Alumni ID from the Google Sheets database
-async function readLastSheetsAlumniID(sheetID) {
+// Get the last Accounts ID from the Google Sheets database
+async function readLastSheetsAccountsID(sheetID) {
     let range = "A2";
     return sheetsModule.readSheets({ range: range, sheetID: sheetID });
 }
 
-module.exports = { readDataFromSheets, writeDataToSheets, readLastEffectiveSheetsAlumniID, readLastSheetsAlumniID }
+module.exports = { readDataFromSheets, writeDataToSheets, readLastEffectiveSheetsAccountsID, readLastSheetsAccountsID }

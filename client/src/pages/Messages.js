@@ -57,6 +57,8 @@ export default function Messages() {
   // let targetID = 10;
   const [messageBody, setMessageBody] = useState("");
   const [chatSocket, setChatSocket] = useState(null);
+  const [loadingMessages, setLoadingMessages] = useState(true);
+  const [loadingConversations, setLoadingConversations] = useState(true);
   let input;
 
   let inputHandler = (e) => {
@@ -101,6 +103,7 @@ export default function Messages() {
     } else {
       setCurrentName(conversation.first_name + " " + conversation.last_name);
     }
+    setLoadingMessages(false);
   }
 
   const submitGetMessageRequest = () => {
@@ -117,7 +120,10 @@ export default function Messages() {
   };
 
   const submitGetConversationsRequest = () => {
-    CommunicationHandler.getConversations(setConversations);
+    CommunicationHandler.getConversations((data) => {
+      setConversations(data);
+      setLoadingConversations(false);
+    });
   };
 
   //= React.MouseEvent
@@ -131,6 +137,7 @@ export default function Messages() {
     console.log("C.CID: " + conversation.conversation_id);
     setConversationID(conversation.conversation_id);
     setConversation(conversation);
+    setLoadingMessages(true);
 
     // let onOpenFunction = (chatSocket) => {
     //   setCurrentName(conversation.first_name + " " + conversation.last_name);
@@ -168,6 +175,8 @@ export default function Messages() {
   // Initial update
   useEffect(() => {
     // console.log("useEffect called");
+    setLoadingMessages(true);
+    setLoadingConversations(true);
     requestClientID();
     submitGetMessageRequest();
     submitGetConversationsRequest();
@@ -204,7 +213,7 @@ export default function Messages() {
                 <button className="btn btn-md sm:px-2   h-10 text-white btn-info hover:bg-gradient-to-r hover:from-sky-100 hover:to-sky-200 hover:border-sky-200 hover:text-black">Blocked</button>
               </div>
 
-              <ConversationGenerator conversations={conversations} functionGenerator={conversationSelectionFunctionGenerator}></ConversationGenerator>
+              <ConversationGenerator loadingConversations={loadingConversations} conversations={conversations} functionGenerator={conversationSelectionFunctionGenerator}></ConversationGenerator>
 
             </div>
           </div>
@@ -215,7 +224,7 @@ export default function Messages() {
             <div className="overflow-auto flex grid " id="conversation-box">
               <h2 className="py-3 text-2xl text-sky-400">{currentName}</h2>
 
-              <MessageList input={messages} currentName={currentName} clientID={clientID} clientName={clientName} />
+              <MessageList loadingMessages={loadingMessages} input={messages} currentName={currentName} clientID={clientID} clientName={clientName} />
               <div className="BOTTOM  row flex gap-2 place-content-center py-3">
                 <div>
                   <input type="text" value={messageBody} onChange={inputHandler} id="message-input" placeholder="Message" className=" input input-bordered input-info w-full max-w-xs focus:border-sky-400 focus:ring-0" />
