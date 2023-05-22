@@ -93,8 +93,8 @@ async function makeRequest(url, params={}, func) {
     params.account_id = id;
     let instance = await getCSRF();
     // console.log(instance);
-    // console.log(LINK_HEADER + url);
-    // console.log(params);
+    console.log(LINK_HEADER + url);
+    console.log(params);
 
     // accessToken = auth0.getAccessTokenSilently();
     // console.log(accessToken);
@@ -114,9 +114,9 @@ async function makeRequest(url, params={}, func) {
 
     let result = instance.post(LINK_HEADER + url, params, options).then(res => {
         let data = res.data;
-        // console.log(url);
-        // console.log(data);
-        // console.log(func);
+        console.log(url);
+        console.log(data);
+        console.log(func);
         if ((func != null) && (data != null)) {
             func(data);
         }

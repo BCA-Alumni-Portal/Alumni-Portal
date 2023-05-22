@@ -9,8 +9,8 @@ import { Circles, Grid } from 'react-loader-spinner'
 
 
 function Person(props) {
-    let createConversationFunc = props.createConversationFunctionGenerator(props.alumniID)
-    let alumniID = props.alumniID;
+    let createConversationFunc = props.createConversationFunctionGenerator(props.accountsID)
+    let accountsID = props.accountsID;
 
     // user information
     const [name, setName] = useState("");
@@ -26,19 +26,19 @@ function Person(props) {
     const [loading, setLoading] = useState(true);
 
     const [profilePictureFile, setProfilePictureFile] = useState(null);
-    // pull profile picture from database using props.alumniID
+    // pull profile picture from database using props.accountsID
     useEffect(() => {
         // pull profilepicture from database
         // if null: setProfilePictureFile(personImage2);
         // else: setProfilePictureFile(string)
         // setProfilePictureFile(personImage2);
-        setOldName(name);
-        setOldDescription(description);
+        // setOldName(name);
+        // setOldDescription(description);
         setLoading(true);
-        CommunicationHandler.getProfilePicture(setProfilePictureFile, alumniID);
-        CommunicationHandler.getProfileDataByID(setProfileData, alumniID);
-        CommunicationHandler.getDescriptionByID(onDescriptionReceived, alumniID);
-        CommunicationHandler.getSocialsInfoByID(setLinkedInData, alumniID);
+        CommunicationHandler.getProfilePicture(setProfilePictureFile, accountsID);
+        CommunicationHandler.getProfileDataByID(setProfileData, accountsID);
+        CommunicationHandler.getDescriptionByID(onDescriptionReceived, accountsID);
+        CommunicationHandler.getSocialsInfoByID(setLinkedInData, accountsID);
 
     }, [props]);
 
@@ -60,7 +60,7 @@ function Person(props) {
 
     const packGetData = () => {
         return {
-            account_id: alumniID
+            account_id: accountsID
         }
     }
 
@@ -87,18 +87,19 @@ function Person(props) {
 
     if (loading) {
         return (
-        <div className='flex justify-center items-center w-full grid grid-cols-3 gap-8 mt-4 ml-10'>
-            <Grid
-                height="80"
-                width="80"
-                color="#38bdf7"
-                ariaLabel="grid-loading"
-                radius="12.5"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
-            />
-        </div>)
+            <div className='flex justify-center items-center mt-16'>
+                 {/* w-full grid grid-cols-3 gap-8 mt-4 ml-10 */}
+                <Grid
+                    height="80"
+                    width="80"
+                    color="#38bdf7"
+                    ariaLabel="grid-loading"
+                    radius="12.5"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                />
+            </div>)
     }
     else {
         return (
