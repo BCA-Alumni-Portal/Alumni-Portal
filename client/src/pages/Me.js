@@ -22,8 +22,6 @@ export default function Me() {
     const [visible, setVisible] = useState(null);
 
 
-
-
     const setVisiblility = (data) => {
         setVisible(data.is_visible);
     }
@@ -72,7 +70,7 @@ export default function Me() {
                     <div>
                         <div className="form-control">
                             <label className="label cursor-pointer">
-                                <span className="label-text">Make my profile public</span>
+                                <span>Make my profile public</span>
                                 <input type="checkbox" defaultChecked={visible} className="checkbox checkbox-info" onClick={() => changeVisibility()} />
                             </label>
                         </div>
