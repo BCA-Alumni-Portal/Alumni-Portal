@@ -206,54 +206,6 @@ export default function Messages() {
 
               <ConversationGenerator conversations={conversations} functionGenerator={conversationSelectionFunctionGenerator}></ConversationGenerator>
 
-              {/* <br className="space-y-2"></br>
-            <div className="flex flex-col place-content-left">
-              <div className="grid card h-25 hover:bg-stone-200  focus:bg-stone-200 rounded-box">
-                <div className="avatar py-3 text-sm row flex gap-3 px-2">
-                  <div className="lg:w-20 rounded-full">
-                    <img src={person} />
-                  </div>
-                  <p className="text-lg ">Hayun Jung </p>
-                </div>
-              </div>
-              <div className="divider"></div>
-              <div className="grid card h-25 hover:bg-stone-200  focus:bg-stone-200 rounded-box">
-                <div className="avatar py-3 text-sm row flex gap-3 px-2">
-                  <div className="lg:w-20  rounded-full">
-                    <img src={person} />
-                  </div>
-                  <p className="text-lg place-content-center">Kevin Liu</p>
-                </div>
-              </div>
-              <div className="divider"></div>
-              <div className="grid card h-25 hover:bg-stone-200  focus:bg-stone-200 rounded-box">
-                <div className="avatar py-3 text-sm row flex gap-3 px-2">
-                  <div className="lg:w-20 rounded-full">
-                    <img src={person} />
-                  </div>
-                  <p className="text-lg ">Remington Kim </p>
-                </div>
-              </div>
-              <div className="divider"></div>
-              <div className="grid card h-25 hover:bg-stone-200  focus:bg-stone-200 rounded-box">
-                <div className="avatar py-3 text-sm row flex gap-3 px-2">
-                  <div className="lg:w-20 rounded-full">
-                    <img src={person} />
-                  </div>
-                  <p className="text-lg ">Benen Sullivan </p>
-                </div>
-              </div>
-              <div className="divider"></div>
-              <div className="grid card h-25 hover:bg-stone-200  focus:bg-stone-200 rounded-box">
-                <div className="avatar py-3 text-sm row flex gap-3 px-2">
-                  <div className="lg:w-20 rounded-full">
-                    <img src={person} />
-                  </div>
-                  <p className="text-lg ">Jack Sparrow</p>
-                </div>
-              </div>
-            </div> */}
-
             </div>
           </div>
 
@@ -264,7 +216,7 @@ export default function Messages() {
               <h2 className="py-3 text-2xl text-sky-400">{currentName}</h2>
 
               <MessageList input={messages} currentName={currentName} clientID={clientID} clientName={clientName} />
-              <div className="row flex gap-2 place-content-center py-3">
+              <div className="BOTTOM  row flex gap-2 place-content-center py-3">
                 <div>
                   <input type="text" value={messageBody} onChange={inputHandler} id="message-input" placeholder="Message" className=" input input-bordered input-info w-full max-w-xs focus:border-sky-400 focus:ring-0" />
                 </div>
@@ -278,14 +230,7 @@ export default function Messages() {
                   </button>
                 </div>
               </div>
-              {/* <div className="search">
-              <TextInput
-                type="search"
-                onChange={inputHandler}
-                placeholder="Message"
-                className="bg-defaultblue border border-defaultblue placeholder-defaultblue rounded-lg focus:ring-defaultblue focus:border-defaultblue block w-full"
-              />
-            </div> */}
+              
               <div>
               </div>
             </div>

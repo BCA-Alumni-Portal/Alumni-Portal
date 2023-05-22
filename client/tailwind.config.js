@@ -4,7 +4,8 @@ const colors = require('tailwindcss/colors');
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
-    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'
+    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
+    "./node_modules/tw-elements/dist/js/**/*.js"
   ],
   theme: {
     // ripple: theme => ({
@@ -26,7 +27,8 @@ module.exports = {
   plugins: [
     require("daisyui"),
     require('flowbite/plugin'),
-    require('tailwindcss-ripple')()
+    // require('tailwindcss-ripple')(),
+    require("tw-elements/dist/plugin.cjs")
   ],
   daisyui: {
     styled: true,

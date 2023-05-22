@@ -24,6 +24,7 @@
     "concurrently": "^7.6.0",
     "react-images-uploading": "^3.1.7",
     "tough-cookie": "^4.1.2",
+    "tw-elements": "^1.0.0-beta2",
     "ws": "^8.13.0",
     "yarn": "^1.22.19"
   }
