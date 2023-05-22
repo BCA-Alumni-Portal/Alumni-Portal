@@ -400,7 +400,8 @@ const checkJwt = auth({
 // });
 
 
-router.post('/updateDescriptionRequest', checkJwt, async (req, res) => {
+// router.post('/updateDescriptionRequest', checkJwt, async (req, res) => {
+router.post('/updateDescriptionRequest', async (req, res) => {
     // console.log("updateDescriptionRequest");
 
     let query = req.body;

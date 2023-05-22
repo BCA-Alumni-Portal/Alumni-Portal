@@ -47,34 +47,35 @@ router.get('/callback', (req, res, next) => {
     })(req, res, next);
 });
 
-var axios = require("axios").default;
+// var axios = require("axios").default;
 
-var options = {
-    method: 'POST',
-    url: 'https://dev-f59msytf.us.auth0.com/oauth/token',
-    headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    data: new URLSearchParams({
-        grant_type: 'client_credentials',
-        client_id: process.env.AUTH0_CLIENT_ID,
-        client_secret: process.env.AUTH0_SECRET,
-        audience: "https://academies-alumni-server-api"
-    })
-};
+// var options = {
+//     method: 'POST',
+//     url: 'https://dev-f59msytf.us.auth0.com/oauth/token',
+//     headers: { 'content-type': 'application/x-www-form-urlencoded' },
+//     data: new URLSearchParams({
+//         grant_type: 'client_credentials',
+//         client_id: process.env.AUTH0_CLIENT_ID,
+//         client_secret: process.env.AUTH0_SECRET,
+//         audience: "https://academies-alumni-server-api"
+//     })
+// };
 
 router.get('/current-session', (req, res) => {
     passport.authenticate('jwt', { session: false }, (err, user) => {
         if (err || !user) {
             res.send(false);
         } else {
-            axios.request(options).then(function (response) {
-                //   console.log(response.data);
-                user.access_token = response.data.access_token;
+            // axios.request(options).then(function (response) {
+            //     //   console.log(response.data);
+            //     user.access_token = response.data.access_token;
 
-                res.send(user);
-            }).catch(function (error) {
-                console.log("Error in requesting response data");
-                console.error(error);
-            });
+            //     res.send(user);
+            // }).catch(function (error) {
+            //     console.log("Error in requesting response data");
+            //     console.error(error);
+            // });
+            res.send(user);
         }
     })(req, res);
 });
