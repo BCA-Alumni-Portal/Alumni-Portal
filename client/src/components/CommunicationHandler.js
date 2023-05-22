@@ -139,7 +139,7 @@ async function getSocialsInfoByID(dataFunction, id) {
 }
 
 async function getDescriptionByID(dataFunction, id) {
-    let data = { target_id: id };
+    let data = { target_id: id || await getClientID() };
     let result = makeRequest("readDescriptionRequestByID", data, dataFunction);
     // let result = axios.get(LINK_HEADER + "readDescriptionRequest", { params: data }).then(res => {
     //     let data = res.data;
@@ -161,6 +161,7 @@ async function writeDescription(description) {
 
 async function getProfileDataByID(dataFunction, id) {
     let data = { target_id: id || await getClientID() };
+    console.log(data);
 
     let result = makeRequest("readProfileDataRequestByID", data, dataFunction);
     // let result = axios.get(LINK_HEADER + "readProfileDataRequestByID", { params: data }).then(res => {
