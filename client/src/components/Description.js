@@ -5,7 +5,7 @@ import { Circles, Grid } from 'react-loader-spinner'
 
 export default function Description(props) {
 
-    const [description, setDescription] = useState("");
+    const [description, setDescription] = useState("Loading...");
     const [editing, setEditing] = useState(false);
     const [auth, setAuth] = useState(props.auth);
 
@@ -35,16 +35,6 @@ export default function Description(props) {
 
     return (
         <div>
-            <Grid
-                height="40"
-                width="40"
-                color="#38bdf7"
-                ariaLabel="grid-loading"
-                radius="12.5"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
-            />
             {editing ?
                 <div className='mt-4'>
                     <textarea className="textarea textarea-info text-xl w-11/12 focus:border-sky-400 focus:ring-0 inline-block align-middle float-left" placeholder="Tell us about yourself..." rows="4" value={description} maxLength={500} onChange={(e) => changeDescription(e)}></textarea>

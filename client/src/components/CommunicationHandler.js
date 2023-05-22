@@ -361,5 +361,8 @@ export default {
     syncMissingData,
     exportData,
 
-    isAdmin
+    isAdmin,
+    
+    writeVisibility,
+    writeAdmin
 }

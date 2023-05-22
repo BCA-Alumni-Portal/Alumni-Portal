@@ -6,6 +6,7 @@ import UserInformation from '../components/UserInformation';
 import Description from '../components/Description';
 import Socials from '../components/Socials';
 import Home from './Home';
+import CommunicationHandler from '../components/CommunicationHandler';
 
 
 export default function Me() {
@@ -15,7 +16,41 @@ export default function Me() {
         axios.get('/auth/current-session').then(({ data }) => {
             setAuth(data);
         })
+        CommunicationHandler.getProfileDataByID(setVisiblility);
     }, [])
+
+    const [visible, setVisible] = useState(null);
+
+
+    const setVisiblility = (data) => {
+        setVisible(data.is_visible);
+    }
+
+    const packSendData = () => {
+        return {
+            email_address: auth.email,
+            is_visible: visible
+        }
+    }
+
+    useEffect(() => {
+        if (auth) {
+            let data = packSendData();
+            console.log(data);
+            CommunicationHandler.writeVisibility(data);
+        }
+
+    }, [visible])
+
+    const changeVisibility = () => {
+        if (visible == 1) {
+            setVisible(0);
+        }
+        else {
+            setVisible(1);
+        }
+    }
+
     if (auth) {
         return (
             <div className='flex justify-center'>
@@ -31,8 +66,20 @@ export default function Me() {
                     </div>
                     <div className='col-span-3'>
                         <Socials auth={auth} />
-                        <input type="checkbox" checked="checked" className="checkbox" />
-
+                    </div>
+                    <div>
+                        <div className="form-control">
+                            <label className="label cursor-pointer">
+                                <span>Make my profile public</span>
+                                <input type="checkbox" defaultChecked={visible} className="checkbox checkbox-info" onClick={() => changeVisibility()} />
+                            </label>
+                        </div>
+                        {/* <div className="form-control">
+                            <label className="label cursor-pointer">
+                                <span className="label-text">Remember me</span>
+                                <input type="checkbox" defaultChecked={visible}  className="toggle toggle-info" onChange={() => changeVisibility()}  />
+                            </label>
+                        </div> */}
                     </div>
                 </div>
 
