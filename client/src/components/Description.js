@@ -44,7 +44,7 @@ export default function Description(props) {
     }
     if (loading) {
         return (
-            <div className="flex justify-center items-center ml-8 mt-8">
+            <div className="flex justify-center items-center">
                 <LineWave
                     height="100"
                     width="100"
