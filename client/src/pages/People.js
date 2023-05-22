@@ -48,7 +48,7 @@ function People() {
   const open = Boolean(anchorEl);
   // const handleClick = (e = React.MouseEvent) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
-  const [currentAlumniID, setCurrentAlumniID] = React.useState(0);
+  const [currentAccountsID, setCurrentAccountsID] = React.useState(0);
   const [people, setPeople] = React.useState([]);
   const [lastFilterGroup, setLastFilterGroup] = React.useState("");
 
@@ -141,15 +141,27 @@ function People() {
     CommunicationHandler.writeConversation(account_id);
   }
 
+  const archiveUser = (account_id) => {
+    CommunicationHandler.archiveUser(account_id);
+  }
+
   const switchFunctionGenerator = (account_id) => {
     return () => {
-      setCurrentAlumniID(account_id);
+      setCurrentAccountsID(account_id);
     }
   };
 
   const createConversationFunctionGenerator = (account_id) => {
     return () => {
       createConversation(account_id);
+    }
+  }
+
+  const createArchiveUserFunctionGenerator = (account_id) => {
+    return () => {
+      archiveUser(account_id);
+      let data = getPackedData();
+      CommunicationHandler.getPeopleList(setPeople, data);
     }
   }
 
@@ -183,11 +195,11 @@ function People() {
 
             <br className="space-y-5"></br>
             <br className="space-y-5"></br>
-            <PeopleGeneratorComponent people={people} switchFunctionGenerator={switchFunctionGenerator} createConversationFunctionGenerator={createConversationFunctionGenerator} />
+            <PeopleGeneratorComponent createArchiveUserFunctionGenerator={createArchiveUserFunctionGenerator} people={people} switchFunctionGenerator={switchFunctionGenerator} createConversationFunctionGenerator={createConversationFunctionGenerator} />
           </div>
         </div>
         <div>
-          <Person alumniID={currentAlumniID} createConversationFunctionGenerator={createConversationFunctionGenerator} />
+          <Person accountsID={currentAccountsID} createConversationFunctionGenerator={createConversationFunctionGenerator} />
         </div>
       </div>
 

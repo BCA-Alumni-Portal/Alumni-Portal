@@ -9,7 +9,7 @@ export default function ClickableSocials(props) {
 
     useEffect(() => {
         // pull from database and setLinkedIn
-        CommunicationHandler.getSocialsInfoByID(setLinkedInData, props.alumniID);
+        CommunicationHandler.getSocialsInfoByID(setLinkedInData, props.accountsID);
     }, [props]);
 
     const setLinkedInData = (data) => {

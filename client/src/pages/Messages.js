@@ -103,6 +103,7 @@ export default function Messages() {
     } else {
       setCurrentName(conversation.first_name + " " + conversation.last_name);
     }
+    // console.log("get messages");
     setLoadingMessages(false);
   }
 
@@ -134,7 +135,7 @@ export default function Messages() {
   };
 
   const switchConversation = (conversation) => {
-    console.log("C.CID: " + conversation.conversation_id);
+    // console.log("C.CID: " + conversation.conversation_id);
     setConversationID(conversation.conversation_id);
     setConversation(conversation);
     setLoadingMessages(true);
@@ -159,7 +160,7 @@ export default function Messages() {
     //   setChatSocket(socket);
     // });
     
-    submitGetMessageRequest();
+    // submitGetMessageRequest();
   }
 
   // Client pings

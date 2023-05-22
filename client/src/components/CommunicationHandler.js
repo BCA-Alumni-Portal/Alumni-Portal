@@ -21,8 +21,8 @@ async function getClientID() {
 
     await axios.get('/auth/current-session').then(({ data }) => {
         // console.log("got email: <" + data.email + ">");
-        console.log("auth data:")
-        console.log(data);
+        // console.log("auth data:")
+        // console.log(data);
         email = data.email;
         accessToken = data.access_token;
     })
@@ -93,8 +93,8 @@ async function makeRequest(url, params={}, func) {
     params.account_id = id;
     let instance = await getCSRF();
     // console.log(instance);
-    console.log(LINK_HEADER + url);
-    console.log(params);
+    // console.log(LINK_HEADER + url);
+    // console.log(params);
 
     // accessToken = auth0.getAccessTokenSilently();
     // console.log(accessToken);
@@ -114,8 +114,8 @@ async function makeRequest(url, params={}, func) {
 
     let result = instance.post(LINK_HEADER + url, params, options).then(res => {
         let data = res.data;
-        console.log(url);
-        console.log(data);
+        // console.log(url);
+        // console.log(data);
         // console.log(func);
         if ((func != null) && (data != null)) {
             func(data);
@@ -139,8 +139,8 @@ async function getSocialsInfoByID(dataFunction, id) {
 }
 
 async function getDescriptionByID(dataFunction, id) {
-    let data = {};
-    let result = makeRequest("readDescriptionRequest", data, dataFunction);
+    let data = { target_id: id };
+    let result = makeRequest("readDescriptionRequestByID", data, dataFunction);
     // let result = axios.get(LINK_HEADER + "readDescriptionRequest", { params: data }).then(res => {
     //     let data = res.data;
     //     // console.log(res);
@@ -334,6 +334,17 @@ async function isAdmin() {
     return adminStatus;
 }
 
+function getIsAdminStatus() {
+    return adminStatus;
+}
+
+async function archiveUser(targetID) {
+    let data = {
+        target_id: targetID
+    }
+    let result = await makeRequest("archiveUser", data);
+}
+
 export default {
     getClientID,
 
@@ -362,7 +373,10 @@ export default {
     exportData,
 
     isAdmin,
+    getIsAdminStatus,
     
     writeVisibility,
-    writeAdmin
+    writeAdmin,
+
+    archiveUser
 }

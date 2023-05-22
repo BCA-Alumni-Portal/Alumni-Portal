@@ -368,8 +368,8 @@ router.post('/readDescriptionRequestByID', async (req, res) => {
 
     let query = req.body;
 
-    let clientID = query.account_id;
-    let result = await sqlAccess.readDescriptionFromSQL(clientID);
+    let targetID = query.target_id;
+    let result = await sqlAccess.readDescriptionFromSQL(targetID);
     return res.send(result);
 })
 
@@ -536,6 +536,16 @@ router.post('/isAdmin', async (req, res) => {
         return;
     }
     return res.send(result[0]);
+})
+
+router.post('/archiveUser', async (req, res) => {
+    let query = req.body;
+    let accountsID = query.account_id;
+    let targetID = query.target_id;
+
+    let result = await sqlAccess.archiveUserInSQL(targetID);
+    console.log("Archived user with ID: " + targetID);
+    return 
 })
 
 // var Tokens = require('csrf');

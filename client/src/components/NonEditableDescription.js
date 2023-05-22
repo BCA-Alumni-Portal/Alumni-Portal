@@ -9,16 +9,18 @@ export default function NonEditableDescription(props) {
 
     useEffect(() => {
         // pull from database and setDescription
-        CommunicationHandler.getDescriptionByID(onDescriptionReceived, props.alumniID);
+        CommunicationHandler.getDescriptionByID(onDescriptionReceived, props.accountsID);
     }, [props]);
 
     const packGetData = () => {
         return {
-            account_id: props.alumniID
+            target_id: props.accountsID
         }
     }
 
     const onDescriptionReceived = (data) => {
+        console.log(data);
+        console.log(data.description);
         if (data.description == "" || data.description == null) {
             setDescription("This person likes to stay secretive...")
         } else {
