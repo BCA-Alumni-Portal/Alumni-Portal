@@ -12,7 +12,7 @@ function PeopleGenerator(props) {
                     let switchFunc = props.switchFunctionGenerator(person.account_id);
                     let createConversationFunc = props.createConversationFunctionGenerator(person.account_id);
                     return (
-                        <div>
+                        <div className="cursor-pointer">
                             <div className="group/item hover:bg-slate-100 grid card h-25 hover:bg-sky-200 focus:bg-sky-300 box py-2" onClick={switchFunc}>
                                 <div className="text-sm row flex gap-3 px-2">
 
