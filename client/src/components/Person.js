@@ -19,7 +19,7 @@ function Person(props) {
                 <NonEditableDescription alumniID={props.alumniID} />
             </div>
             <div className='col-span-3'>
-                <ClickableSocials alumniID={props.alumniID}/>
+                <ClickableSocials alumniID={props.alumniID} />
             </div>
             <div className="col-span-3">
                 <button className="btn bg-sky-400 hover:bg-gradient-to-r hover:from-sky-300 hover:to-sky-400 hover:border-sky-300 border-sky-100 float-left normal-case text-xl" onClick={createConversationFunc}>Message</button>
