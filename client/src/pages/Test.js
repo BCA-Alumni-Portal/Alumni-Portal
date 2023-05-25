@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { Toast } from 'flowbite-react/lib/cjs/components/Toast';
 import person from "../images/person1.png"
-import {
-    Ripple,
-    initTE,
-} from "tw-elements";
+import { useRef } from "react";
 
-initTE({ Ripple });
-// import "./styles/Test.css"
+import "./styles/Test.css"
+import { UseClickAnimation } from '../components/UseClickAnimation';
 
 export default function App() {
+    const buttonRefA = useRef();
+    const buttonRefB = useRef();
+    UseClickAnimation(buttonRefA, { duration: 2000 });
+    UseClickAnimation(buttonRefB, { duration: 2000 });
+
     return (
         // <div className="h-screen  flex grid px-20">
         //     <div className="row flex flex-wrap items-center gap-2 content-center">
@@ -389,22 +391,23 @@ export default function App() {
         //     </div>
 
         // </div>
-
         <div>
-            <a href="#!" data-te-ripple-init>
-                <img
-                    src="https://tecdn.b-cdn.net/img/new/standard/city/043.jpg"
-                    class="h-auto max-w-sm"
-                    alt="" />
-            </a>
-            <button
-                type="button"
-                data-te-ripple-init
-                data-te-ripple-color="light"
-                class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
-                Button
-            </button>
-
+            <div>
+                <div  className="button-container"ref={buttonRefA}>
+                    <button className="button-class" >mybutton</button>
+                </div>
+            </div>
+            {/* <div>
+                <div  className="button-container"ref={buttonRefB}>
+                    <button className="button-class" >mybutton</button>
+                </div>
+            </div>
+   */}
+            <div className="button-container" ref={buttonRefB} >
+                <button className="drop-shadow-md text-xs hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500 bg-amber-100 border  rounded py-2 px-2 border-amber-100 hover:border-amber-400 ">
+                    Button
+                </button>
+            </div>
         </div>
     )
 }

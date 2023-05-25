@@ -1,13 +1,21 @@
-span.ripple {
-    position: absolute;
-    border-radius: 50%;
-    transform: scale(0);
-    animation: ripple 600ms linear;
-    background-color: rgba(255, 255, 255, 0.7);
-  }
-  @keyframes ripple {
-    to {
-      transform: scale(4);
-      opacity: 0;
-    }
-  }
+.button-container{
+  display:block;
+  /* width:50px;
+  margin: 10px auto; */
+}
+
+.button-class{
+  display:block;
+  cursor:pointer;
+  /* width:50px; */
+  border-radius:10px;
+  border:none;
+  padding:10px;
+  /* font-size:5px; */
+  color:white;
+  background: linear-gradient(
+    90deg,
+    #9383C5,
+    #56E3FA
+  );  
+}
