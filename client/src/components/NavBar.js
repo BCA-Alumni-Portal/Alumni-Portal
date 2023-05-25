@@ -10,6 +10,8 @@ import CommunicationHandler from './CommunicationHandler';
 export default function NavBar() {
   const [auth, setAuth] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [profilePictureFile, setProfilePictureFile] = useState(null);
+
 
   useEffect(() => {
     axios.get('/auth/current-session').then(({ data }) => {
@@ -21,6 +23,14 @@ export default function NavBar() {
       }
     });
   }, [])
+
+  useEffect(() => {
+    if(auth !== null){
+      setProfilePictureFile(auth.picture)
+    }
+  }, [auth])
+  
+
 
 
   return (
@@ -51,7 +61,7 @@ export default function NavBar() {
           <Link to='/me'>
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src={personImage2} />
+                <img src={profilePictureFile} referrerpolicy="no-referrer"/>
               </div>
             </label>
           </Link>

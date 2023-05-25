@@ -20,8 +20,30 @@ export default function ProfilePicture(props) {
         // pull profilepicture from database
         // if null: setProfilePictureFile(personImage2);
         // else: setProfilePictureFile(string)
-        setProfilePictureFile(personImage2);
+        // console.log(auth.picture)
+        // getBase64FromUrl(auth.picture);
+        // getBase64FromUrl('https://lh3.googleusercontent.com/i7cTyGnCwLIJhT1t2YpLW-zHt8ZKalgQiqfrYnZQl975-ygD_0mOXaYZMzekfKW_ydHRutDbNzeqpWoLkFR4Yx2Z2bgNj2XskKJrfw8')
+        // getBase64FromUrl("https://lh3.googleusercontent.com/a/AAcHTteIr-862BsHONs6SRqM3TOCoLmoIDhR_N0heT5J=s1000")
+        // setProfilePictureFile(auth.picture)
+        setProfilePictureFile(auth.picture)
+
+
     }, []);
+
+    const getBase64FromUrl = async (url) => {
+        const data = await fetch(url);
+        const blob = await data.blob();
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(blob); 
+          reader.onloadend = () => {
+            const base64data = reader.result;
+            console.log(base64data) 
+            setProfilePictureFile(base64data);
+          }
+        });
+      }
+
 
     const profilePictureUploader = React.useRef(null);
 
@@ -85,7 +107,7 @@ export default function ProfilePicture(props) {
                 <div className="avatar" >
                     <div className="w-64 rounded-full">
                         <div id="wrapperpfp">
-                            <img id="pfp" src={profilePictureFile} />
+                            <img id="pfp" src={profilePictureFile} referrerpolicy="no-referrer"/>
                             <p id="changepfp">+</p>
                         </div>
                     </div>

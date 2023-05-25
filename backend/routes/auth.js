@@ -37,6 +37,7 @@ router.get('/callback', (req, res, next) => {
         console.log(user);
         const userReturnObject = {
             email: user._json.email,
+            picture: user.picture
         };
         let isAlum = await sqlAccess.verifyAlumEmail(userReturnObject.email);
         if (!isAlum) {
