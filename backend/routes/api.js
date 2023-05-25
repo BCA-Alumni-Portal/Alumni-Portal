@@ -15,200 +15,176 @@ const sourceSheetsID = "1oOohmDEw3R2AU8aHwt9-KWGpFCQSYz08HsGgcXQEDLQ";
 const exportSheetsID = "1nCnY_3uG0xUZSx9uSaS9ROFUF9hur70jBrUxFSEnZMY";
 
 
-// for MySQL
-router.post('/getSQLData', async (req, res) => {
-    // console.log("getSQLData");
+// // for MySQL
+// router.post('/getSQLData', async (req, res) => {
+//     // console.log("getSQLData");
 
-    let additionalSpecifiers = {
-        account_id: req.accountsID,
-        first_name: req.firstName,
-        last_name: req.lastName,
-        graduation_year: req.graduationYear,
-        email_address: req.emailAddress,
-        academy_id: req.academyID
-    }
+//     let additionalSpecifiers = {
+//         account_id: req.accountsID,
+//         first_name: req.firstName,
+//         last_name: req.lastName,
+//         graduation_year: req.graduationYear,
+//         email_address: req.emailAddress,
+//         academy_id: req.academyID
+//     }
 
-    let query = "SELECT * FROM " + TABLE_ACCOUNTS;
+//     let query = "SELECT * FROM " + TABLE_ACCOUNTS;
 
-    let first = true;
+//     let first = true;
 
-    for (key in additionalSpecifiers) {
-        let specifier = additionalSpecifiers[key];
-        if (specifier != undefined) {
-            if (first) {
-                first = false;
-                query += "WHERE ";
-            } else {
-                query += "AND ";
-            }
-            query += key + "=" + additionalSpecifiers[key];
-        }
-    }
+//     for (key in additionalSpecifiers) {
+//         let specifier = additionalSpecifiers[key];
+//         if (specifier != undefined) {
+//             if (first) {
+//                 first = false;
+//                 query += "WHERE ";
+//             } else {
+//                 query += "AND ";
+//             }
+//             query += key + "=" + additionalSpecifiers[key];
+//         }
+//     }
 
-    let result = await sqlModule.makeQuery({ query: query });
-    res.send(result);
-});
+//     let result = await sqlModule.makeQuery({ query: query });
+//     res.send(result);
+// });
 
-router.post('/createSQLData', async (req, res) => {
-    // console.log(req)
-    // console.log("createSQLData");
-    let additionalSpecifiers = {
-        account_id: req.body.accountsID,
-        first_name: req.body.firstName,
-        last_name: req.body.lastName,
-        graduation_year: req.body.graduationYear,
-        email_address: req.body.emailAddress,
-        academy_id: req.body.academyID
-    }
+// router.post('/createSQLData', async (req, res) => {
+//     // console.log(req)
+//     // console.log("createSQLData");
+//     let additionalSpecifiers = {
+//         account_id: req.body.accountsID,
+//         first_name: req.body.firstName,
+//         last_name: req.body.lastName,
+//         graduation_year: req.body.graduationYear,
+//         email_address: req.body.emailAddress,
+//         academy_id: req.body.academyID
+//     }
 
-    let query = "INSERT INTO Accounts (";
+//     let query = "INSERT INTO Accounts (";
 
-    let first = true;
-    for (key in additionalSpecifiers) {
-        let specifier = additionalSpecifiers[key];
-        if (specifier != undefined) {
-            if (first) {
-                first = false;
-            } else {
-                query += ", ";
-            }
-            query += key
-        }
-    }
-    query += ") VALUES (";
+//     let first = true;
+//     for (key in additionalSpecifiers) {
+//         let specifier = additionalSpecifiers[key];
+//         if (specifier != undefined) {
+//             if (first) {
+//                 first = false;
+//             } else {
+//                 query += ", ";
+//             }
+//             query += key
+//         }
+//     }
+//     query += ") VALUES (";
 
-    first = true;
+//     first = true;
 
-    for (key in additionalSpecifiers) {
-        let specifier = additionalSpecifiers[key];
-        if (specifier != undefined) {
-            if (first) {
-                first = false;
-            } else {
-                query += ", ";
-            }
-            query += '"' + additionalSpecifiers[key] + '"';
-        }
-    }
+//     for (key in additionalSpecifiers) {
+//         let specifier = additionalSpecifiers[key];
+//         if (specifier != undefined) {
+//             if (first) {
+//                 first = false;
+//             } else {
+//                 query += ", ";
+//             }
+//             query += '"' + additionalSpecifiers[key] + '"';
+//         }
+//     }
 
-    query += ");";
+//     query += ");";
 
-    let result = await sqlModule.makeQuery({ query: query });
-    res.send(result);
-})
+//     let result = await sqlModule.makeQuery({ query: query });
+//     res.send(result);
+// })
 
-router.post('/updateSQLData', async (req, res) => {
-    // console.log("updateSQLData");
+// router.post('/updateSQLData', async (req, res) => {
+//     // console.log("updateSQLData");
 
-    let additionalSpecifiers = {
-        first_name: req.body.firstName,
-        last_name: req.body.lastName,
-        graduation_year: req.body.graduationYear,
-        email_address: req.body.emailAddress,
-        academy_id: req.body.academyID
-    }
+//     let additionalSpecifiers = {
+//         first_name: req.body.firstName,
+//         last_name: req.body.lastName,
+//         graduation_year: req.body.graduationYear,
+//         email_address: req.body.emailAddress,
+//         academy_id: req.body.academyID
+//     }
 
-    // additionalSpecifiers = {
-    //     first_name: "Johnny2",
-    //     last_name: "Doe2",
-    //     graduation_year: "19872",
-    //     email_address: "jd@gmail.com2",
-    //     academy_id: 4
-    // }
-    // console.log(additionalSpecifiers);
+//     // additionalSpecifiers = {
+//     //     first_name: "Johnny2",
+//     //     last_name: "Doe2",
+//     //     graduation_year: "19872",
+//     //     email_address: "jd@gmail.com2",
+//     //     academy_id: 4
+//     // }
+//     // console.log(additionalSpecifiers);
 
-    let query = "UPDATE Accounts ";
+//     let query = "UPDATE Accounts ";
 
-    let first = true;
+//     let first = true;
 
-    for (key in additionalSpecifiers) {
-        let specifier = additionalSpecifiers[key];
-        if (specifier != undefined) {
-            if (first) {
-                first = false;
-                query += "SET ";
-            } else {
-                query += ", ";
-            }
-            query += key + "=" + '"' + additionalSpecifiers[key] + '"';
-        }
-    }
+//     for (key in additionalSpecifiers) {
+//         let specifier = additionalSpecifiers[key];
+//         if (specifier != undefined) {
+//             if (first) {
+//                 first = false;
+//                 query += "SET ";
+//             } else {
+//                 query += ", ";
+//             }
+//             query += key + "=" + '"' + additionalSpecifiers[key] + '"';
+//         }
+//     }
 
-    query += " WHERE account_id=" + req.body.accountsID;
+//     query += " WHERE account_id=" + req.body.accountsID;
 
-    let result = await sqlModule.makeQuery({ query: query });
-    res.send(result);
-})
+//     let result = await sqlModule.makeQuery({ query: query });
+//     res.send(result);
+// })
 
-// for Google Sheets
-router.post('/getGSData', (req, res) => {
-    // console.log("getGSData");
-    let range = "A1:C5";
-    sheetsModule.readSheets({ range: range, sheetID: sourceSheetsID });
-    return res.send("Finished reading");
-});
+// // for Google Sheets
+// router.post('/getGSData', (req, res) => {
+//     // console.log("getGSData");
+//     let range = "A1:C5";
+//     sheetsModule.readSheets({ range: range, sheetID: sourceSheetsID });
+//     return res.send("Finished reading");
+// });
 
-router.post('/writeGSData', (req, res) => {
-    // console.log("writeGSData");
-    sheetsModule.updateSheets({ query: "dummy", sheetID: sourceSheetsID });
-    return res.send("Finished writing");
-})
+// router.post('/writeGSData', (req, res) => {
+//     // console.log("writeGSData");
+//     sheetsModule.updateSheets({ query: "dummy", sheetID: sourceSheetsID });
+//     return res.send("Finished writing");
+// })
 
-
-
-router.post('/syncData', (req, res) => {
-    console.log("syncData");
-    databaseSync.sync(sourceSheetsID);
-    return res.send("Finished syncing");
-})
+// router.post('/syncData', (req, res) => {
+//     console.log("syncData");
+//     databaseSync.sync(sourceSheetsID);
+//     return res.send("Finished syncing");
+// })
 
 router.post('/sendMessageRequest', async (req, res) => {
-    // console.log("sendMessage");
-    // console.log(req);
     let senderID = req.body.account_id;
     let conversationID = req.body.conversationID;
     let body = req.body.messageBody;
-    // console.log(req.body);
-    // return {
-    //     senderID: clientID,
-    //     // receiverID: targetID,
-    //     messageBody: messageBody,
-    //     conversationID: conversationID
-    //   }
+    
     let result = await sqlAccess.writeMessageToSQL(senderID, conversationID, body);
-    // console.log(result);
     return res.send("Finished sending");
 })
 
 router.post('/getMessageRequest', async (req, res) => {
-    // console.log("getMessage");
-    // let senderID = req.body.senderID;
     let conversationID = req.body.conversationID;
-    // let result = await sqlAccess.readMessageFromSQLByBothIDs(senderID, receiverID);
     let result = await sqlAccess.readMessageFromSqlByConversation(conversationID);
 
-    // console.log(result);
     return res.send(result);
 })
 
 router.get('/getClientID', async (req, res) => {
-    // console.log("getClientID Session:");
-    // console.log(req.session);
-    // console.log("getClientID");
-    // console.log(req.body.email);
-    // console.log(req);
     let result = await sqlAccess.readClientID(req.query.email);
-    // console.log("Client ID: " + result);
+    
     return res.send({ clientID: result });
 })
 
 router.post('/updateProfileDataRequest', async (req, res) => {
-    // console.log("updateProfileDataRequest");
-    // console.log(req);
     let query = req.body;
 
-    // let email = query.email_address;
-    // let clientID = await sqlAccess.readClientID(email);
     let clientID = query.account_id;
     let company = query.company;
     let graduationYear = query.graduationYear;
@@ -248,12 +224,8 @@ router.post('/updateAdminRequest', async(req, res) => {
 
 
 router.post('/readProfileDataRequest', async (req, res) => {
-    // console.log("readProfileDataRequest");
-    // console.log(req);
     let query = req.body;
 
-    // let email = query.email_address;
-    // let clientID = await sqlAccess.readClientID(email);
     let clientID = query.account_id;
     let result = await sqlAccess.readProfileInfoFromSQL(clientID);
 
@@ -268,10 +240,7 @@ router.post('/readProfileDataRequest', async (req, res) => {
 })
 
 router.post('/readProfileDataRequestByID', async (req, res) => {
-    // console.log("readProfileDataRequestByID");
-    // console.log(req);
     let query = req.body;
-    // console.log(query);
 
     let targetID = query.target_id;
     let result = await sqlAccess.readProfileInfoFromSQL(targetID);
@@ -289,36 +258,26 @@ router.post('/readProfileDataRequestByID', async (req, res) => {
 
 
 router.post('/readSocialsRequest', async (req, res) => {
-    // console.log("readSocialsRequest");
-
     let query = req.body;
 
-    // let email = query.email_address;
-    // let clientID = await sqlAccess.readClientID(email);
     let clientID = query.account_id;
     if (clientID == undefined) {
         console.log("Undefined client ID for email <" + email + ">");
     }
+
     let result = await sqlAccess.readSocialsFromSQL(clientID);
     if (result == undefined) {
         return res.send(undefined);
     }
-    // console.log(result);
+    
     return res.send(result[0]);
 })
 
 router.post('/readSocialsRequestByID', async (req, res) => {
-    // console.log("readSocialsRequest");
-
     let query = req.body;
 
     let clientID = query.account_id || 0;
     let result = await sqlAccess.readSocialsFromSQL(clientID);
-    // console.log("rSRBID_1");
-    // console.log(req);
-    // console.log(query);
-    // console.log(clientID);
-    // console.log(result);
     if (result == undefined) {
         return res.send(undefined);
     }
@@ -326,12 +285,7 @@ router.post('/readSocialsRequestByID', async (req, res) => {
 })
 
 router.post('/updateSocialsRequest', async (req, res) => {
-    // console.log("updateSocialsRequest");
-
     let query = req.body;
-
-    // let email = query.email_address;
-    // let clientID = await sqlAccess.readClientID(email);
 
     let clientID = query.account_id;
     let socials = [
@@ -339,24 +293,17 @@ router.post('/updateSocialsRequest', async (req, res) => {
     ];
 
     let result = await sqlAccess.readSocialsFromSQL(clientID);
-    // console.log("result: " + result);
     if (result == undefined) {
-        // console.log("writing");
         let result = await sqlAccess.writeSocialsToSQL(clientID, socials);
     } else {
-        // console.log("updating");
         let result = await sqlAccess.updateSocialsToSQL(clientID, socials);
     }
     return res.send("Finished updating");
 })
 
 router.post('/readDescriptionRequest', async (req, res) => {
-    // console.log("readDescriptionRequest");
-
     let query = req.body;
 
-    // let email = query.email_address;
-    // let clientID = await sqlAccess.readClientID(email);
     let clientID = query.account_id;
     let result = await sqlAccess.readDescriptionFromSQL(clientID);
     return res.send(result);
@@ -364,8 +311,6 @@ router.post('/readDescriptionRequest', async (req, res) => {
 
 
 router.post('/readDescriptionRequestByID', async (req, res) => {
-    // console.log("readDescriptionRequest");
-
     let query = req.body;
 
     let targetID = query.target_id;
@@ -456,29 +401,21 @@ router.post('/updateDescriptionRequest', async (req, res) => {
 })
 
 router.post('/syncMissingData', async (req, res) => {
-    // console.log("syncMissingData");
     let result = await databaseSync.sync(sourceSheetsID);
     return res.send(result);
 })
 
 router.post('/exportData', async (req, res) => {
-    // console.log("exportData");
     let result = await databaseSync.exportSqlToSheets(exportSheetsID);
     return res.send(result);
 })
 
 router.post('/getConversationsRequest', async (req, res) => {
-    // console.log("getConversationsRequest");
-
     let query = req.body;
 
-    // let email = query.email;
-    // // console.log(email);
-    // let clientID = await sqlAccess.readClientID(email);
     let clientID = query.account_id;
-    // console.log(clientID);
     let result = await sqlAccess.readAvailableConversations(clientID);
-    // console.log(result);
+    
     return res.send(result);
 })
 
@@ -487,16 +424,9 @@ router.post('/getPeopleList', async (req, res) => {
     let nameFilter = query.name_filter || "";
     let yearFilters = query.year_filter || [];
     let academyFilters = query.academy_filter || [];
-    // console.log("getPeopleList");
-    // console.log(req);
-    // console.log(query);
-    // console.log(nameFilter);
-    // console.log(yearFilters);
-    // console.log(academyFilters);
 
     let result = await sqlAccess.readAccountsDataWithFilter(nameFilter, yearFilters, academyFilters);
 
-    // console.log(result)
     return res.send(result);
 })
 

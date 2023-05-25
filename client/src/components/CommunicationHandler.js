@@ -128,59 +128,25 @@ async function makeRequest(url, params={}, func) {
 async function getSocialsInfoByID(dataFunction, id) {
     let data = {};
     let result = makeRequest("readSocialsRequestByID", data, dataFunction);
-    // let result = axios.get(LINK_HEADER + "readSocialsRequestByID", { params: data }).then(res => {
-    //     let data = res.data;
-    //     // console.log(data);
-    //     if (data != null) {
-    //         dataFunction(data);
-    //     }
-    //     return undefined;
-    // });
 }
-
+6
 async function getDescriptionByID(dataFunction, id) {
     let data = { target_id: id || await getClientID() };
     let result = makeRequest("readDescriptionRequestByID", data, dataFunction);
-    // let result = axios.get(LINK_HEADER + "readDescriptionRequest", { params: data }).then(res => {
-    //     let data = res.data;
-    //     // console.log(res);
-    //     // console.log(data);
-    //     if (data != null) {
-    //         dataFunction(data);
-    //     }
-    // });
 }
 
 async function writeDescription(description) {
     let data = { description: description };
     let result = makeRequest("updateDescriptionRequest", data);
-    // let result = axios.get(LINK_HEADER + "updateDescriptionRequest", { params: data }).then(res => {
-
-    // });
 }
 
 async function getProfileDataByID(dataFunction, id) {
     let data = { target_id: id || await getClientID() };
-    console.log(data);
-
     let result = makeRequest("readProfileDataRequestByID", data, dataFunction);
-    // let result = axios.get(LINK_HEADER + "readProfileDataRequestByID", { params: data }).then(res => {
-    //     let data = res.data;
-    //     if (data != null) {
-    //         dataFunction(data);
-    //     }
-    // });
 }
 
 async function writeProfileData(data) {
     let result = makeRequest("updateProfileDataRequest", data);
-    // let result = axios.get(LINK_HEADER + "updateProfileDataRequest", { params: data }).then(res => {
-    //     let data = res.data;
-    //     // console.log(data);
-    //     if (data != null) {
-
-    //     }
-    // });
 }
 
 async function writeVisibility(data){
@@ -191,43 +157,19 @@ async function writeAdmin(data){
     let result = makeRequest('updateAdminRequest', data);
 }
 
-
-
 async function writeSocialsInfo(data) {
     let result = makeRequest("updateSocialsRequest", data);
-    // let result = axios.get(LINK_HEADER + "updateSocialsRequest", { params: data }).then(res => {
-
-    // });
 }
 
 async function getMessages(dataFunction, conversationID) {
-    // const submitGetMessageRequest = () => {
-    // const data = packGetData();
-    // console.log(data);
     let data = { conversationID: conversationID };
     let result = makeRequest("getMessageRequest", data, dataFunction);
-    // let result = axios.get(LINK_HEADER + "getMessageRequest", { params: data }).then(res => {
-    //     let resultData = res.data;
-    //     if (resultData != null) {
-    //         dataFunction(resultData);
-    //     }
-    // });
-    // }
 }
 
 async function writeMessage(conversationID, messageBody) {
     let data = { conversationID: conversationID, messageBody: messageBody };
     let result = makeRequest("sendMessageRequest", data);
-    // axios.get(LINK_HEADER + "sendMessageRequest", { params: data }).then(res => console.log(res)).catch((err) => {
-
-    // });
 }
-
-// async function writeMessage(chatSocket, messageBody) {
-//     let id = await getClientID();
-//     let data = { senderID: id, messageBody: messageBody }
-//     chatSocket.send(JSON.stringify(data));
-// }
 
 async function createConversationConnection(conversationID, onOpenFunction, onMessageFunction) {
     let onOpenData = { conversationID: conversationID };
@@ -267,13 +209,6 @@ async function createConversationConnection(conversationID, onOpenFunction, onMe
 
 async function getConversations(dataFunction) {
     let result = makeRequest("getConversationsRequest", {}, dataFunction);
-    // axios.get(LINK_HEADER + "getConversationsRequest", { params: data }).then(res => {
-    //     let data = res.data;
-    //     // console.log(data);
-    //     if (data != null) {
-    //         dataFunction(data);
-    //     }
-    // });
 }
 
 async function writeConversation(otherID) {
@@ -281,31 +216,15 @@ async function writeConversation(otherID) {
         targetID: otherID
     }
     let result = makeRequest("createConversation", data);
-    // let result = axios.get(LINK_HEADER + "createConversation", { params: data }).then(res => {
-
-    // });
 }
 
 async function getPeopleList(dataFunction, data) {
     let result = makeRequest("getPeopleList", data, dataFunction);
-    // let result = axios.get(LINK_HEADER + "getPeopleList", { params: data }).then(res => {
-    //     let data = res.data;
-    //     if (data != null) {
-    //         dataFunction(data);
-    //     }
-    // });
 }
 
 async function getProfilePicture(dataFunction, id) {
     let data = { target_id: id }
     let result = makeRequest("getProfilePicture", data, dataFunction);
-    // axios.get(LINK_HEADER + "getProfilePicture", { params: data }).then(res => {
-    //     let data = res.data;
-    //     // console.log(data);
-    //     if (data != null) {
-    //         dataFunction(data);
-    //     }
-    // });
 }
 
 async function writeProfilePicture(picture) {
@@ -313,9 +232,6 @@ async function writeProfilePicture(picture) {
         image: picture
     }
     let result = makeRequest("writeProfilePicture", data);
-    // let result = axios.get(LINK_HEADER + "writeProfilePicture", { params: data }).then(res => {
-
-    // });
 }
 
 async function syncMissingData() {
