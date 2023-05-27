@@ -35,7 +35,10 @@ function Person(props) {
         // setProfilePictureFile(personImage2);
         // setOldName(name);
         // setOldDescription(description);
+        // console.log(props);
+        // console.log(accountsID);
         if (accountsID !== -1) {
+            // console.log("refreshing person.js")
             setLoading(true);
             CommunicationHandler.getProfilePicture(setProfilePictureFile, accountsID);
             CommunicationHandler.getProfileDataByID(setProfileData, accountsID);
@@ -44,15 +47,17 @@ function Person(props) {
         }
 
 
-    }, [props]);
+    }, [props.accountsID]);
 
     const setProfileData = (data) => {
+        // console.log("setting profile data");
         setCompany(data.company || "");
         setGraduationYear(data.graduation_year);
         setPronouns(data.pronouns || "");
         setAcademy(data.academy);
         setName(data.first_name + " " + data.last_name);
         setProfilePicture(data.profile_picture);
+        // setLoading(false);
     }
 
     const checkCompany = () => {
@@ -70,6 +75,7 @@ function Person(props) {
     }
 
     const onDescriptionReceived = (data) => {
+        console.log("got description")
         if (data.description == "" || data.description == null) {
             setDescription("This person likes to stay secretive...")
         } else {
@@ -83,8 +89,8 @@ function Person(props) {
     }
 
     useEffect(() => {
-        console.log(name);
-        console.log(description)
+        // console.log(name);
+        // console.log(description)
         if (name !== "" && description !== null) {
             setLoading(false);
         }

@@ -443,14 +443,14 @@ async function readAccountsDataWithFilter(accountsID, nameFilter, yearFilters, a
     // console.log("year or: " + yearOr);
     // console.log("academy or: " + academyOr);
 
-    query += " INNER JOIN Academy WHERE (Accounts.is_visible=1"
+    query += " INNER JOIN Academy WHERE (Accounts.is_admin=0 AND (Accounts.is_visible=1"
 
     let isAdmin = await readIsAdminFromSQL(accountsID);
     console.log(isAdmin[0]);
     if (isAdmin[0].is_admin == 1) {
         query += " OR Accounts.is_visible=0";
     }
-    query += ") ";
+    query += ")) ";
 
     if ((yearFilters.length + academyFilters.length + nameFilter.length) > 0) {
         query += " AND ";
