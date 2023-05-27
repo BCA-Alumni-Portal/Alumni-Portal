@@ -25,11 +25,11 @@ export default function NavBar() {
   }, [])
 
   useEffect(() => {
-    if(auth !== null){
+    if (auth !== null) {
       setProfilePictureFile(auth.picture)
     }
   }, [auth])
-  
+
 
 
 
@@ -58,13 +58,23 @@ export default function NavBar() {
 
         </ul>
         <div className="dropdown dropdown-hover dropdown-end">
-          <Link to='/me'>
+          {isAdmin ?
+            <Link to='/admin'>
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src={profilePictureFile} referrerpolicy="no-referrer"/>
+                <img src={profilePictureFile} referrerpolicy="no-referrer" />
               </div>
             </label>
           </Link>
+            :
+            <Link to='/me'>
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 rounded-full">
+                  <img src={profilePictureFile} referrerpolicy="no-referrer" />
+                </div>
+              </label>
+            </Link>
+          }
           <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40 mt-16">
             <a href="/auth/logout" className="nav-item text-lg font-semibold border rounded hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500  border border-amber-50 rounded py-2 px-2  hover:border-amber-400 hover:text-white">
               Logout

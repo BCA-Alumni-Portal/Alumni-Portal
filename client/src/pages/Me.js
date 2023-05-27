@@ -6,17 +6,25 @@ import UserInformation from '../components/UserInformation';
 import Description from '../components/Description';
 import Socials from '../components/Socials';
 import Home from './Home';
+import Admin from './Admin'
 import CommunicationHandler from '../components/CommunicationHandler';
 
 
 export default function Me() {
     const [auth, setAuth] = useState(null);
+    const [isAdmin, setIsAdmin] = useState(false);
+
 
     useEffect(() => {
         axios.get('/auth/current-session').then(({ data }) => {
             setAuth(data);
         })
         CommunicationHandler.getProfileDataByID(setVisiblility);
+        CommunicationHandler.isAdmin().then((result) => {
+            if (result != null) {
+              setIsAdmin(result);
+            }
+          });
     }, [])
 
     const [visible, setVisible] = useState(null);
@@ -51,7 +59,7 @@ export default function Me() {
         }
     }
 
-    if (auth) {
+    if (auth && !isAdmin) {
         return (
             <div className='flex justify-center'>
                 <div className='max-w-4xl grid grid-cols-3 gap-8 mt-4'>
@@ -85,6 +93,9 @@ export default function Me() {
 
             </div>
         )
+    }
+    else if(auth){
+        return <Admin />
     }
     else if (auth === null) {
         // loading

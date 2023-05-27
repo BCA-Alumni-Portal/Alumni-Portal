@@ -35,7 +35,7 @@ function ConversationGenerator(props) {
                         gray = true;
                         if (gray) {
                             return (
-                                <div>
+                                <div className="cursor-pointer">
                                     <div className="ripple-bg-gray-300 grid card h-25 hover:bg-sky-200 focus:bg-sky-300" onClick={func}>
                                         <div className="avatar py-3 text-sm row flex gap-3 px-2">
                                             <div className="lg:w-10 rounded-full">
