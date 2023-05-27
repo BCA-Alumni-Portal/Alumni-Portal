@@ -432,8 +432,9 @@ router.post('/getPeopleList', async (req, res) => {
     let nameFilter = query.name_filter || "";
     let yearFilters = query.year_filter || [];
     let academyFilters = query.academy_filter || [];
+    let clientID = query.account_id;
 
-    let result = await sqlAccess.readAccountsDataWithFilter(nameFilter, yearFilters, academyFilters);
+    let result = await sqlAccess.readAccountsDataWithFilter(clientID, nameFilter, yearFilters, academyFilters);
 
     return res.send(result);
 })

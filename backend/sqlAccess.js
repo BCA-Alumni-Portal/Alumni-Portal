@@ -437,12 +437,21 @@ async function updateAdminToSQL(accountsID, is_admin) {
 
 
 
-async function readAccountsDataWithFilter(nameFilter, yearFilters, academyFilters) {
+async function readAccountsDataWithFilter(accountsID, nameFilter, yearFilters, academyFilters) {
     let query = constructSQLReadQuery(readPublicAccountsColumns);
     // console.log("query: " + query);
     // console.log("year or: " + yearOr);
     // console.log("academy or: " + academyOr);
-    query += " INNER JOIN Academy WHERE Accounts.is_visible=1"
+
+    query += " INNER JOIN Academy WHERE (Accounts.is_visible=1"
+
+    let isAdmin = await readIsAdminFromSQL(accountsID);
+    console.log(isAdmin[0]);
+    if (isAdmin[0].is_admin == 1) {
+        query += " OR Accounts.is_visible=0";
+    }
+    query += ") ";
+
     if ((yearFilters.length + academyFilters.length + nameFilter.length) > 0) {
         query += " AND ";
     }
