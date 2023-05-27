@@ -291,11 +291,19 @@ router.post('/updateSocialsRequest', async (req, res) => {
     let socials = [
         query.linkedin
     ];
+    console.log("clientID:");
+    console.log(clientID);
+    console.log("socials:");
+    console.log(socials);
 
     let result = await sqlAccess.readSocialsFromSQL(clientID);
-    if (result == undefined) {
+    console.log("result:");
+    console.log(result);
+    if (result[0] == undefined) {
+        console.log("writing");
         let result = await sqlAccess.writeSocialsToSQL(clientID, socials);
     } else {
+        console.log("updating");
         let result = await sqlAccess.updateSocialsToSQL(clientID, socials);
     }
     return res.send("Finished updating");
