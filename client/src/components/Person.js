@@ -34,11 +34,14 @@ function Person(props) {
         // setProfilePictureFile(personImage2);
         // setOldName(name);
         // setOldDescription(description);
-        setLoading(true);
-        CommunicationHandler.getProfilePicture(setProfilePictureFile, accountsID);
-        CommunicationHandler.getProfileDataByID(setProfileData, accountsID);
-        CommunicationHandler.getDescriptionByID(onDescriptionReceived, accountsID);
-        CommunicationHandler.getSocialsInfoByID(setLinkedInData, accountsID);
+        if(accountsID !== -1){
+            setLoading(true);
+            CommunicationHandler.getProfilePicture(setProfilePictureFile, accountsID);
+            CommunicationHandler.getProfileDataByID(setProfileData, accountsID);
+            CommunicationHandler.getDescriptionByID(onDescriptionReceived, accountsID);
+            CommunicationHandler.getSocialsInfoByID(setLinkedInData, accountsID);
+        }
+        
 
     }, [props]);
 
