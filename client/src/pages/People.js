@@ -37,18 +37,26 @@ function useInterval(callback, delay) {
 
 function People() {
   const [auth, setAuth] = useState(null);
-
+  const [loggedInID, setLoggedInID] = useState(null);
   useEffect(() => {
     axios.get('/auth/current-session').then(({ data }) => {
       setAuth(data);
     })
   }, []);
 
+  useEffect(() =>{
+    if(auth!==null){
+        CommunicationHandler.getClientID().then((res) => {
+          setLoggedInID(res)
+        })
+    }
+  }, [auth])
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   // const handleClick = (e = React.MouseEvent) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
-  const [currentAccountsID, setCurrentAccountsID] = React.useState(0);
+  const [currentAccountsID, setCurrentAccountsID] = React.useState(-1);
   const [people, setPeople] = React.useState([]);
   const [lastFilterGroup, setLastFilterGroup] = React.useState("");
 
@@ -199,7 +207,7 @@ function People() {
           </div>
         </div>
         <div>
-          <Person accountsID={currentAccountsID} createConversationFunctionGenerator={createConversationFunctionGenerator} />
+          <Person accountsID={currentAccountsID} createConversationFunctionGenerator={createConversationFunctionGenerator} loggedInID={loggedInID}/>
         </div>
       </div>
 
