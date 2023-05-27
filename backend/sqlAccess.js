@@ -294,7 +294,7 @@ async function updateProfileInfoToSQL(accountsID, company = "", graduationYear, 
 }
 
 async function readProfileInfoFromSQL(accountsID) {
-    let query = "SELECT * FROM " + TABLE_ACCOUNTS + " WHERE " +
+    let query = "SELECT profile_picture FROM " + TABLE_ACCOUNTS + " WHERE " +
         "(account_id = " + mysql.escape(accountsID) + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
