@@ -73,7 +73,9 @@ function People() {
   const [AcademyFilter, setAcademyFilter] = React.useState([]);
 
   let inputYear = "";
-  const academy_array = ['AAST', 'AMST', 'AVPA', 'ABF', 'ATCS', 'ACAHA', 'AEDT', 'APT', 'ABCT', 'ACA', 'AVAGC', 'GLE'];
+  // const academy_array = ['AAST', 'AMST', 'AVPA', 'ABF', 'ATCS', 'ACAHA', 'AEDT', 'APT', 'ABCT', 'ACA', 'AVAGC', 'GLE'];
+  const academy_array = ['AAST', 'AMST', 'AVPA', 'ABF', 'ATCS', 'ACAHA', 'AEDT'];
+
 
   let YearFilterHandler = (newElement) => {
     var current_array = [...YearFilter, newElement];
@@ -183,7 +185,7 @@ function People() {
 
   if (auth) {
     return (
-      <div className="grid grid-cols-2 divide-x h-full">
+      <div className="w-full grid grid-cols-2 divide-x h-auto overflow-x-hidden">
         <div className="">
           <h1 className="py-3 text-3xl font-bold text-stone-600 mr-6 inline-block align-middle">Directory</h1>
           <div className="search px-10">
@@ -191,7 +193,7 @@ function People() {
               <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
               </div>
-              <input type="search" onChange={inputHandler} placeholder="Search for alum" className="input input-bordered input-info block w-full focus:border-sky-400 focus:ring-0 pl-10"></input>
+              <input type="search" onChange={inputHandler} placeholder="Search alumni directory" className="input input-bordered input-info block w-full focus:border-sky-400 focus:ring-0 pl-10"></input>
             </div>
             <br className="space-y-8"></br>
 

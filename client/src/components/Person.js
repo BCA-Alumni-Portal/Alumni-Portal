@@ -19,6 +19,7 @@ function Person(props) {
     const [graduationYear, setGraduationYear] = useState("");
     const [pronouns, setPronouns] = useState("");
     const [academy, setAcademy] = useState("");
+    const [profilePicture, setProfilePicture] = useState("");
     const [description, setDescription] = useState(null);
     const [oldDescription, setOldDescription] = useState(null);
     const [linkedIn, setLinkedIn] = useState("");
@@ -34,14 +35,14 @@ function Person(props) {
         // setProfilePictureFile(personImage2);
         // setOldName(name);
         // setOldDescription(description);
-        if(accountsID !== -1){
+        if (accountsID !== -1) {
             setLoading(true);
             CommunicationHandler.getProfilePicture(setProfilePictureFile, accountsID);
             CommunicationHandler.getProfileDataByID(setProfileData, accountsID);
             CommunicationHandler.getDescriptionByID(onDescriptionReceived, accountsID);
             CommunicationHandler.getSocialsInfoByID(setLinkedInData, accountsID);
         }
-        
+
 
     }, [props]);
 
@@ -51,6 +52,7 @@ function Person(props) {
         setPronouns(data.pronouns || "");
         setAcademy(data.academy);
         setName(data.first_name + " " + data.last_name);
+        setProfilePicture(data.profile_picture);
     }
 
     const checkCompany = () => {
@@ -90,8 +92,8 @@ function Person(props) {
 
     if (accountsID == -1) {
         return (
-            <div>
-                Hello
+            <div className='flex justify-center items-center'>
+                <h1 className="text-4xl font-bold text-stone-600 inline-block align-middle ">Search the directory to find your classmates!</h1>
             </div>
         )
     }
@@ -118,7 +120,7 @@ function Person(props) {
                     <div>
                         <div className="avatar" >
                             <div className="w-64 rounded-full">
-                                <img id="pfp" src={profilePictureFile} />
+                                <img id="pfp" src={profilePicture} referrerpolicy="no-referrer"/>
                             </div>
                         </div>
                     </div>

@@ -22,7 +22,13 @@ module.exports = {
       sky: colors.sky,
       green: colors.green,
     },
-    extend: {}
+    extend: {
+      maxHeight: {
+        '25': '25%',
+        '50': '50%',
+        '75': '75%',
+      }
+    }
   },
   plugins: [
     require("daisyui"),
