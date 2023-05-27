@@ -129,7 +129,7 @@ async function getSocialsInfoByID(dataFunction, id) {
     let data = {};
     let result = makeRequest("readSocialsRequestByID", data, dataFunction);
 }
-6
+
 async function getDescriptionByID(dataFunction, id) {
     let data = { target_id: id || await getClientID() };
     let result = makeRequest("readDescriptionRequestByID", data, dataFunction);
