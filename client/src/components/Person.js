@@ -21,12 +21,11 @@ function Person(props) {
     const [academy, setAcademy] = useState("");
     const [profilePicture, setProfilePicture] = useState("");
     const [description, setDescription] = useState(null);
-    const [oldDescription, setOldDescription] = useState(null);
     const [linkedIn, setLinkedIn] = useState("");
     const [linkedInLink, setLinkedInLink] = useState("");
     const [loading, setLoading] = useState(true);
 
-    const [profilePictureFile, setProfilePictureFile] = useState(null);
+    // const [profilePictureFile, setProfilePictureFile] = useState(null);
     // pull profile picture from database using props.accountsID
     useEffect(() => {
         // pull profilepicture from database
@@ -40,7 +39,7 @@ function Person(props) {
         if (accountsID !== -1) {
             // console.log("refreshing person.js")
             setLoading(true);
-            CommunicationHandler.getProfilePicture(setProfilePictureFile, accountsID);
+            // CommunicationHandler.getProfilePicture(setProfilePictureFile, accountsID);
             CommunicationHandler.getProfileDataByID(setProfileData, accountsID);
             CommunicationHandler.getDescriptionByID(onDescriptionReceived, accountsID);
             CommunicationHandler.getSocialsInfoByID(setLinkedInData, accountsID);
