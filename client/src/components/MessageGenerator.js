@@ -39,7 +39,7 @@ function MessageGenerator(props) {
                             <div className="chat chat-start">
                                 <div className="chat-image avatar">
                                     <div className="w-10 rounded-full">
-                                        <img src={person} />
+                                        <img  />
                                     </div>
                                 </div>
                                 <div className="chat-header">
@@ -54,7 +54,7 @@ function MessageGenerator(props) {
                             <div className="chat chat-end">
                                 <div className="chat-image avatar">
                                     <div className="w-10 rounded-full">
-                                        <img src={person} />
+                                        <img src={props.profilePictureFile} />
                                     </div>
                                 </div>
                                 <div className="chat-header">
@@ -73,4 +73,4 @@ function MessageGenerator(props) {
 }
 
 
-export default MessageGenerator
+export default MessageGenerator;

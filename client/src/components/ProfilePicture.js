@@ -4,6 +4,7 @@ import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import React, { useEffect, useState } from 'react';
 import './styles/ProfilePicture.css';
+import CommunicationHandler from './CommunicationHandler';
 import axios from 'axios';
 
 // import sharp from 'sharp';
@@ -26,8 +27,8 @@ export default function ProfilePicture(props) {
         // getBase64FromUrl("https://lh3.googleusercontent.com/a/AAcHTteIr-862BsHONs6SRqM3TOCoLmoIDhR_N0heT5J=s1000")
         // setProfilePictureFile(auth.picture)
         setProfilePictureFile(auth.picture)
-
-
+        // let data = {email_address: auth.email, profile_picture: auth.picture};
+        // CommunicationHandler.writeProfileData(data);
     }, []);
 
     const getBase64FromUrl = async (url) => {
