@@ -11,13 +11,13 @@ function NonEditableProfilePicture(props) {
         // if null: setProfilePictureFile(personImage2);
         // else: setProfilePictureFile(string)
         // setProfilePictureFile(personImage2);
-        CommunicationHandler.getProfilePicture(setProfilePictureFile, props.accountsID);
+        CommunicationHandler.getProfilePictureByID(setProfilePictureFile, props.accountsID);
     }, [props]);
 
 
     return (
         <div className="avatar" >
-            <div className="w-64 rounded-full">
+            <div className={`w-${props.width} rounded-full`}>
                 <img id="pfp" src={profilePictureFile} />
             </div>
         </div>

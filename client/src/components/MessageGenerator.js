@@ -1,6 +1,7 @@
 import { React, useState } from 'react'
 import { Circles, Grid } from 'react-loader-spinner'
 import person from "../images/person1.png"
+import NonEditableProfilePicture from './NonEditableProfilePicture';
 
 function MessageGenerator(props) {
     // console.log(props);
@@ -39,7 +40,7 @@ function MessageGenerator(props) {
                             <div className="chat chat-start">
                                 <div className="chat-image avatar">
                                     <div className="w-10 rounded-full">
-                                        <img  />
+                                        <NonEditableProfilePicture accountsID={item.sender_id} width={10}></NonEditableProfilePicture>
                                     </div>
                                 </div>
                                 <div className="chat-header">

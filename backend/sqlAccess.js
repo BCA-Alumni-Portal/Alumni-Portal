@@ -499,7 +499,7 @@ async function writeConversation(accountsID, targetID) {
 
 async function readAvailableConversations(accountsID) {
     accountsID = mysql.escape(accountsID);
-    let query = `SELECT Conversation.conversation_id, Accounts.first_name, Accounts.last_name
+    let query = `SELECT Conversation.conversation_id, Accounts.first_name, Accounts.last_name, Conversation.first_id, Conversation.second_id
     FROM Conversation
     INNER JOIN Accounts ON (
     (Conversation.first_id=Accounts.account_id AND Conversation.first_id!=${accountsID})
