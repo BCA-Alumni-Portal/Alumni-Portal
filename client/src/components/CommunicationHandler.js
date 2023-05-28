@@ -126,7 +126,7 @@ async function makeRequest(url, params={}, func) {
 }
 
 async function getSocialsInfoByID(dataFunction, id) {
-    let data = {};
+    let data = { target_id: id };
     let result = makeRequest("readSocialsRequestByID", data, dataFunction);
 }
 
