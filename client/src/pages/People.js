@@ -44,11 +44,11 @@ function People() {
     })
   }, []);
 
-  useEffect(() =>{
-    if(auth!==null){
-        CommunicationHandler.getClientID().then((res) => {
-          setLoggedInID(res)
-        })
+  useEffect(() => {
+    if (auth !== null) {
+      CommunicationHandler.getClientID().then((res) => {
+        setLoggedInID(res)
+      })
     }
   }, [auth])
 
@@ -195,21 +195,46 @@ function People() {
               </div>
               <input type="search" onChange={inputHandler} placeholder="Search alumni directory" className="input input-bordered input-info block w-full focus:border-sky-400 focus:ring-0 pl-10"></input>
             </div>
-            <br className="space-y-8"></br>
+            <div className="form-control">
+              <h1 className="text-lg font-bold text-left mt-2">Academies</h1>
+              <label className="label cursor-pointer">
+                <span className="text-sm">AAST</span>
+                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
+                <span className="text-sm">AMST</span>
+                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
+                <span className="text-sm">AEDT</span>
+                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
+                <span className="text-sm">ABF</span>
+                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
+                <span className="text-sm">ATCS</span>
+                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
+              </label>
+              <label className="label cursor-pointer">
+                <span className="text-sm">ACAHA</span>
+                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
+                <span className="text-sm">AVPA-M</span>
+                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
+                <span className="text-sm">AVPA-V</span>
+                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
+                <span className="text-sm">AVPA-T</span>
+                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
+              </label>
+              <h1 className="text-lg font-bold text-left mt-2">Graduation Year</h1>
 
-            <YearFilterComponent input={YearFilterHandler}></YearFilterComponent>
+              <input type="range" min="0" max="100" value="40" className="range range-info" />
+
+            </div>
+            {/* <YearFilterComponent input={YearFilterHandler}></YearFilterComponent>
             <AcademyFilterComponent Academies={academy_array} RegisterFilters={Academy_filter}></AcademyFilterComponent>
             
             <YearFilterToast input={YearFilter}></YearFilterToast>
-            <AcademyFilterToast input={AcademyFilter}></AcademyFilterToast>
-
-            <br className="space-y-5"></br>
-            <br className="space-y-5"></br>
+            <AcademyFilterToast input={AcademyFilter}></AcademyFilterToast> */}
+            <div className="divider"></div>
             <PeopleGeneratorComponent createArchiveUserFunctionGenerator={createArchiveUserFunctionGenerator} people={people} switchFunctionGenerator={switchFunctionGenerator} createConversationFunctionGenerator={createConversationFunctionGenerator} />
           </div>
         </div>
         <div>
-          <Person accountsID={currentAccountsID} createConversationFunctionGenerator={createConversationFunctionGenerator} loggedInID={loggedInID}/>
+          <Person accountsID={currentAccountsID} createConversationFunctionGenerator={createConversationFunctionGenerator} loggedInID={loggedInID} />
         </div>
       </div>
 
