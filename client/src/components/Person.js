@@ -99,7 +99,7 @@ function Person(props) {
     if (accountsID == -1) {
         return (
             <div className='flex justify-center items-center'>
-                <h1 className="text-4xl font-bold text-stone-600 inline-block align-middle ">Search the directory to find your classmates!</h1>
+                {/* <h1 className="text-4xl font-bold text-stone-600 inline-block align-middle ">Search the directory to find your classmates!</h1> */}
             </div>
         )
     }

@@ -187,7 +187,7 @@ function People() {
     return (
       <div className="w-full grid grid-cols-2 divide-x h-auto overflow-x-hidden">
         <div className="">
-          <h1 className="py-3 text-3xl font-bold text-stone-600 mr-6 inline-block align-middle">Directory</h1>
+          <h1 className="py-3 text-3xl font-bold text-stone-600 inline-block align-middle">Directory</h1>
           <div className="search px-10">
             <div class="relative">
               <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
