@@ -276,7 +276,7 @@ router.post('/readSocialsRequest', async (req, res) => {
 router.post('/readSocialsRequestByID', async (req, res) => {
     let query = req.body;
 
-    let clientID = query.account_id || 0;
+    let clientID = query.target_id;
     let result = await sqlAccess.readSocialsFromSQL(clientID);
     if (result == undefined) {
         return res.send(undefined);
