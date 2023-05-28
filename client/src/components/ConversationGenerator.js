@@ -38,7 +38,7 @@ function ConversationGenerator(props) {
                         // console.log(convo);
 
                         return (
-                            <div>
+                            <div className="cursor-pointer">
                                 <div className="grid card h-25 hover:bg-sky-200 focus:bg-sky-200" onClick={func}>
                                     <div className="avatar py-3 text-sm row flex gap-3 px-2">
                                         <NonEditableProfilePicture accountsID={otherID} width={16}></NonEditableProfilePicture>
