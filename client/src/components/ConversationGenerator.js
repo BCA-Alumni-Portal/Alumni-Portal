@@ -1,11 +1,12 @@
 import { React, useState } from 'react'
 import { Circles, Grid } from 'react-loader-spinner'
 import person from "../images/person1.png"
+import NonEditableProfilePicture from "./NonEditableProfilePicture"
+import CommunicationHandler from './CommunicationHandler';
 
 
 function ConversationGenerator(props) {
     let conversations = props.conversations;
-    let gray = true;
     let loading = props.loadingConversations;
 
     if (loading) {
@@ -30,38 +31,29 @@ function ConversationGenerator(props) {
                 {
                     conversations.map((convo) => {
                         let func = props.functionGenerator(convo);
-                        gray = !gray;
-                        // console.log(convo);
-                        gray = true;
-                        if (gray) {
-                            return (
-                                <div className="cursor-pointer">
-                                    <div className="ripple-bg-gray-300 grid card h-25 hover:bg-sky-200 focus:bg-sky-300" onClick={func}>
-                                        <div className="avatar py-3 text-sm row flex gap-3 px-2">
-                                            <div className="lg:w-10 rounded-full">
-                                                <img src={person} />
-                                            </div>
-                                            <p className="text-lg">{convo.first_name} {convo.last_name}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-
-                        } else {
-                            return (
-                                <div>
-                                    <div className="grid card h-25 hover:bg-sky-200 focus:bg-sky-200" onClick={func}>
-                                        <div className="avatar py-3 text-sm row flex gap-3 px-2">
-                                            <div className="lg:w-10 rounded-full">
-                                                <img src={person} />
-                                            </div>
-                                            <p className="text-lg">{convo.first_name} {convo.last_name}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-
+                        let otherID = convo.first_id;
+                        if (otherID == CommunicationHandler.getClientIDImmediate()) {
+                            otherID = convo.second_id;
                         }
+                        // console.log(convo);
+
+                        return (
+                            <div>
+                                <div className="grid card h-25 hover:bg-sky-200 focus:bg-sky-200" onClick={func}>
+                                    <div className="avatar py-3 text-sm row flex gap-3 px-2">
+                                        <NonEditableProfilePicture accountsID={otherID} width={16}></NonEditableProfilePicture>
+                    {/* <div>
+                        <div className="avatar" >
+                            <div className="w-64 rounded-full">
+                                <img id="pfp" src={profilePicture} referrerpolicy="no-referrer"/>
+                            </div>
+                        </div>
+                    </div> */}
+                                        <p className="text-lg">{convo.first_name} {convo.last_name}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )
                     })
                 }
             </div>

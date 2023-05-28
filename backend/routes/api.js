@@ -454,7 +454,15 @@ router.post('/getProfilePicture', async (req, res) => {
     let accountsID = query.account_id;
 
     let result = await sqlAccess.readProfilePictureFromSQL(accountsID);
-    return res.send(result);
+    return res.send(result[0].profile_picture);
+})
+
+router.post('/getProfilePictureByID', async (req, res) => {
+    let query = req.body;
+    let accountsID = query.target_id;
+
+    let result = await sqlAccess.readProfilePictureFromSQL(accountsID);
+    return res.send(result[0].profile_picture);
 })
 
 router.post('/writeProfilePicture', async (req, res) => {

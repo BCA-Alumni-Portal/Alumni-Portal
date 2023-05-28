@@ -84,6 +84,10 @@ async function getCSRF() {
     return instance;
 }
 
+function getClientIDImmediate() {
+    return clientID;
+}
+
 async function makeRequest(url, params={}, func) {
     let id = await getClientID();
     if (id == undefined) {
@@ -227,6 +231,11 @@ async function getProfilePicture(dataFunction, id) {
     let result = makeRequest("getProfilePicture", data, dataFunction);
 }
 
+async function getProfilePictureByID(dataFunction, id) {
+    let data = { target_id: id }
+    let result = makeRequest("getProfilePictureByID", data, dataFunction);
+}
+
 async function writeProfilePicture(picture) {
     let data = {
         image: picture
@@ -264,6 +273,7 @@ async function archiveUser(targetID) {
 
 export default {
     getClientID,
+    getClientIDImmediate,
 
     getSocialsInfoByID,
     writeSocialsInfo,
@@ -284,6 +294,7 @@ export default {
     getPeopleList,
 
     getProfilePicture,
+    getProfilePictureByID,
     writeProfilePicture,
 
     syncMissingData,
