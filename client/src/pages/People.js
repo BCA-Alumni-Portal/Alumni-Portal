@@ -7,6 +7,7 @@ import AcademyFilterComponent from "../components/AcademyFilter"
 import YearFilterToast from "../components/YearFilterToast";
 import AcademyFilterToast from "../components/AcademyFilterToast";
 import PeopleGeneratorComponent from "../components/PeopleGenerator";
+import AcademyFilterCheckboxes from "../components/AcademyFilterCheckboxes";
 // import { Label } from 'flowbite-react/lib/cjs/components/Label';
 import Person from '../components/Person';
 import { useState, useEffect, useRef } from 'react';
@@ -74,7 +75,7 @@ function People() {
 
   let inputYear = "";
   // const academy_array = ['AAST', 'AMST', 'AVPA', 'ABF', 'ATCS', 'ACAHA', 'AEDT', 'APT', 'ABCT', 'ACA', 'AVAGC', 'GLE'];
-  const academy_array = ['AAST', 'AMST', 'AVPA', 'ABF', 'ATCS', 'ACAHA', 'AEDT'];
+  const academy_array = ['AAST', 'AMST', 'ABF', 'ATCS', 'ACAHA', 'AEDT', 'AVPA-M', 'AVPA-V', 'AVPA-T'];
 
 
   let YearFilterHandler = (newElement) => {
@@ -175,6 +176,10 @@ function People() {
     }
   }
 
+  const academyFilterFunctionGenerator = (academy) => {
+    console.log(academy + " was pressed")
+  }
+
   useInterval(() => {
     submitGetPeopleRequest();
   }, 100);
@@ -197,7 +202,8 @@ function People() {
             </div>
             <div className="form-control">
               <h1 className="text-lg font-bold text-left mt-2">Academies</h1>
-              <label className="label cursor-pointer">
+              <AcademyFilterCheckboxes academies={academy_array} entriesPerRow={5} filterFunctionGenerator={academyFilterFunctionGenerator}></AcademyFilterCheckboxes>
+              {/* <label className="label cursor-pointer">
                 <span className="text-sm">AAST</span>
                 <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
                 <span className="text-sm">AMST</span>
@@ -218,7 +224,7 @@ function People() {
                 <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
                 <span className="text-sm">AVPA-T</span>
                 <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
-              </label>
+              </label> */}
               <h1 className="text-lg font-bold text-left mt-2">Graduation Year</h1>
 
               <input type="range" min="0" max="100" value="40" className="range range-info" />
