@@ -26,7 +26,7 @@ export default function ProfilePicture(props) {
         // getBase64FromUrl('https://lh3.googleusercontent.com/i7cTyGnCwLIJhT1t2YpLW-zHt8ZKalgQiqfrYnZQl975-ygD_0mOXaYZMzekfKW_ydHRutDbNzeqpWoLkFR4Yx2Z2bgNj2XskKJrfw8')
         // getBase64FromUrl("https://lh3.googleusercontent.com/a/AAcHTteIr-862BsHONs6SRqM3TOCoLmoIDhR_N0heT5J=s1000")
         // setProfilePictureFile(auth.picture)
-        setProfilePictureFile(auth.picture)
+        setProfilePictureFile(auth.picture);
         // let data = {email_address: auth.email, profile_picture: auth.picture};
         // CommunicationHandler.writeProfileData(data);
     }, []);
@@ -108,11 +108,11 @@ export default function ProfilePicture(props) {
                 <div className="avatar" >
                     <div className="w-64 rounded-full">
                         <div id="wrapperpfp">
-                            <img id="pfp" src={profilePictureFile} referrerpolicy="no-referrer"/>
+                            <img id="pfp" src={profilePictureFile} referrerPolicy="no-referrer"/>
                             <p id="changepfp">+</p>
                         </div>
                     </div>
-                    <input type="file" accept="image/*" multiple="false" onChange={profilePictureUpload} ref={profilePictureUploader} style={{ display: "none" }} />
+                    <input type="file" accept="image/*" multiple={false} onChange={profilePictureUpload} ref={profilePictureUploader} style={{ display: "none" }} />
                 </div>
             </label>
 

@@ -276,6 +276,7 @@ router.post('/readSocialsRequest', async (req, res) => {
 
 router.post('/readSocialsRequestByID', async (req, res) => {
     let query = req.body;
+    console.log(query);
 
     let clientID = query.target_id;
     let result = await sqlAccess.readSocialsFromSQL(clientID);
@@ -469,8 +470,9 @@ router.post('/writeProfilePicture', async (req, res) => {
     let query = req.body;
     let accountsID = query.account_id;
     let image = query.image;
+    console.log(accountsID);
 
-    let result = await sqlAccess.writeProfilePictureFromSQL(accountsID, image);
+    let result = await sqlAccess.writeProfilePictureToSQL(accountsID, image);
     return res.send(result);
 })
 

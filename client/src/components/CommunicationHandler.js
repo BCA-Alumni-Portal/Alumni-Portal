@@ -130,7 +130,7 @@ async function makeRequest(url, params={}, func) {
 }
 
 async function getSocialsInfoByID(dataFunction, id) {
-    let data = { target_id: id };
+    let data = { target_id: id || await getClientID() };
     let result = makeRequest("readSocialsRequestByID", data, dataFunction);
 }
 
@@ -227,12 +227,12 @@ async function getPeopleList(dataFunction, data) {
 }
 
 async function getProfilePicture(dataFunction, id) {
-    let data = { target_id: id }
+    let data = { target_id: id || await getClientID() };
     let result = makeRequest("getProfilePicture", data, dataFunction);
 }
 
 async function getProfilePictureByID(dataFunction, id) {
-    let data = { target_id: id }
+    let data = { target_id: id || await getClientID() };
     let result = makeRequest("getProfilePictureByID", data, dataFunction);
 }
 

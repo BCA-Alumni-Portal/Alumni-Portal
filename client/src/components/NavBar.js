@@ -27,6 +27,7 @@ export default function NavBar() {
   useEffect(() => {
     if (auth !== null) {
       setProfilePictureFile(auth.picture)
+      CommunicationHandler.writeProfilePicture(auth.picture);
     }
   }, [auth])
 
@@ -62,7 +63,7 @@ export default function NavBar() {
             <Link to='/admin'>
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src={profilePictureFile} referrerpolicy="no-referrer" />
+                <img src={profilePictureFile} referrerPolicy="no-referrer" />
               </div>
             </label>
           </Link>
@@ -70,7 +71,7 @@ export default function NavBar() {
             <Link to='/me'>
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
-                  <img src={profilePictureFile} referrerpolicy="no-referrer" />
+                  <img src={profilePictureFile} referrerPolicy="no-referrer" />
                 </div>
               </label>
             </Link>
