@@ -86,49 +86,6 @@ function People() {
     setYearFilter(uniqueArray);
   };
 
-  let AcademyFilterHandler = (newArray) => {
-    // var current_array = [...academyFilter, newElement];
-    // let uniqueArray = current_array.filter(function (item, pos) {
-    //   return current_array.indexOf(item) == pos;
-    // })
-    // setAcademyFilter(uniqueArray);
-    // let chars = ['A', 'B', 'A', 'C', 'B'];
-    let mergedArray = [...academyFilter, ...newArray];
-
-    let uniqueArray = mergedArray.filter((e, index) => {
-      return mergedArray.indexOf(e) === index;
-    });
-
-    // console.log(uniqueArray);
-
-    setAcademyFilter(uniqueArray); //[...academyFilter, "\"" + newElement + "\""]);
-  };
-
-  // //check if year is valid 
-  // function Year_filter() {
-  //   inputYear = document.getElementById("year").value;
-  //   console.log(document.getElementById("year").value);
-  //   if (isNaN(inputYear) == false) {
-  //     inputYear = Number(inputYear);
-  //     YearFilterHandler(inputYear);
-  //   }
-  // };
-
-  //Pushing Academy Values, checking if checkbox checked
-  function Academy_filter() {
-    let checked_array = []
-    for (let i = 0; i < 7; i++) {
-      var current = academy_array[i]
-      console.log(current);
-      console.log(document.querySelector("#" + current));
-      var checkedValue = document.querySelector("#" + current).checked;
-      if (checkedValue == true) {
-        checked_array.push(academy_array[i]);
-      }
-    }
-    AcademyFilterHandler(checked_array);
-  };
-
   const getPackedData = () => {
     return {
       name_filter: inputText,
@@ -178,7 +135,6 @@ function People() {
 
   const academyFilterFunctionGenerator = (academy) => {
     return () => {
-      console.log(academy + " was pressed")
       if (academyFilter.indexOf(academy) == -1) {
         academyFilter.push(academy);
       } else {
