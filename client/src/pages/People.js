@@ -70,8 +70,8 @@ function People() {
   };
 
   //for filters
-  const [YearFilter, setYearFilter] = React.useState([]);
-  const [AcademyFilter, setAcademyFilter] = React.useState([]);
+  const [yearFilter, setYearFilter] = React.useState([]);
+  const [academyFilter, setAcademyFilter] = React.useState([]);
 
   let inputYear = "";
   // const academy_array = ['AAST', 'AMST', 'AVPA', 'ABF', 'ATCS', 'ACAHA', 'AEDT', 'APT', 'ABCT', 'ACA', 'AVAGC', 'GLE'];
@@ -79,7 +79,7 @@ function People() {
 
 
   let YearFilterHandler = (newElement) => {
-    var current_array = [...YearFilter, newElement];
+    var current_array = [...yearFilter, newElement];
     let uniqueArray = current_array.filter(function (item, pos) {
       return current_array.indexOf(item) == pos;
     })
@@ -87,13 +87,13 @@ function People() {
   };
 
   let AcademyFilterHandler = (newArray) => {
-    // var current_array = [...AcademyFilter, newElement];
+    // var current_array = [...academyFilter, newElement];
     // let uniqueArray = current_array.filter(function (item, pos) {
     //   return current_array.indexOf(item) == pos;
     // })
     // setAcademyFilter(uniqueArray);
     // let chars = ['A', 'B', 'A', 'C', 'B'];
-    let mergedArray = [...AcademyFilter, ...newArray];
+    let mergedArray = [...academyFilter, ...newArray];
 
     let uniqueArray = mergedArray.filter((e, index) => {
       return mergedArray.indexOf(e) === index;
@@ -101,7 +101,7 @@ function People() {
 
     // console.log(uniqueArray);
 
-    setAcademyFilter(uniqueArray); //[...AcademyFilter, "\"" + newElement + "\""]);
+    setAcademyFilter(uniqueArray); //[...academyFilter, "\"" + newElement + "\""]);
   };
 
   // //check if year is valid 
@@ -132,8 +132,8 @@ function People() {
   const getPackedData = () => {
     return {
       name_filter: inputText,
-      academy_filter: AcademyFilter,
-      year_filter: YearFilter
+      academy_filter: academyFilter,
+      year_filter: yearFilter
     };
   }
 
@@ -177,7 +177,18 @@ function People() {
   }
 
   const academyFilterFunctionGenerator = (academy) => {
-    console.log(academy + " was pressed")
+    return () => {
+      console.log(academy + " was pressed")
+      if (academyFilter.indexOf(academy) == -1) {
+        academyFilter.push(academy);
+      } else {
+        academyFilter.pop(academy);
+      }
+    }
+  }
+
+  const initializeAcademyFilters = () => {
+    setAcademyFilter(academy_array);
   }
 
   useInterval(() => {
@@ -186,6 +197,7 @@ function People() {
 
   useEffect(() => {
     submitGetPeopleRequest();
+    initializeAcademyFilters();
   }, [])
 
   if (auth) {
@@ -233,8 +245,8 @@ function People() {
             {/* <YearFilterComponent input={YearFilterHandler}></YearFilterComponent>
             <AcademyFilterComponent Academies={academy_array} RegisterFilters={Academy_filter}></AcademyFilterComponent>
             
-            <YearFilterToast input={YearFilter}></YearFilterToast>
-            <AcademyFilterToast input={AcademyFilter}></AcademyFilterToast> */}
+            <YearFilterToast input={yearFilter}></YearFilterToast>
+            <AcademyFilterToast input={academyFilter}></AcademyFilterToast> */}
             <div className="divider"></div>
             <PeopleGeneratorComponent createArchiveUserFunctionGenerator={createArchiveUserFunctionGenerator} people={people} switchFunctionGenerator={switchFunctionGenerator} createConversationFunctionGenerator={createConversationFunctionGenerator} />
           </div>
