@@ -19,6 +19,7 @@ function AcademyFilter(props) {
             }
             newList.push(academies[academyIndex]);
         }
+        academyLists.push(newList);
     }
 
     return (
@@ -29,7 +30,7 @@ function AcademyFilter(props) {
                         return (
                             <div>
                                 <span className="text-sm">{academy}</span>
-                                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onclick={
+                                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={
                                     () => filterFunction(academy)
                                 } />
                             </div>
