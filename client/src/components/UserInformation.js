@@ -54,7 +54,6 @@ function UserInformation(props) {
 
   const packSendData = () => {
     return {
-      email_address: auth.email,
       company: company,
       graduationYear: graduationYear,
       pronouns: pronouns,
