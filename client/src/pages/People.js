@@ -32,7 +32,18 @@ function useInterval(callback, delay) {
 function People() {
   const [auth, setAuth] = useState(null);
   const [loggedInID, setLoggedInID] = useState(null);
+  const [years, setYears] = useState([]);
+  const [currentYear, setCurrentYear] = useState(2023);
+  const [lowerBound, setLowerBound] = useState(1992);
+  const [upperBound, setUpperBound] = useState(currentYear);
+
   useEffect(() => {
+    let _years = []
+    for (let year = 1992; year <= currentYear; year++) {
+      _years.push(year);
+    }
+    setYears(_years)
+
     axios.get('/auth/current-session').then(({ data }) => {
       setAuth(data);
     })
@@ -150,6 +161,15 @@ function People() {
     initializeAcademyFilters();
   }, [])
 
+
+  const changeLowerBound = (e) => {
+    setLowerBound(e.target.value);
+  }
+
+  const changeUpperBound = (e) => {
+    setUpperBound(e.target.value);
+  }
+
   if (auth) {
     return (
       <div className="w-full grid grid-cols-2 divide-x h-auto overflow-x-hidden">
@@ -188,11 +208,23 @@ function People() {
                 <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
               </label> */}
               <h1 className="text-lg font-bold text-left mt-2">Graduation Year</h1>
+              <div className='flex'>
+                <select className="select select-info select-md focus:border-sky-400 focus:ring-0 w-full max w-full max-w-xs" value={lowerBound} onChange={(e) => changeLowerBound(e)}>
+                  <option disabled selected>Select lower bound</option>
+                  {years.map(element => <option key={element}>{element}</option>)}
+                </select>
+                <div className="divider divider-horizontal">TO</div>
+                <select className="select select-info select-md focus:border-sky-400 focus:ring-0 w-full max w-full max-w-xs " value={upperBound} onChange={(e) => changeUpperBound(e)}>
+                  <option disabled selected>Select upper bound</option>
+                  {years.map(element => <option key={element}>{element}</option>)}
+                </select>
+              </div>
 
-              <input type="range" min="0" max="100" className="range range-info" />
+
+              {/* <input type="range" min="0" max="100" className="range range-info" /> */}
 
             </div>
-            
+
             <div className="divider"></div>
             <PeopleGeneratorComponent createArchiveUserFunctionGenerator={createArchiveUserFunctionGenerator} people={people} switchFunctionGenerator={switchFunctionGenerator} createConversationFunctionGenerator={createConversationFunctionGenerator} />
           </div>
