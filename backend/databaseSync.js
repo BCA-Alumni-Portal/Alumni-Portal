@@ -41,6 +41,14 @@ async function sync(sheetID) {
 
     // }
 
+    // Force it to write from sheets to SQL
+    // let values = await sheetsAccess.readDataFromSheets(sheetID, 0, lastSheetsID);
+    // let result = await sqlAccess.writeDataToSQL(writeAccountsColumns, values);
+    // console.log(result);
+    // if (true) {
+    //     return;
+    // }
+
     if (lastSqlID == lastSheetsID) {
         // All good! (for now)
         // console.log("No need for a sync - all good!");

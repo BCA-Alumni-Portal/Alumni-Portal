@@ -147,7 +147,6 @@ function People() {
   }
 
   useInterval(() => {
-    console.log(yearFilter);
     submitGetPeopleRequest();
   }, 100);
 

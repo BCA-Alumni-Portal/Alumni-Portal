@@ -195,10 +195,28 @@ router.post('/updateProfileDataRequest', async (req, res) => {
     let profile_picture = query.profile_picture;
 
     let result = await sqlAccess.updateProfileInfoToSQL(clientID, company, graduationYear, pronouns, academy, first_name, last_name, profile_picture);
-
+    databaseSync.exportSqlToSheets(sourceSheetsID);
     return res.send("Finished sending");
 })
 
+router.post('/updateProfileDataRequestAdmin', async (req, res) => {
+    let query = req.body;
+
+    // Make sure the person sending the request is an admin...
+
+    let clientID = query.target_id;
+    let company = query.company;
+    let graduationYear = query.graduationYear;
+    let pronouns = query.pronouns;
+    let academy = query.academy;
+    let first_name = query.first_name;
+    let last_name = query.last_name;
+    let profile_picture = query.profile_picture;
+
+    let result = await sqlAccess.updateProfileInfoToSQL(clientID, company, graduationYear, pronouns, academy, first_name, last_name, profile_picture);
+    databaseSync.exportSqlToSheets(sourceSheetsID);
+    return res.send("Finished sending");
+})
 
 router.post('/updateVisibilityRequest', async(req, res) => {
     let query = req.body;

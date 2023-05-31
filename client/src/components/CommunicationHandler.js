@@ -153,6 +153,10 @@ async function writeProfileData(data) {
     let result = makeRequest("updateProfileDataRequest", data);
 }
 
+async function writeProfileDataAdmin(data) {
+    let result = makeRequest("updateProfileDataRequestAdmin", data);
+}
+
 async function writeVisibility(data){
     let result = makeRequest('updateVisibilityRequest', data);
 }
@@ -244,7 +248,7 @@ async function writeProfilePicture(picture) {
 }
 
 async function syncMissingData() {
-    let result = makeRequest("syncData");
+    let result = makeRequest("syncMissingData");
 }
 
 async function exportData() {
@@ -283,6 +287,7 @@ export default {
 
     getProfileDataByID,
     writeProfileData,
+    writeProfileDataAdmin,
 
     getMessages,
     writeMessage,
