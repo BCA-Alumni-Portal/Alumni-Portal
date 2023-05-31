@@ -81,15 +81,6 @@ function People() {
   // const academy_array = ['AAST', 'AMST', 'AVPA', 'ABF', 'ATCS', 'ACAHA', 'AEDT', 'APT', 'ABCT', 'ACA', 'AVAGC', 'GLE'];
   const academy_array = ['AAST', 'AMST', 'ABF', 'ATCS', 'ACAHA', 'AEDT', 'AVPA-M', 'AVPA-V', 'AVPA-T'];
 
-
-  let YearFilterHandler = (newElement) => {
-    var current_array = [...yearFilter, newElement];
-    let uniqueArray = current_array.filter(function (item, pos) {
-      return current_array.indexOf(item) == pos;
-    })
-    setYearFilter(uniqueArray);
-  };
-
   const getPackedData = () => {
     return {
       name_filter: inputText,
@@ -144,7 +135,6 @@ function People() {
       } else {
         academyFilter.splice(academyFilter.indexOf(academy), 1);
       }
-      // console.log(academyFilter);
     }
   }
 
@@ -152,15 +142,24 @@ function People() {
     setAcademyFilter(academy_array);
   }
 
+  const updateYearFilters = () => {
+    setYearFilter([lowerBound, upperBound]);
+  }
+
   useInterval(() => {
+    console.log(yearFilter);
     submitGetPeopleRequest();
   }, 100);
 
   useEffect(() => {
     submitGetPeopleRequest();
     initializeAcademyFilters();
-  }, [])
+    updateYearFilters();
+  }, []);
 
+  useEffect(() => {
+    updateYearFilters();
+  }, [lowerBound, upperBound]);
 
   const changeLowerBound = (e) => {
     setLowerBound(e.target.value);
@@ -185,38 +184,31 @@ function People() {
             <div className="form-control">
               <h1 className="text-lg font-bold text-left mt-2">Academies</h1>
               <AcademyFilterCheckboxes academies={academy_array} entriesPerRow={5} filterFunctionGenerator={academyFilterFunctionGenerator}></AcademyFilterCheckboxes>
-              {/* <label className="label cursor-pointer">
-                <span className="text-sm">AAST</span>
-                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
-                <span className="text-sm">AMST</span>
-                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
-                <span className="text-sm">AEDT</span>
-                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
-                <span className="text-sm">ABF</span>
-                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
-                <span className="text-sm">ATCS</span>
-                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
-              </label>
-              <label className="label cursor-pointer">
-                <span className="text-sm">ACAHA</span>
-                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
-                <span className="text-sm">AVPA-M</span>
-                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
-                <span className="text-sm">AVPA-V</span>
-                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
-                <span className="text-sm">AVPA-T</span>
-                <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={() => null} />
-              </label> */}
+
               <h1 className="text-lg font-bold text-left mt-2">Graduation Year</h1>
               <div className='flex'>
-                <select className="select select-info select-md focus:border-sky-400 focus:ring-0 w-full max w-full max-w-xs" value={lowerBound} onChange={(e) => changeLowerBound(e)}>
+                <select className="select select-info select-md focus:border-sky-400 focus:ring-0 w-full max w-full max-w-xs" value={lowerBound} onChange={
+                  (e) => {
+                    changeLowerBound(e);
+                  }}>
                   <option disabled selected>Select lower bound</option>
-                  {years.map(element => <option key={element}>{element}</option>)}
+                  {
+                    years.map(
+                      element => <option key={element}>{element}</option>
+                    )
+                  }
                 </select>
                 <div className="divider divider-horizontal">TO</div>
-                <select className="select select-info select-md focus:border-sky-400 focus:ring-0 w-full max w-full max-w-xs " value={upperBound} onChange={(e) => changeUpperBound(e)}>
+                <select className="select select-info select-md focus:border-sky-400 focus:ring-0 w-full max w-full max-w-xs " value={upperBound} onChange={
+                  (e) => {
+                    changeUpperBound(e);
+                  }}>
                   <option disabled selected>Select upper bound</option>
-                  {years.map(element => <option key={element}>{element}</option>)}
+                  {
+                    years.map(
+                      element => <option key={element}>{element}</option>
+                    )
+                  }
                 </select>
               </div>
 

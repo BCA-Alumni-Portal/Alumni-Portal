@@ -463,8 +463,9 @@ async function readAccountsDataWithFilter(accountsID, nameFilter, yearFilters, a
         if (nameFilter.length > 0) {
             query += " AND ";
         }
-        let yearOr = constructSQLOrSequence(TABLE_ACCOUNTS + ".graduation_year", yearFilters);
-        query += yearOr;
+        query += `(graduation_year >= ${yearFilters[0]} AND graduation_year <= ${yearFilters[1]}) `;
+        // let yearOr = constructSQLOrSequence(TABLE_ACCOUNTS + ".graduation_year", yearFilters);
+        // query += yearOr;
     }
     if (academyFilters.length > 0) {
         if ((yearFilters.length > 0) || (nameFilter.length > 0)) {
