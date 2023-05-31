@@ -218,6 +218,15 @@ router.post('/updateProfileDataRequestAdmin', async (req, res) => {
     return res.send("Finished sending");
 })
 
+router.post('/readVisibilityRequest', async(req, res) => {
+    let query = req.body;
+
+    let clientID = query.target_id;
+    let result = await sqlAccess.readVisibilityFromSQL(clientID);
+
+    return res.send(result[0]);
+})
+
 router.post('/updateVisibilityRequest', async(req, res) => {
     let query = req.body;
 
