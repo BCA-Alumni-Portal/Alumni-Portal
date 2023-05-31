@@ -229,6 +229,17 @@ router.post('/updateVisibilityRequest', async(req, res) => {
     return res.send('Finished sending');
 })
 
+router.post('/updateVisibilityRequestAdmin', async(req, res) => {
+    let query = req.body;
+
+    let clientID = query.target_id;
+    let visibility = query.is_visible;
+
+    let result = await sqlAccess.updateVisibilityToSQL(clientID, visibility);
+
+    return res.send('Finished sending');
+})
+
 router.post('/updateAdminRequest', async(req, res) => {
     let query = req.body;
 
@@ -239,8 +250,6 @@ router.post('/updateAdminRequest', async(req, res) => {
 
     return res.send('Finished sending');
 })
-
-
 
 router.post('/readProfileDataRequest', async (req, res) => {
     let query = req.body;
@@ -311,19 +320,30 @@ router.post('/updateSocialsRequest', async (req, res) => {
     let socials = [
         query.linkedin
     ];
-    console.log("clientID:");
-    console.log(clientID);
-    console.log("socials:");
-    console.log(socials);
 
     let result = await sqlAccess.readSocialsFromSQL(clientID);
-    console.log("result:");
-    console.log(result);
+    
     if (result[0] == undefined) {
-        console.log("writing");
         let result = await sqlAccess.writeSocialsToSQL(clientID, socials);
     } else {
-        console.log("updating");
+        let result = await sqlAccess.updateSocialsToSQL(clientID, socials);
+    }
+    return res.send("Finished updating");
+})
+
+router.post('/updateSocialsRequestAdmin', async (req, res) => {
+    let query = req.body;
+
+    let clientID = query.target_id;
+    let socials = [
+        query.linkedin
+    ];
+
+    let result = await sqlAccess.readSocialsFromSQL(clientID);
+    
+    if (result[0] == undefined) {
+        let result = await sqlAccess.writeSocialsToSQL(clientID, socials);
+    } else {
         let result = await sqlAccess.updateSocialsToSQL(clientID, socials);
     }
     return res.send("Finished updating");
@@ -375,19 +395,11 @@ const checkJwt = auth({
 
 // router.post('/updateDescriptionRequest', checkJwt, async (req, res) => {
 router.post('/updateDescriptionRequest', async (req, res) => {
-    // console.log("updateDescriptionRequest");
-
     let query = req.body;
 
-    // let email = query.email_address;
-    // let clientID = await sqlAccess.readClientID(email);
     let clientID = query.account_id;
     let accessToken = query.access_token;
 
-    // var webAuth = new auth0.WebAuth({
-    //     domain:       'dev-f59msytf.us.auth0.com',
-    //     clientID:     '26xeGjN92uf2j0WDsB4GSV3S01Q39Keh'
-    // });
     var options = {
         method: 'GET',
         url: "https://dev-f59msytf.us.auth0.com/userinfo",
@@ -395,34 +407,40 @@ router.post('/updateDescriptionRequest', async (req, res) => {
         clientID: process.env.AUTH0_CLIENT_ID
     };
 
-    // let check = axios.get("https://dev-f59msytf.us.auth0.com/userinfo", options).then(res => {
-    //     let data = res.data;
-    //     console.log(url);
-    //     console.log(data);
-    //     // console.log(func);
-    //     // if ((func != null) && (data != null)) {
-    //     //     func(data);
-    //     // }
-    //     return data;
-    // }).catch(err => {
-    //     console.log("Error has occurred when trying to get user data:");
-    //     console.log(err);
-    // });
-    
-    // let data = await check;
-    // console.log("done");
+    let description = [
+        query.description
+    ];
+
+    let result = await sqlAccess.readDescriptionFromSQL(clientID);
+    if (result == undefined) {
+        let result = await sqlAccess.writeDescriptionToSQL(clientID, description);
+    } else {
+        let result = await sqlAccess.updateDescriptionToSQL(clientID, description);
+    }
+    return res.send("Finished updating");
+})
+
+router.post('/updateDescriptionRequestAdmin', async (req, res) => {
+    let query = req.body;
+
+    let clientID = query.target_id;
+    let accessToken = query.access_token;
+
+    var options = {
+        method: 'GET',
+        url: "https://dev-f59msytf.us.auth0.com/userinfo",
+        headers: {'content-type': 'application/json', authorization: 'Bearer ' + accessToken},
+        clientID: process.env.AUTH0_CLIENT_ID
+    };
 
     let description = [
         query.description
     ];
 
     let result = await sqlAccess.readDescriptionFromSQL(clientID);
-    // console.log("result: " + result);
     if (result == undefined) {
-        // console.log("writing");
         let result = await sqlAccess.writeDescriptionToSQL(clientID, description);
     } else {
-        // console.log("updating");
         let result = await sqlAccess.updateDescriptionToSQL(clientID, description);
     }
     return res.send("Finished updating");

@@ -45,15 +45,15 @@ async function getCSRF() {
         return axiosInstance;
     }
 
-	let cookieJar = new tough.CookieJar();
+    let cookieJar = new tough.CookieJar();
 
-	let instance = await axios.create({
-		jar:cookieJar,
-		withCredentials: true
-		// httpsAgent: new https.Agent({ rejectUnauthorized: false, requestCert: true, keepAlive: true})
-	});
-	// let res = await instance.get(LINK_HEADER + "getCSRF");
-	// // console.log(res.locals.csrf);
+    let instance = await axios.create({
+        jar: cookieJar,
+        withCredentials: true
+        // httpsAgent: new https.Agent({ rejectUnauthorized: false, requestCert: true, keepAlive: true})
+    });
+    // let res = await instance.get(LINK_HEADER + "getCSRF");
+    // // console.log(res.locals.csrf);
     // console.log(res);
     // let token = res.data.csrf_token;
 
@@ -76,10 +76,10 @@ async function getCSRF() {
     //     // 'xsrfCookieName' : token
     // };
 
-	// instance.defaults.headers['x-csrf-token'] = token;
+    // instance.defaults.headers['x-csrf-token'] = token;
     // console.log(axios.defaults.headers);
 
-	// res = await instance.post('https://172.16.220.133/login',{username:name,password:pass});
+    // res = await instance.post('https://172.16.220.133/login',{username:name,password:pass});
     axiosInstance = instance;
     return instance;
 }
@@ -88,7 +88,7 @@ function getClientIDImmediate() {
     return clientID;
 }
 
-async function makeRequest(url, params={}, func) {
+async function makeRequest(url, params = {}, func) {
     let id = await getClientID();
     if (id == undefined) {
         console.log("Undefined client ID, will not send request");
@@ -106,10 +106,10 @@ async function makeRequest(url, params={}, func) {
     var options = {
         method: 'POST',
         url: LINK_HEADER + url,
-        headers: {'content-type': 'application/json', authorization: 'Bearer ' + accessToken}
+        headers: { 'content-type': 'application/json', authorization: 'Bearer ' + accessToken }
     };
     params.access_token = accessToken;
-    
+
     // axios.request(options).then(function (response) {
     //     console.log(response.data);
     // }).catch(function (error) {
@@ -144,6 +144,11 @@ async function writeDescription(description) {
     let result = makeRequest("updateDescriptionRequest", data);
 }
 
+async function writeDescriptionAdmin(description, id) {
+    let data = { description: description, target_id: id };
+    let result = makeRequest("updateDescriptionRequestAdmin", data);
+}
+
 async function getProfileDataByID(dataFunction, id) {
     let data = { target_id: id || await getClientID() };
     let result = makeRequest("readProfileDataRequestByID", data, dataFunction);
@@ -153,20 +158,31 @@ async function writeProfileData(data) {
     let result = makeRequest("updateProfileDataRequest", data);
 }
 
-async function writeProfileDataAdmin(data) {
+async function writeProfileDataAdmin(data, id) {
+    data.target_id = id;
     let result = makeRequest("updateProfileDataRequestAdmin", data);
 }
 
-async function writeVisibility(data){
+async function writeVisibility(data) {
     let result = makeRequest('updateVisibilityRequest', data);
 }
 
-async function writeAdmin(data){
+async function writeVisibilityAdmin(data, id) {
+    data.target_id = id;
+    let result = makeRequest('updateVisibilityRequestAdmin', data);
+}
+
+async function writeAdmin(data) {
     let result = makeRequest('updateAdminRequest', data);
 }
 
 async function writeSocialsInfo(data) {
     let result = makeRequest("updateSocialsRequest", data);
+}
+
+async function writeSocialsInfoAdmin(data, id) {
+    data.target_id = id;
+    let result = makeRequest("updateSocialsRequestAdmin", data);
 }
 
 async function getMessages(dataFunction, conversationID) {
@@ -281,9 +297,11 @@ export default {
 
     getSocialsInfoByID,
     writeSocialsInfo,
+    writeSocialsInfoAdmin,
 
     getDescriptionByID,
     writeDescription,
+    writeDescriptionAdmin,
 
     getProfileDataByID,
     writeProfileData,
@@ -307,8 +325,9 @@ export default {
 
     isAdmin,
     getIsAdminStatus,
-    
+
     writeVisibility,
+    writeVisibilityAdmin,
     writeAdmin,
 
     archiveUser
