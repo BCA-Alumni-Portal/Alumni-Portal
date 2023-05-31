@@ -32,12 +32,12 @@ function MessageGenerator(props) {
     }
     else {
         return (
-            <div class="list-group">
+            <div className="list-group">
                 {messages.map((item) => {
                     // console.log(item);
                     if (item.sender_id != clientID) {
                         return (
-                            <div className="chat chat-start">
+                            <div className="chat chat-start" key={item.sent_datetime}>
                                 <div className="chat-image avatar">
                                     <div className="w-10 rounded-full">
                                         <NonEditableProfilePicture accountsID={item.sender_id} width={10}></NonEditableProfilePicture>
@@ -52,7 +52,7 @@ function MessageGenerator(props) {
                         );
                     } else {
                         return (
-                            <div className="chat chat-end">
+                            <div className="chat chat-end" key={item.sent_datetime}>
                                 <div className="chat-image avatar">
                                     <div className="w-10 rounded-full">
                                         <img src={props.profilePictureFile} />

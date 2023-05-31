@@ -9,7 +9,7 @@ function PeopleGenerator(props) {
     const academy_id_map = [null, "AAST", "AMST", "AEDT", "ABF", "ATCS", "ACAHA", "AVPA-M", "AVPA-V", "AVPA-T"]
     // console.log(people);
     return (
-        <div class="list-group h-[55vh] overflow-y-scroll divide-y">
+        <div className="list-group h-[55vh] overflow-y-scroll divide-y">
             {
                 people.map((person) => {
                     let switchFunc = props.switchFunctionGenerator(person.account_id);
@@ -17,7 +17,7 @@ function PeopleGenerator(props) {
                     // let archiveUser = props.createArchiveUserFunctionGenerator(person.account_id);
                     //  ({academy_id_map[person.academy_id]}, {person.graduation_year})
                     return (
-                        <div className="cursor-pointer">
+                        <div className="cursor-pointer" key={person.account_id} >
                             <div className="group/item hover:bg-slate-100 grid card h-25 hover:bg-sky-200 focus:bg-sky-300 box py-2" onClick={switchFunc}>
                                 <div className="text-sm row flex gap-3 px-2">
 

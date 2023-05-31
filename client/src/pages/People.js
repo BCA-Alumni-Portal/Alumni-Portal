@@ -1,11 +1,4 @@
 import * as React from 'react';
-import ReactDOM from 'react-dom/client'
-// import { TextInput } from 'flowbite-react/lib/cjs/components/TextInput';
-import List from "../components/SearchBar";
-import YearFilterComponent from "../components/YearFilter"
-import AcademyFilterComponent from "../components/AcademyFilter"
-import YearFilterToast from "../components/YearFilterToast";
-import AcademyFilterToast from "../components/AcademyFilterToast";
 import PeopleGeneratorComponent from "../components/PeopleGenerator";
 import AcademyFilterCheckboxes from "../components/AcademyFilterCheckboxes";
 // import { Label } from 'flowbite-react/lib/cjs/components/Label';
@@ -196,14 +189,10 @@ function People() {
               </label> */}
               <h1 className="text-lg font-bold text-left mt-2">Graduation Year</h1>
 
-              <input type="range" min="0" max="100" value="40" className="range range-info" />
+              <input type="range" min="0" max="100" className="range range-info" />
 
             </div>
-            {/* <YearFilterComponent input={YearFilterHandler}></YearFilterComponent>
-            <AcademyFilterComponent Academies={academy_array} RegisterFilters={Academy_filter}></AcademyFilterComponent>
             
-            <YearFilterToast input={yearFilter}></YearFilterToast>
-            <AcademyFilterToast input={academyFilter}></AcademyFilterToast> */}
             <div className="divider"></div>
             <PeopleGeneratorComponent createArchiveUserFunctionGenerator={createArchiveUserFunctionGenerator} people={people} switchFunctionGenerator={switchFunctionGenerator} createConversationFunctionGenerator={createConversationFunctionGenerator} />
           </div>
