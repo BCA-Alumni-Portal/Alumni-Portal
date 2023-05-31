@@ -9,7 +9,7 @@ function PeopleGenerator(props) {
     const academy_id_map = [null, "AAST", "AMST", "AEDT", "ABF", "ATCS", "ACAHA", "AVPA-M", "AVPA-V", "AVPA-T"]
     // console.log(people);
     return (
-        <div className="list-group h-[55vh] overflow-y-scroll divide-y">
+        <div className="list-group h-[52.5vh] overflow-y-scroll divide-y">
             {
                 people.map((person) => {
                     let switchFunc = props.switchFunctionGenerator(person.account_id);
