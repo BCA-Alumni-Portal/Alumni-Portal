@@ -27,7 +27,6 @@ export default function NavBar() {
   useEffect(() => {
     if (auth !== null) {
       setProfilePictureFile(auth.picture)
-      CommunicationHandler.writeProfilePicture(auth.picture);
     }
   }, [auth])
 

@@ -33,16 +33,27 @@ router.get('/callback', (req, res, next) => {
         if (!user) {
             return res.redirect('/login');
         }
+        
         console.log("CALLBACK SUCCESSFUL!");
         console.log(user);
+
+        let email = user._json.email;
+        let picture = user.picture;
+
         const userReturnObject = {
-            email: user._json.email,
-            picture: user.picture
+            email: email,
+            picture: picture
         };
         let isAlum = await sqlAccess.verifyAlumEmail(userReturnObject.email);
         if (!isAlum) {
             return res.redirect('/invalid');
         }
+
+        // Write the user's profile picture to the SQL database
+        sqlAccess.readClientID(email).then((id) => {
+            sqlAccess.writeProfilePictureToSQL(id, picture);
+        })
+
         req.session.jwt = jwt.sign(userReturnObject, process.env.JWT_SECRET_KEY);
         return res.redirect('/');
     })(req, res, next);
