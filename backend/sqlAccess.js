@@ -423,6 +423,12 @@ async function updateVisibilityToSQL(accountsID, is_visible) {
     return queryResult;
 }
 
+async function readVisibilityFromSQL(accountsID) {
+    let query = "SELECT is_visible FROM " + TABLE_ACCOUNTS + " WHERE account_id=" + mysql.escape(accountsID);
+    let queryResult = await sqlModule.makeQuery({ query: query });
+    return queryResult;
+}
+
 async function updateAdminToSQL(accountsID, is_admin) {
     let columns = ["is_admin"]
     let values = [
@@ -595,6 +601,7 @@ module.exports = {
 
     readIsAdminFromSQL,
 
+    readVisibilityFromSQL,
     updateVisibilityToSQL,
     updateAdminToSQL,
 

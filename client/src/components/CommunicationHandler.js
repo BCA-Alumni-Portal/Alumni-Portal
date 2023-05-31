@@ -172,6 +172,12 @@ async function writeVisibilityAdmin(data, id) {
     let result = makeRequest('updateVisibilityRequestAdmin', data);
 }
 
+async function getVisibility(data, id) {
+    data.target_id = id;
+    let result = makeRequest('readVisibilityRequest', data);
+    return result;
+}
+
 async function writeAdmin(data) {
     let result = makeRequest('updateAdminRequest', data);
 }
@@ -327,6 +333,8 @@ export default {
     getIsAdminStatus,
 
     writeVisibility,
+    getVisibility,
+
     writeVisibilityAdmin,
     writeAdmin,
 
