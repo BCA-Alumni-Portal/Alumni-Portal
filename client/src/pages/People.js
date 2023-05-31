@@ -138,8 +138,9 @@ function People() {
       if (academyFilter.indexOf(academy) == -1) {
         academyFilter.push(academy);
       } else {
-        academyFilter.pop(academy);
+        academyFilter.splice(academyFilter.indexOf(academy), 1);
       }
+      // console.log(academyFilter);
     }
   }
 
