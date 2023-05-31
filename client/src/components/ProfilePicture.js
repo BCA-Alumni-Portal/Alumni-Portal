@@ -107,16 +107,16 @@ export default function ProfilePicture(props) {
             <label htmlFor='pfp-upload-modal'>
                 <div className="avatar" >
                     <div className="w-64 rounded-full">
-                        <div id="wrapperpfp">
+                        <div id="">
                             <img id="pfp" src={profilePictureFile} referrerPolicy="no-referrer"/>
-                            <p id="changepfp">+</p>
+                            {/* <p id="changepfp">+</p> */}
                         </div>
                     </div>
-                    <input type="file" accept="image/*" multiple={false} onChange={profilePictureUpload} ref={profilePictureUploader} style={{ display: "none" }} />
+                    {/* <input type="file" accept="image/*" multiple={false} onChange={profilePictureUpload} ref={profilePictureUploader} style={{ display: "none" }} /> */}
                 </div>
             </label>
 
-            <input type="checkbox" id="pfp-upload-modal" className="modal-toggle" />
+            {/* <input type="checkbox" id="pfp-upload-modal" className="modal-toggle" />
             <div className="modal">
                 <div className="modal-box relative">
                     {!profilePictureUploaded ? (
@@ -164,7 +164,7 @@ export default function ProfilePicture(props) {
                     )}
 
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }

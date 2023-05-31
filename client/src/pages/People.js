@@ -31,6 +31,7 @@ function useInterval(callback, delay) {
 
 function People() {
   const [auth, setAuth] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loggedInID, setLoggedInID] = useState(null);
   const [years, setYears] = useState([]);
   const [currentYear, setCurrentYear] = useState(2023);
@@ -47,6 +48,12 @@ function People() {
     axios.get('/auth/current-session').then(({ data }) => {
       setAuth(data);
     })
+
+    CommunicationHandler.isAdmin().then((result) => {
+      if (result != null) {
+        setIsAdmin(result);
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -221,7 +228,7 @@ function People() {
           </div>
         </div>
         <div>
-          <Person accountsID={currentAccountsID} createConversationFunctionGenerator={createConversationFunctionGenerator} loggedInID={loggedInID} />
+          <Person accountsID={currentAccountsID} createConversationFunctionGenerator={createConversationFunctionGenerator} loggedInID={loggedInID} isAdmin={isAdmin}/>
         </div>
       </div>
 

@@ -29,7 +29,7 @@ function AcademyFilter(props) {
                     {academyList.map((academy) => {
                         return (
                             <div key={academy} >
-                                <span className="text-sm">{academy}</span>
+                                <span className="text-sm mr-2">{academy}</span>
                                 <input type="checkbox" defaultChecked={true} className="checkbox checkbox-info checkbox-sm" onClick={
                                     filterFunction(academy)
                                 } />
