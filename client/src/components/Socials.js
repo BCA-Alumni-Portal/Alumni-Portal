@@ -73,7 +73,7 @@ export default function Socials(props) {
                             className="drop-shadow-lg text-lg font-bold mt-4 text-stone-600 hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500 bg-amber-100 border border-amber-100 hover:border-amber-400 rounded py-2 px-4 "
                             onClick={() => saveChanges()}
                         >
-                            Add LinkedIn
+                            Save LinkedIn
                         </button>
                     </div>
                 </div>

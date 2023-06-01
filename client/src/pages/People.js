@@ -228,7 +228,7 @@ function People() {
           </div>
         </div>
         <div>
-          <Person accountsID={currentAccountsID} createConversationFunctionGenerator={createConversationFunctionGenerator} loggedInID={loggedInID} isAdmin={isAdmin}/>
+          <Person accountsID={currentAccountsID} createConversationFunctionGenerator={createConversationFunctionGenerator} loggedInID={loggedInID} isAdmin={isAdmin} years={years}/>
         </div>
       </div>
 
