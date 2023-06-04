@@ -18,6 +18,7 @@ export default function NavBar() {
       setAuth(data);
     })
     CommunicationHandler.isAdmin().then((result) => {
+      console.log(result);
       if (result != null) {
         setIsAdmin(result);
       }

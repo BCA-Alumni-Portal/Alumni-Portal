@@ -7,7 +7,7 @@ const tough = require('tough-cookie');
 
 const LINK_HEADER = "/api/";
 
-let clientID = -1;
+let clientID = -10000;
 let accessToken;
 let axiosInstance;
 let adminStatus;
@@ -16,26 +16,27 @@ async function getClientID() {
     if (clientID != -1) {
         return clientID;
     }
-    // console.log("called requestClientID");
-    let email;
+    clientID = await makeRequest(LINK_HEADER + "getClientID");
+    // // console.log("called requestClientID");
+    // let email;
 
-    await axios.get('/auth/current-session').then(({ data }) => {
-        // console.log("got email: <" + data.email + ">");
-        // console.log("auth data:")
-        // console.log(data);
-        email = data.email;
-        accessToken = data.access_token;
-    })
-    // console.log("getClientID - email: " + email);
-    let result = axios.get(LINK_HEADER + "getClientID", { params: { email: email } }).then(res => {
-        let data = res.data.clientID;
-        // console.log("<CH> clientID: " + res.data.clientID);
-        clientID = data;
-        // setClientID(data);
-        // getName();
-        // setClientName(user.first_name + " " + user.last_name);
-    });
-    await result;
+    // await axios.get('/auth/current-session').then(({ data }) => {
+    //     // console.log("got email: <" + data.email + ">");
+    //     // console.log("auth data:")
+    //     // console.log(data);
+    //     email = data.email;
+    //     accessToken = data.access_token;
+    // })
+    // // console.log("getClientID - email: " + email);
+    // let result = axios.get(LINK_HEADER + "getClientID", { params: { email: email } }).then(res => {
+    //     let data = res.data.clientID;
+    //     // console.log("<CH> clientID: " + res.data.clientID);
+    //     clientID = data + 1;
+    //     // setClientID(data);
+    //     // getName();
+    //     // setClientName(user.first_name + " " + user.last_name);
+    // });
+    // await result;
     // console.log("after await: " + clientID);
     return clientID;
 }
@@ -89,12 +90,13 @@ function getClientIDImmediate() {
 }
 
 async function makeRequest(url, params = {}, func) {
-    let id = await getClientID();
-    if (id == undefined) {
-        console.log("Undefined client ID, will not send request");
-        return;
-    }
-    params.account_id = id;
+    // let id = await getClientID();
+    // if (id == undefined) {
+    //     console.log("Undefined client ID, will not send request");
+    //     return;
+    // }
+    // params.account_id = id;
+    // params.account_id = undefined;
     let instance = await getCSRF();
     // console.log(instance);
     // console.log(LINK_HEADER + url);
@@ -126,7 +128,7 @@ async function makeRequest(url, params = {}, func) {
         }
         return data;
     });
-    return result;
+    return await result;
 }
 
 async function getSocialsInfoByID(dataFunction, id) {
@@ -149,8 +151,12 @@ async function writeDescriptionAdmin(description, id) {
     let result = makeRequest("updateDescriptionRequestAdmin", data);
 }
 
+async function getProfileData(dataFunction) {
+    let result = makeRequest("readProfileDataRequest", {}, dataFunction);
+}
+
 async function getProfileDataByID(dataFunction, id) {
-    let data = { target_id: id || await getClientID() };
+    let data = { target_id: id };
     let result = makeRequest("readProfileDataRequestByID", data, dataFunction);
 }
 
@@ -278,10 +284,13 @@ async function exportData() {
 }
 
 async function isAdmin() {
+    console.log(adminStatus);
     if (adminStatus != undefined) {
         return adminStatus;
     }
+    console.log("before");
     let result = await makeRequest("isAdmin");
+    console.log(result);
     adminStatus = result.is_admin == 1;
     return adminStatus;
 }
@@ -309,6 +318,7 @@ export default {
     writeDescription,
     writeDescriptionAdmin,
 
+    getProfileData,
     getProfileDataByID,
     writeProfileData,
     writeProfileDataAdmin,

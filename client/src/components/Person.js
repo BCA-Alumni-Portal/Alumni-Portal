@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import NonEditableProfilePicture from './NonEditableProfilePicture';
-// import NonEditableUserInformation from './NonEditableUserInformation';
-// import NonEditableDescription from './NonEditableDescription';
-import ClickableSocials from './ClickableSocials';
 import CommunicationHandler from './CommunicationHandler';
 import { Circles, Grid } from 'react-loader-spinner'
 

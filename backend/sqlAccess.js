@@ -102,8 +102,8 @@ function constructSQLWriteQuery(sqlColumns, values, tableName = TABLE_ACCOUNTS) 
 
 // Construct a query which updates <values> to <sqlColumns> in the same order
 function constructSQLUpdateQuery(pkName, pkVal, sqlColumns, values, tableName = TABLE_ACCOUNTS) {
-    console.log(sqlColumns);
-    console.log(values);
+    // console.log(sqlColumns);
+    // console.log(values);
 
     let query = "UPDATE " + tableName + " SET ";
     for (let i = 0; i < sqlColumns.length; i++) {
@@ -329,7 +329,7 @@ async function writeSocialsToSQL(accountsID, socials) {
     socials.account_id = accountsID;
 
     let result = writeDataToSQL(columns, socials, TABLE_SOCIAL);
-    console.log("query: \n" + query);
+    // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
@@ -481,7 +481,7 @@ async function readAccountsDataWithFilter(accountsID, nameFilter, yearFilters, a
         query += "(Accounts.academy_id=Academy.academy_id AND " + academyOr + ")"
     }
     // "WHERE " + yearOr + " AND " + "(Accounts.academy_id=Academy.academy_id AND " + academyOr + ")";
-    console.log("final query: " + query);
+    // console.log("final query: " + query);
     let result = await sqlModule.makeQuery({ query: query });
     return result;
 }

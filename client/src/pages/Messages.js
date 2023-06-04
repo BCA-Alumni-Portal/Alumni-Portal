@@ -78,7 +78,7 @@ export default function Messages() {
   }
 
   const getName = () => {
-    CommunicationHandler.getProfileDataByID(setConversationInfo);
+    CommunicationHandler.getProfileData(setConversationInfo);
   }
 
   async function requestClientID() {
