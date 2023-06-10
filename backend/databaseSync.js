@@ -6,7 +6,7 @@ const writeAccountsColumns = sqlAccess.writeSheetsAccountsColumns;
 // Pull data from the SQL database and write to the Google Sheets
 async function exportSqlToSheets(sheetID) {
     let data = await sqlAccess.readAccountsDataFromSQL();
-    let result = await sheetsAccess.writeDataToSheets(writeAccountsColumns, data, sheetID, 0, await sqlAccess.readLastEffectiveSqlAccountsID());
+    let result = await sheetsAccess.writeAccountsDataToSheets(writeAccountsColumns, data, sheetID, 0, await sqlAccess.readLastEffectiveSqlAccountsID());
     return result;
 }
 
@@ -17,7 +17,7 @@ async function writeNewEntriesToSQL(sheetID) {
 
     // Sync things from Sheets to SQL
     // Read the rows that the SQL database doesn't have
-    let values = await sheetsAccess.readDataFromSheets(sheetID, lastSqlID, lastSheetsID);
+    let values = await sheetsAccess.readAccountsDataFromSheets(sheetID, lastSqlID, lastSheetsID);
     let result = await sqlAccess.writeDataToSQL(writeAccountsColumns, values);
     return result;
 }
@@ -42,7 +42,7 @@ async function sync(sheetID) {
     // }
 
     // Force it to write from sheets to SQL
-    // let values = await sheetsAccess.readDataFromSheets(sheetID, 0, lastSheetsID);
+    // let values = await sheetsAccess.readAccountsDataFromSheets(sheetID, 0, lastSheetsID);
     // let result = await sqlAccess.writeDataToSQL(writeAccountsColumns, values);
     // console.log(result);
     // if (true) {
@@ -55,7 +55,7 @@ async function sync(sheetID) {
         return null;
     } else if (lastSqlID < lastSheetsID) { // Sync things from Sheets to SQL
         // // Read the rows that the SQL database doesn't have
-        let values = await sheetsAccess.readDataFromSheets(sheetID, lastSqlID, lastSheetsID);
+        let values = await sheetsAccess.readAccountsDataFromSheets(sheetID, lastSqlID, lastSheetsID);
 
         // [ Query Structure ]
         // INSERT INTO table_name (column_list)
@@ -72,7 +72,7 @@ async function sync(sheetID) {
     } else if (lastSheetsID < lastSqlID) { // Sync things from SQL to Sheets
         // // Query the rows that the Sheets doesn't have
         let data = await sqlAccess.readAccountsDataFromSQL(lastSheetsID, lastSqlID);
-        let result = await sheetsAccess.writeDataToSheets(writeAccountsColumns, data, sheetID, lastSheetsID, lastSqlID);
+        let result = await sheetsAccess.writeAccountsDataToSheets(writeAccountsColumns, data, sheetID, lastSheetsID, lastSqlID);
         return result;
     }
 }
