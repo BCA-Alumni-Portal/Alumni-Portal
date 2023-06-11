@@ -41,3 +41,7 @@ These two variables are not included in the JSON file, and must be taken from th
 - GS_SOURCE_SHEET=[The ID of the source google sheets, which will be used for syncing data]
 
 - GS_EXPORT_SHEET=[The ID of the export google sheets, which will be used for exporting data]
+
+
+
+Once you have filled out all the information in the .example_env, change the file name to .env
