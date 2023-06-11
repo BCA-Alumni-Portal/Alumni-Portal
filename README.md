@@ -20,10 +20,15 @@ Then:
 - Once that has been created, fill out the information below in the .example_env file from the downloaded JSON file.
 
 GS_PROJECT_ID=[The id of the project]
+
 GS_PRIVATE_KEY_ID=[Your service account's key ID]
+
 GS_PRIVATE_KEY=[Your service account's private key]
+
 GS_CLIENT_EMAIL=[The service account's email]
+
 GS_CLIENT_ID=[The service account's unique ID]
+
 GS_CLIENT_X509_CERT_URL=[The certification URL]
 
 Note:
