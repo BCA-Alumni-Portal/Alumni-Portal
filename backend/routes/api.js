@@ -12,8 +12,8 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-const sourceSheetsID = "1oOohmDEw3R2AU8aHwt9-KWGpFCQSYz08HsGgcXQEDLQ";
-const exportSheetsID = "1nCnY_3uG0xUZSx9uSaS9ROFUF9hur70jBrUxFSEnZMY";
+const sourceSheetsID = process.env.GS_SOURCE_SHEET;
+const exportSheetsID = process.env.GS_EXPORT_SHEET;
 
 router.post('/sendMessageRequest', async (req, res) => {
     await authenticateClient(req, res);
