@@ -54,11 +54,14 @@ async function authenticateClient(req, res) {
                 reject();
             }
             query.account_id = await sqlAccess.readClientID(user.email);
-            let adminResult = await sqlAccess.readIsAdminFromSQL(query.account_id)[0];
+            let adminResult = (await sqlAccess.readIsAdminFromSQL(query.account_id))[0];
+            // console.log("here");
+            // console.log((await sqlAccess.readIsAdminFromSQL(query.account_id))[0]);
+            // console.log(adminResult);
             if (adminResult == undefined) {
                 query.is_admin = false;
             } else {
-                query.is_admin = adminResult.is_admin;
+                query.is_admin = (adminResult.is_admin == 1);
             }
             resolve();
         })(req, res);
@@ -428,6 +431,7 @@ router.post('/writeProfilePicture', async (req, res) => {
 router.post('/isAdmin', async (req, res) => {
     await authenticateClient(req, res);
     let query = req.body;
+    console.log("isAdmin " + query);
     return res.send(query);
 })
 

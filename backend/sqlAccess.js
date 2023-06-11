@@ -57,14 +57,26 @@ const readDescriptionColumns = allDescriptionColumns[1];
 const updateDescriptionColumns = allDescriptionColumns.slice(2);
 const writeDescriptionColumns = allDescriptionColumns.slice(1);
 
-const TABLE_ACCOUNTS = "Accounts";
-const TABLE_MESSAGES = "Messages";
-const TABLE_SOCIAL = "Social";
-const TABLE_DESCRIPTION = "ProfileDescription";
-const TABLE_CONVERSATION = "Conversation";
+const allAcademyColumns = [
+    "academy_id",
+    "academy_name"
+]
+const readAcademyColumns = allAcademyColumns.slice(1);
+const updateAcademyColumns = allAcademyColumns.slice(1);
+const writeAcademyColumns = allAcademyColumns;
+const writeSheetsAcademyColumns = allAcademyColumns;
+
+const TABLES = {
+    "ACCOUNTS": "Accounts",
+    "MESSAGES": "Messages",
+    "SOCIAL": "Social",
+    "DESCRIPTION": "ProfileDescription",
+    "CONVERSATION": "Conversation",
+    "ACADEMY": "Academy"
+}
 
 // Construct a query which writes <values> to <sqlColumns> in the same order
-function constructSQLWriteQuery(sqlColumns, values, tableName = TABLE_ACCOUNTS) {
+function constructSQLWriteQuery(sqlColumns, values, tableName = TABLES.ACCOUNTS) {
     let query = "INSERT INTO " + tableName + " (";
     let firstCol = true;
     for (let col of sqlColumns) {
@@ -101,7 +113,7 @@ function constructSQLWriteQuery(sqlColumns, values, tableName = TABLE_ACCOUNTS) 
 }
 
 // Construct a query which updates <values> to <sqlColumns> in the same order
-function constructSQLUpdateQuery(pkName, pkVal, sqlColumns, values, tableName = TABLE_ACCOUNTS) {
+function constructSQLUpdateQuery(pkName, pkVal, sqlColumns, values, tableName = TABLES.ACCOUNTS) {
     // console.log(sqlColumns);
     // console.log(values);
 
@@ -147,7 +159,7 @@ function constructSQLWhereSequence(whereColumns, whereValues) {
 }
 
 // Construct a query which reads the values of <readColumns> from <tableName>, where <whereColumns> == <whereValues>
-function constructSQLReadQuery(readColumns, tableName = TABLE_ACCOUNTS) {
+function constructSQLReadQuery(readColumns, tableName = TABLES.ACCOUNTS) {
     let query = "SELECT DISTINCT ";
     for (let i = 0; i < readColumns.length; i++) {
         if (i != 0) {
@@ -167,7 +179,7 @@ async function readAccountsDataFromSQL(startID = 0, endID = readLastEffectiveSql
     endID = mysql.escape(endID);
     // Sync things from SQL to Sheets
     // Query the rows that the Sheets doesn't have
-    let query = "SELECT * FROM " + TABLE_ACCOUNTS + " WHERE account_id >= " + startID + " AND account_id <= " + endID;
+    let query = "SELECT * FROM " + TABLES.ACCOUNTS + " WHERE account_id >= " + startID + " AND account_id <= " + endID;
 
     let data = await sqlModule.makeQuery({ query: query });
 
@@ -204,7 +216,7 @@ async function writeMessageToSQL(senderID, conversationID, body) {
             new Date().toISOString().slice(0, 19).replace('T', ' ') // Have the database log the current date
         ]
     ]
-    let result = writeDataToSQL(writeMessageColumns, values, TABLE_MESSAGES);
+    let result = writeDataToSQL(writeMessageColumns, values, TABLES.MESSAGES);
     return result;
 }
 
@@ -216,14 +228,14 @@ async function readLastEffectiveSqlAccountsID() {
 
 // Get the last account_id from the SQL database
 async function readLastSqlAccountsID() {
-    let query = "SELECT max(account_id) FROM " + TABLE_ACCOUNTS;
+    let query = "SELECT max(account_id) FROM " + TABLES.ACCOUNTS;
     return await sqlModule.makeQuery({ query: query });
 }
 
 async function readClientID(email) {
     email = mysql.escape(email);
 
-    let query = "SELECT account_id FROM " + TABLE_ACCOUNTS + " WHERE " +
+    let query = "SELECT account_id FROM " + TABLES.ACCOUNTS + " WHERE " +
         "(email_address = " + email + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
@@ -237,18 +249,18 @@ async function readClientID(email) {
 }
 
 async function writeProfilePictureToSQL(account_id, picture) {
-    // let query = "INSERT INTO " + TABLE_ACCOUNTS + " "
+    // let query = "INSERT INTO " + TABLES.ACCOUNTS + " "
     let columns = ["profile_picture"];
     let values = [
         picture
     ];
-    let query = constructSQLUpdateQuery("account_id", account_id, columns, values, TABLE_ACCOUNTS);
+    let query = constructSQLUpdateQuery("account_id", account_id, columns, values, TABLES.ACCOUNTS);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
 
 async function readProfilePictureFromSQL(account_id) {
-    let query = "SELECT profile_picture FROM " + TABLE_ACCOUNTS + " WHERE account_id=" + mysql.escape(account_id);
+    let query = "SELECT profile_picture FROM " + TABLES.ACCOUNTS + " WHERE account_id=" + mysql.escape(account_id);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
@@ -287,14 +299,14 @@ async function updateProfileInfoToSQL(accountsID, company = "", graduationYear, 
         first_name,
         last_name
     ];
-    let query = constructSQLUpdateQuery("account_id", accountsID, columns, values, TABLE_ACCOUNTS);
+    let query = constructSQLUpdateQuery("account_id", accountsID, columns, values, TABLES.ACCOUNTS);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
 
 async function readProfileInfoFromSQL(accountsID) {
-    let query = "SELECT * FROM " + TABLE_ACCOUNTS + " WHERE " +
+    let query = "SELECT * FROM " + TABLES.ACCOUNTS + " WHERE " +
         "(account_id = " + mysql.escape(accountsID) + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
@@ -305,7 +317,7 @@ async function readSocialsFromSQL(accountsID) {
     // console.log("readSocialsFromSQL");
     // console.log("AID: " + accountsID);
     // console.log("EAID: " + mysql.escape(accountsID));
-    let query = "SELECT * FROM " + TABLE_SOCIALS + " WHERE " +
+    let query = "SELECT * FROM " + TABLES.SOCIALS + " WHERE " +
         "(account_id = " + mysql.escape(accountsID) + ")"
     // console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     let data = await sqlModule.makeQuery({ query: query });
@@ -318,7 +330,7 @@ async function readSocialsFromSQL(accountsID) {
 
 async function updateSocialsToSQL(accountsID, socials) {
     let columns = updateSocialColumns;
-    let query = constructSQLUpdateQuery("account_id", accountsID, columns, socials, TABLE_SOCIAL);
+    let query = constructSQLUpdateQuery("account_id", accountsID, columns, socials, TABLES.SOCIAL);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
@@ -328,7 +340,7 @@ async function writeSocialsToSQL(accountsID, socials) {
     let columns = writeSocialColumns;
     socials.account_id = accountsID;
 
-    let result = writeDataToSQL(columns, socials, TABLE_SOCIAL);
+    let result = writeDataToSQL(columns, socials, TABLES.SOCIAL);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
@@ -338,7 +350,7 @@ async function readSocialsFromSQL(accountsID) {
     // console.log("almID:");
     // console.log(mysql.escape(accountsID));
     // console.log(parseInt(mysql.escape(accountsID)));
-    let query = "SELECT * FROM " + TABLE_SOCIAL + " WHERE " +
+    let query = "SELECT * FROM " + TABLES.SOCIAL + " WHERE " +
         "(account_id = " + accountsID + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
@@ -350,7 +362,7 @@ async function readSocialsFromSQL(accountsID) {
 
 async function updateSocialsToSQL(accountsID, socials) {
     let columns = updateSocialColumns;
-    let query = constructSQLUpdateQuery("account_id", accountsID, columns, socials, TABLE_SOCIAL);
+    let query = constructSQLUpdateQuery("account_id", accountsID, columns, socials, TABLES.SOCIAL);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
@@ -366,14 +378,14 @@ async function writeSocialsToSQL(accountsID, socials) {
     ]
     // console.log(columns);
     // console.log(values);
-    let result = await writeDataToSQL(columns, values, TABLE_SOCIAL);
+    let result = await writeDataToSQL(columns, values, TABLES.SOCIAL);
     // console.log("result: \n" + result);
     // let queryResult = await sqlModule.makeQuery({ query: query });
     return result;
 }
 
 async function readDescriptionFromSQL(accountsID) {
-    let query = "SELECT * FROM " + TABLE_DESCRIPTION + " WHERE " +
+    let query = "SELECT * FROM " + TABLES.DESCRIPTION + " WHERE " +
         "(account_id = " + mysql.escape(accountsID) + ")"
     let data = await sqlModule.makeQuery({ query: query });
     // Only return the first result
@@ -389,7 +401,7 @@ async function updateDescriptionToSQL(accountsID, description) {
     let values = [
         description
     ];
-    let query = constructSQLUpdateQuery("account_id", accountsID, columns, values, TABLE_DESCRIPTION);
+    let query = constructSQLUpdateQuery("account_id", accountsID, columns, values, TABLES.DESCRIPTION);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
@@ -406,7 +418,7 @@ async function writeDescriptionToSQL(accountsID, description) {
     ]
     // console.log(columns);
     // console.log(values);
-    let result = await writeDataToSQL(columns, values, TABLE_DESCRIPTION);
+    let result = await writeDataToSQL(columns, values, TABLES.DESCRIPTION);
     // console.log("result: \n" + result);
     // let queryResult = await sqlModule.makeQuery({ query: query });
     return result;
@@ -417,14 +429,14 @@ async function updateVisibilityToSQL(accountsID, is_visible) {
     let values = [
         is_visible
     ];
-    let query = constructSQLUpdateQuery("account_id", accountsID, columns, values, TABLE_ACCOUNTS);
+    let query = constructSQLUpdateQuery("account_id", accountsID, columns, values, TABLES.ACCOUNTS);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
 
 async function readVisibilityFromSQL(accountsID) {
-    let query = "SELECT is_visible FROM " + TABLE_ACCOUNTS + " WHERE account_id=" + mysql.escape(accountsID);
+    let query = "SELECT is_visible FROM " + TABLES.ACCOUNTS + " WHERE account_id=" + mysql.escape(accountsID);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
 }
@@ -434,7 +446,7 @@ async function updateAdminToSQL(accountsID, is_admin) {
     let values = [
         is_admin
     ];
-    let query = constructSQLUpdateQuery("account_id", accountsID, columns, values, TABLE_ACCOUNTS);
+    let query = constructSQLUpdateQuery("account_id", accountsID, columns, values, TABLES.ACCOUNTS);
     // console.log("query: \n" + query);
     let queryResult = await sqlModule.makeQuery({ query: query });
     return queryResult;
@@ -463,14 +475,14 @@ async function readAccountsDataWithFilter(accountsID, nameFilter, yearFilters, a
     }
     if (nameFilter.length > 0) {
         nameFilter = mysql.escape(nameFilter + "%");
-        query += ` (Accounts.first_name LIKE ${nameFilter}` + ` OR ` + TABLE_ACCOUNTS + `.last_name LIKE ${nameFilter}` + `)`;
+        query += ` (Accounts.first_name LIKE ${nameFilter}` + ` OR ` + TABLES.ACCOUNTS + `.last_name LIKE ${nameFilter}` + `)`;
     }
     if (yearFilters.length > 0) {
         if (nameFilter.length > 0) {
             query += " AND ";
         }
         query += `(graduation_year >= ${yearFilters[0]} AND graduation_year <= ${yearFilters[1]}) `;
-        // let yearOr = constructSQLOrSequence(TABLE_ACCOUNTS + ".graduation_year", yearFilters);
+        // let yearOr = constructSQLOrSequence(TABLES.ACCOUNTS + ".graduation_year", yearFilters);
         // query += yearOr;
     }
     if (academyFilters.length > 0) {
@@ -489,7 +501,7 @@ async function readAccountsDataWithFilter(accountsID, nameFilter, yearFilters, a
 async function writeConversation(accountsID, targetID) {
     accountsID = mysql.escape(accountsID);
     targetID = mysql.escape(targetID);
-    let checkQuery = "SELECT * FROM " + TABLE_CONVERSATION +
+    let checkQuery = "SELECT * FROM " + TABLES.CONVERSATION +
         " WHERE ((first_id=" + accountsID + " AND second_id=" + targetID + ") OR (first_id=" + targetID + " AND second_id=" + accountsID + "))";
 
     // console.log(checkQuery);
@@ -498,7 +510,7 @@ async function writeConversation(accountsID, targetID) {
         return;
     }
 
-    let query = "INSERT INTO " + TABLE_CONVERSATION + "(conversation_id, first_id, second_id) VALUES (null, " + accountsID + ", " + targetID + ")";
+    let query = "INSERT INTO " + TABLES.CONVERSATION + "(conversation_id, first_id, second_id) VALUES (null, " + accountsID + ", " + targetID + ")";
     // console.log(query);
     let result = await sqlModule.makeQuery({ query: query });
     return result;
@@ -524,7 +536,7 @@ async function readAvailableConversations(accountsID) {
 async function readSpecificConversation(accountsID, targetID) {
     accountsID = mysql.escape(accountsID);
     targetID = mysql.escape(targetID);
-    let query = "SELECT * FROM " + TABLE_CONVERSATION + " WHERE " +
+    let query = "SELECT * FROM " + TABLES.CONVERSATION + " WHERE " +
         "(first_id=" + accountsID + " AND second_id=" + targetID + ") OR (second_id=" + targetID + " AND first_id=" + accountsID + ")";
     // console.log(query);
     let result = await sqlModule.makeQuery({ query: query });
@@ -540,7 +552,7 @@ async function writeDataToSQL(columns, values, tableName) {
 }
 
 async function verifyAlumEmail(accountsEmail) {
-    let query = "SELECT email_address FROM " + TABLE_ACCOUNTS;
+    let query = "SELECT email_address FROM " + TABLES.ACCOUNTS;
     let data = await sqlModule.makeQuery({ query: query });
     let set = new Set(data.map(element => element.email_address));
     console.log(set);
@@ -550,19 +562,42 @@ async function verifyAlumEmail(accountsEmail) {
 }
 
 async function readIsAdminFromSQL(accountID) {
-    let query = "SELECT is_admin FROM " + TABLE_ACCOUNTS + " WHERE account_id=" + mysql.escape(accountID);
+    let query = "SELECT is_admin FROM " + TABLES.ACCOUNTS + " WHERE account_id=" + mysql.escape(accountID);
     let data = await sqlModule.makeQuery({ query: query });
     return data;
 }
 
 async function archiveUserInSQL(targetID) {
-    let query = "UPDATE " + TABLE_ACCOUNTS + " SET is_visible=0 WHERE account_id=" + mysql.escape(targetID);
+    let query = "UPDATE " + TABLES.ACCOUNTS + " SET is_visible=0 WHERE account_id=" + mysql.escape(targetID);
     
     let data = await sqlModule.makeQuery({ query: query });
     return data;
 }
 
+async function readAcademiesDataFromSQL(startID, endID) {
+    startID = mysql.escape(startID + 1);
+    endID = mysql.escape(endID);
+    let query = "SELECT * FROM " + TABLES.ACADEMY + " WHERE academy_id >= " + startID + " AND academy_id <= " + endID;
+
+    let data = await sqlModule.makeQuery({ query: query });
+    return data;
+}
+
+async function readLastEffectiveSqlAcademiesID() {
+    let lastSqlID = await readLastSqlAcademiesID();
+    // We add 1 because it starts with 0, and max() returns the largest value
+    return parseInt(lastSqlID[0]['max(academy_id)'], 10);
+}
+
+// Get the last academy_id from the SQL database
+async function readLastSqlAcademiesID() {
+    let query = "SELECT max(academy_id) FROM " + TABLES.ACADEMY;
+    return await sqlModule.makeQuery({ query: query });
+}
+
 module.exports = {
+    TABLES,
+
     readAccountsDataFromSQL,
     writeDataToSQL,
     writeMessageToSQL,
@@ -605,5 +640,13 @@ module.exports = {
     updateVisibilityToSQL,
     updateAdminToSQL,
 
-    archiveUserInSQL
+    archiveUserInSQL,
+
+    readLastEffectiveSqlAcademiesID,
+    readAcademiesDataFromSQL,
+
+    writeAcademyColumns,
+    writeSheetsAcademyColumns,
+    updateAcademyColumns,
+    readAcademyColumns
 }
