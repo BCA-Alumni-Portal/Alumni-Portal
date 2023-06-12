@@ -1,5 +1,5 @@
 # AcademiesAlumni
-To install the required node packages, first run `npm install recursive-install` which can also be found at https://www.npmjs.com/package/recursive-install
+To install the required node packages, first run `npm install recursive-install` which can also be found at https://www.npmjs.com/package/recursive-install.
 
 Then, run `npm-recursive-install` to install the rest of the node packages in the main directory, the client directory, and the backend directory.
 
@@ -11,7 +11,9 @@ TO DO
 
 # MySQL Setup
 Provided under the `mysql_dump` folder are files which contain the statements required for recreating the MySQL database.
+
 We used MySQL Workbench to export the structure, and it may be easier to import the structure using Workbench as well.
+
 After the structure has been imported, fill out the SQL credentials in `.example_env`
 
 
@@ -53,6 +55,6 @@ Make sure to share the source and export Google Sheets with your service account
 
 
 # Starting it up
-Once you have filled out all the information in the `.example_env`, change the file name to `.env`
+Once you have filled out all the information in the `.example_env`, change the file name to `.env`.
 
-Run `npm start` in the main directory to start the application
+Run `npm start` in the main directory to start the application.
