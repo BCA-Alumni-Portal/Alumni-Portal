@@ -21,7 +21,7 @@ export default function Home() {
           <div className="centered space-y-2">
             {/* <img class="h-auto max-w-3xl rounded-lg self-center mb-6 mt-6" src={alumni1} /> */}
             <div class="relative">
-              <img class="h-auto max-w-full rounded-lg self-center mb-6 mt-6" src={alumni1} />
+              <img class="h-auto max-w-full rounded-lg self-center mt-1" src={alumni1} />
               <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg" style={{ backgroundColor: "rgba(255, 255, 255, 0.9)" }}>
                 <h1 class="text-7xl text-black mt-2 mb-2 ml-2 mr-2 tracking-wides">
                   Welcome to the BCA Alumni Portal!
@@ -53,7 +53,7 @@ export default function Home() {
           <div className="centered space-y-2">
             {/* <img class="h-auto max-w-3xl rounded-lg self-center mb-6 mt-6" src={alumni1} /> */}
             <div class="relative">
-              <img class="h-auto max-w-full rounded-lg self-center mb-6 mt-6" src={alumni1} />
+              <img class="h-auto max-w-full rounded-lg self-center" src={alumni1} />
               <div class="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg" style={{ backgroundColor: "rgba(255, 255, 255, 0.9)" }}>
                 <h1 class="text-4xl text-black mt-2 ml-2 mr-2 tracking-wides">
                   Welcome to the BCA Alumni portal - log in to continue!
