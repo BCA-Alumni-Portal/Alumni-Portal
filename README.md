@@ -26,7 +26,7 @@ Provided under the `mysql_dump` folder are files which contain the statements re
 
 We used MySQL Workbench to export the structure, and it may be easier to import the structure using Workbench as well.
 
-After the structure has been imported, fill out the SQL credentials in `.example_env`
+After the structure has been imported, fill out the SQL credentials in `.example_env`.
 
 
 # Google Sheets API Setup
@@ -34,7 +34,7 @@ The Google Sheets API is required in order to sync data between the MySQL databa
 
 In the `.example_env` file, there are a series of environmental variables that must be filled out to ensure proper functionality.
 
-First, a Google Cloud project must be created, which can be accessed at https://console.cloud.google.com
+First, a Google Cloud project must be created, which can be accessed at https://console.cloud.google.com.
 
 Then:
 - Go to APIs & Services 
@@ -64,6 +64,8 @@ These two variables are not included in the JSON file, and must be taken from th
 - GS_EXPORT_SHEET=[The ID of the export google sheets, which will be used for exporting data]
 
 Make sure to share the source and export Google Sheets with your service account's email, so that it can edit those sheets.
+
+For the source sheet, use a copy of https://docs.google.com/spreadsheets/d/1OjG6CG9yg9-o6RyRgzI7j3h9rNkWkhg7BZ38Ke92VK4/edit?usp=sharing.
 
 
 # Starting it up
