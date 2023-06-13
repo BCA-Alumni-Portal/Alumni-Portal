@@ -10,8 +10,16 @@ Then, run `npm-recursive-install` to install the rest of the node packages in th
 To start, run `npm start` in the main directory, which will use `concurrently` to run the client and server at the same time. See the main directory's package.json for more details.
 
 # Auth0 Setup
-TO DO
+Create an Auth0 tenant at https://manage.auth0.com. Navigate to the Applications tabs, select the application you wish to use, and navigate to its Settings tab.
 
+Fill out the following credentials, which can be found on the Settings tabs, in `.example_env`.
+- AUTH0_SECRET=[Client secret]
+- AUTH0_CLIENT_ID=[Client ID]
+- AUTH0_DOMAIN=[Tenant domain]
+
+Then, generate two secret keys for the cookie and JWT authentication functionalities. 
+- COOKIE_SECRET=[Random cookie secret]
+- JWT_SECRET_KEY=[Random JWT secret]
 
 # MySQL Setup
 Provided under the `mysql_dump` folder are files which contain the statements required for recreating the MySQL database.
