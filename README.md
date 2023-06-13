@@ -1,11 +1,8 @@
-<<<<<<< HEAD
 # BCA Alumni Portal
 
 An alumni portal for the Bergen County Academies. Built by Kevin Liu, Remington Kim, and Hayun Jung.
 
-## Instructions
-=======
-# AcademiesAlumni
+# Instructions
 To install the required node packages, first run `npm install recursive-install` which can also be found at https://www.npmjs.com/package/recursive-install.
 
 Then, run `npm-recursive-install` to install the rest of the node packages in the main directory, the client directory, and the backend directory.
@@ -65,4 +62,3 @@ Make sure to share the source and export Google Sheets with your service account
 Once you have filled out all the information in the `.example_env`, change the file name to `.env`.
 
 Run `npm start` in the main directory to start the application.
->>>>>>> eb0c07cfa051b80fbf695f134af7eaf104e2ef1c
