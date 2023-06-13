@@ -19,7 +19,7 @@ export default function Me() {
         axios.get('/auth/current-session').then(({ data }) => {
             setAuth(data);
         })
-        CommunicationHandler.getProfileDataByID(setVisiblility);
+        CommunicationHandler.getProfileData(setVisibility);
         CommunicationHandler.isAdmin().then((result) => {
             if (result != null) {
               setIsAdmin(result);
@@ -30,7 +30,7 @@ export default function Me() {
     const [visible, setVisible] = useState(null);
 
 
-    const setVisiblility = (data) => {
+    const setVisibility = (data) => {
         setVisible(data.is_visible);
     }
 

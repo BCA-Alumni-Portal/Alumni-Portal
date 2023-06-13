@@ -39,10 +39,12 @@ router.get('/callback', (req, res, next) => {
 
         let email = user._json.email;
         let picture = user.picture;
+        let user_id = user.user_id;
 
         const userReturnObject = {
             email: email,
-            picture: picture
+            picture: picture,
+            user_id: user_id
         };
         let isAlum = await sqlAccess.verifyAlumEmail(userReturnObject.email);
         if (!isAlum) {
@@ -75,6 +77,8 @@ router.get('/callback', (req, res, next) => {
 
 router.get('/current-session', (req, res) => {
     passport.authenticate('jwt', { session: false }, (err, user) => {
+        // console.log("current-session user:");
+        // console.log(user);
         if (err || !user) {
             res.send(false);
         } else {

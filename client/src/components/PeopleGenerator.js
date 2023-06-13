@@ -4,7 +4,6 @@ import CommunicationHandler from './CommunicationHandler';
 
 function PeopleGenerator(props) {
     let people = props.people;
-    let isAdmin = CommunicationHandler.getIsAdminStatus();
 
     const academy_id_map = [null, "AAST", "AMST", "AEDT", "ABF", "ATCS", "ACAHA", "AVPA-M", "AVPA-V", "AVPA-T"]
     // console.log(people);

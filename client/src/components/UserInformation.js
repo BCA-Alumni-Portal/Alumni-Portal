@@ -32,7 +32,7 @@ function UserInformation(props) {
     // pronouns, company = optional
     // SQL -> client
     // getInfo();
-    CommunicationHandler.getProfileDataByID(setProfileData);
+    CommunicationHandler.getProfileData(setProfileData);
   }, []);
 
   useEffect(() => {
