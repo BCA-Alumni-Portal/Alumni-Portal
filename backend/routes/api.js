@@ -295,13 +295,6 @@ router.post('/updateDescriptionRequest', async (req, res) => {
     let clientID = query.account_id;
     let accessToken = query.access_token;
 
-    var options = {
-        method: 'GET',
-        url: "https://dev-f59msytf.us.auth0.com/userinfo",
-        headers: { 'content-type': 'application/json', authorization: 'Bearer ' + accessToken },
-        clientID: process.env.AUTH0_CLIENT_ID
-    };
-
     let description = [
         query.description
     ];
@@ -325,13 +318,6 @@ router.post('/updateDescriptionRequestAdmin', async (req, res) => {
 
     let clientID = query.target_id;
     let accessToken = query.access_token;
-
-    var options = {
-        method: 'GET',
-        url: "https://dev-f59msytf.us.auth0.com/userinfo",
-        headers: { 'content-type': 'application/json', authorization: 'Bearer ' + accessToken },
-        clientID: process.env.AUTH0_CLIENT_ID
-    };
 
     let description = [
         query.description
